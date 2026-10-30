@@ -1,13 +1,23 @@
 name: Render Shorts
 
-# Renders one vertical MP4 per row of hyperframes/shorts-roots-of-capitalism/script.json.
-# Edit a row's text and push, or run it from the Actions tab.
+# Builds and renders the Roots of Capitalism Shorts: Kokoro voiceover, timed
+# captions and maps, one MP4 per part of script.json.
+# Edit script.json and push, or run it from the Actions tab.
 on:
   push:
     paths:
       - "hyperframes/shorts-roots-of-capitalism/**"
       - ".github/workflows/render-shorts.yml"
   workflow_dispatch:
+    inputs:
+      style:
+        description: Card style
+        type: choice
+        options: [glass, brutal]
+        default: glass
+      part:
+        description: Only this part (number), or blank for all
+        required: false
 
 permissions:
   contents: read
@@ -19,17 +29,43 @@ concurrency:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     defaults:
       run:
         working-directory: hyperframes/shorts-roots-of-capitalism
+    env:
+      HYPERFRAMES_PYTHON: ${{ github.workspace }}/.venv/bin/python
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-hyperframes
-      - name: Lint
-        run: npx hyperframes lint
-      - name: Render every part
-        run: npx hyperframes render --batch script.json --strict-variables --output "renders/{slug}.mp4"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Kokoro
+        working-directory: .
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -q kokoro-onnx soundfile
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/hyperframes/tts
+          key: kokoro-v1.0
+      - name: Build compositions (voiceover, captions, maps)
+        env:
+          STYLE: ${{ inputs.style }}
+          PART: ${{ inputs.part }}
+        run: |
+          args=()
+          [ -n "${STYLE:-}" ] && args+=(--style "$STYLE")
+          [ -n "${PART:-}" ] && args+=(--part "$PART")
+          node build.mjs "${args[@]}"
+      - name: Lint and render each part
+        run: |
+          mkdir -p renders
+          for dir in build/*/; do
+            name=$(basename "$dir")
+            (cd "$dir" && npx hyperframes lint && npx hyperframes render --output "../../renders/$name.mp4")
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: shorts-roots-of-capitalism

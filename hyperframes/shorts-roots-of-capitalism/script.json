@@ -1,98 +1,242 @@
-[
-  {
-    "slug": "01-sugar-built-capitalism",
-    "part": "1",
-    "partTitle": "Sugar built capitalism",
-    "hook": "The first global commodity wasn't oil. It was sugar.",
-    "b1Big": "1226",
-    "b1Text": "England's King Henry III was ready to pay roughly US$450 in today's money for three pounds of sugar.",
-    "b2Big": "Sugar + people",
-    "b2Text": "Sugar travelled with a second 'commodity': enslaved Africans, sold in the Caribbean and the Americas.",
-    "b3Big": "Field + factory",
-    "b3Text": "Plantations grew, crushed and boiled the cane on one site, using enslaved labour at every step.",
-    "b4Big": "4–7×",
-    "b4Text": "Investments in the sugar colonies were four to seven times more profitable than investments in England.",
-    "b5Big": "1 in 5",
-    "b5Text": "By 1774, raw sugar made up one-fifth of all British imports, more than any other good."
-  },
-  {
-    "slug": "02-from-the-mediterranean",
-    "part": "2",
-    "partTitle": "The plantation's journey",
-    "hook": "The slave plantation wasn't invented in the Americas.",
-    "b1Big": "1347–1351",
-    "b1Text": "The Black Death drastically reduced the peasant labour supply around the Mediterranean.",
-    "b2Big": "Sicily · Cyprus · Crete",
-    "b2Text": "Island rulers imported enslaved people from North Africa to work the sugar.",
-    "b3Big": "Venice & Genoa",
-    "b3Text": "Merchant families invested in these plantations: the marriage of merchant capital and modern slavery.",
-    "b4Big": "São Tomé",
-    "b4Text": "Land from the Portuguese king, capital from Venice or Genoa, enslaved people from Africa.",
-    "b5Big": "→ Brazil",
-    "b5Text": "Portugal carried the São Tomé model to Brazil. From there it spread to the Caribbean and North America."
-  },
-  {
-    "slug": "03-replaceable-by-design",
-    "part": "3",
-    "partTitle": "Replaceable by design",
-    "hook": "Planters found it cheaper to replace people than to keep them alive.",
-    "b1Big": "60–100",
-    "b1Text": "Planting holes each first-gang worker had to dig by hand, every day.",
-    "b2Big": "18–20 hours",
-    "b2Text": "Harvest-season shifts in the mills and boiling houses, six days a week.",
-    "b3Big": "19 years",
-    "b3Text": "A Barbados planter estimated a sugar estate would kill all 100 of its enslaved workers in 19 years.",
-    "b4Big": "2 in 5",
-    "b4Text": "Newly arrived enslaved people who died within their first year, by one contemporary estimate.",
-    "b5Big": "Account books",
-    "b5Text": "Owners tracked return on investment like spreadsheets. Time-and-motion studies came before Taylorism."
-  },
-  {
-    "slug": "04-the-human-toll",
-    "part": "4",
-    "partTitle": "The human toll",
-    "hook": "At least ten million people landed. The real number seized was far higher.",
-    "b1Big": "10 million+",
-    "b1Text": "Enslaved Africans estimated to have landed in the Americas and the Caribbean.",
-    "b2Big": "14–20 million",
-    "b2Text": "Plausible total seized, counting deaths during capture, marches, detention and the Middle Passage.",
-    "b3Big": "3.1 million",
-    "b3Text": "Africans forced onto British ships, 1640–1807. About 2.7 million survived the crossing.",
-    "b4Big": "2 → 15",
-    "b4Text": "Muskets exchanged for one enslaved person: early 1700s versus the end of that century.",
-    "b5Big": "300%",
-    "b5Text": "Population growth in Asia and Europe, 1600s–1800s. Africa's stayed almost flat, and fell in many regions."
-  },
-  {
-    "slug": "05-britains-sugar-factories",
-    "part": "5",
-    "partTitle": "Britain's sugar factories",
-    "hook": "Before the textile mills, some of Britain's earliest factories refined slave-grown sugar.",
-    "b1Big": "Sugar bakers",
-    "b1Text": "Refineries from Plymouth to Glasgow: coal, heat, specialised equipment and disciplined labour.",
-    "b2Big": "7×",
-    "b2Text": "Growth of British sugar imports from 1700 to 1800: about 21,845 to 152,407 tonnes.",
-    "b3Big": "95%+",
-    "b3Text": "Share of Jamaica's sugar exports shipped to Britain between 1682 and 1701.",
-    "b4Big": "~40%",
-    "b4Text": "Share of capital for Britain's expansion in 1770 that came from slave-trade profits (Engerman).",
-    "b5Big": "+25%",
-    "b5Text": "Extra tariff Britain put on Indian sugar to protect its refiners and Caribbean plantations."
-  },
-  {
-    "slug": "06-sugar-silver-and-money",
-    "part": "6",
-    "partTitle": "Sugar, silver and money",
-    "hook": "The global financial system grew out of sugar, silver and slavery.",
-    "b1Big": "1513",
-    "b1Text": "Spain issues the first asiento: a licence to sell enslaved Africans to its colonies.",
-    "b2Big": "80%",
-    "b2Text": "Share of the world's silver from Spanish America, 1494–1850, mined in Potosí and Mexico.",
-    "b3Big": "Piece of eight",
-    "b3Text": "The Spanish silver dollar was accepted for trade across Asia, the Americas and much of Europe.",
-    "b4Big": "Guilder → Pound",
-    "b4Text": "Control of sugar and the trade in enslaved people helped make each the reserve currency of its era.",
-    "b5Big": "500 years",
-    "b5Text": "Modern capitalism's configuration of power dates back at least around 500 years."
-  }
-]
+{
+  "voice": "bm_george",
+  "speed": 1.0,
+  "style": "glass",
+  "outro": "Adapted from The Roots of Capitalism, by Prabir Purkayastha, from Tricontinental.",
+  "parts": [
+    {
+      "slug": "01-sugar-built-capitalism",
+      "part": 1,
+      "title": "Sugar built capitalism",
+      "hook": "The first global commodity wasn't oil. It was sugar.",
+      "hookMap": { "view": [-100, -30, 45, 62] },
+      "beats": [
+        {
+          "big": "1226",
+          "label": "England",
+          "say": "In {1226|twelve twenty-six}, England's King Henry the Third was ready to pay roughly 450 US dollars, in today's money, for three pounds of sugar.",
+          "map": { "view": [-12, 36, 22, 60], "points": ["London"] }
+        },
+        {
+          "big": "Sugar + people",
+          "label": "West Africa → Caribbean",
+          "say": "Sugar travelled with a second commodity: enslaved Africans, captured in Africa and sold in the Caribbean and the Americas.",
+          "map": { "view": [-90, -12, 15, 34], "points": ["Elmina", "Jamaica"], "routes": [["Elmina", "Jamaica"]] }
+        },
+        {
+          "big": "Field + factory",
+          "label": "Caribbean plantations",
+          "say": "On the plantation, enslaved people grew the cane, crushed it and boiled it, on one site. Field and factory in one.",
+          "map": { "view": [-86, 8, -56, 26], "points": ["Jamaica", "Saint-Domingue", "Barbados"] }
+        },
+        {
+          "big": "4–7×",
+          "label": "Colonies vs. England",
+          "say": "Investments in the sugar colonies were four to seven times more profitable than investments in England.",
+          "map": { "view": [-85, 5, 10, 60], "points": ["Jamaica", "London"], "routes": [["Jamaica", "London"]] }
+        },
+        {
+          "big": "1 in 5",
+          "label": "British imports, 1774",
+          "say": "By {1774|seventeen seventy-four}, raw sugar made up one fifth of all British imports, more than any other good.",
+          "map": { "view": [-85, 5, 10, 60], "points": ["Barbados", "Jamaica", "London"], "routes": [["Barbados", "London"], ["Jamaica", "London"]] }
+        }
+      ]
+    },
+    {
+      "slug": "02-from-the-mediterranean",
+      "part": 2,
+      "title": "The plantation's journey",
+      "hook": "The slave plantation wasn't invented in the Americas.",
+      "hookMap": { "view": [-30, 22, 40, 50] },
+      "beats": [
+        {
+          "big": "1347–1351",
+          "label": "The Black Death",
+          "say": "Between {1347|thirteen forty-seven} and {1351|thirteen fifty-one}, the Black Death drastically reduced the supply of peasant labour around the Mediterranean.",
+          "map": { "view": [-10, 28, 40, 48] }
+        },
+        {
+          "big": "Island sugar",
+          "label": "Sicily · Cyprus · Rhodes · Crete",
+          "say": "So the rulers of Sicily, Cyprus, Rhodes and Crete imported enslaved people from North Africa to work the sugar.",
+          "map": { "view": [5, 28, 38, 44], "points": ["Sicily", "Crete", "Rhodes", "Cyprus"] }
+        },
+        {
+          "big": "Venice & Genoa",
+          "label": "Merchant capital",
+          "say": "Merchant families from Venice and Genoa invested in these plantations. Here, merchant capital and modern slavery were married.",
+          "map": { "view": [3, 30, 38, 48], "points": ["Venice", "Genoa", "Sicily", "Cyprus"], "routes": [["Genoa", "Sicily"], ["Venice", "Cyprus"]] }
+        },
+        {
+          "big": "São Tomé",
+          "label": "Gulf of Guinea",
+          "say": "Portugal took the model to São Tomé: land from the king, capital from Venice or Genoa, enslaved people from Africa.",
+          "map": { "view": [-28, -6, 18, 42], "points": ["Madeira", "Canary Islands", "Cape Verde", "São Tomé"], "routes": [["Madeira", "Cape Verde"], ["Cape Verde", "São Tomé"]] }
+        },
+        {
+          "big": "→ Brazil",
+          "label": "Then the Caribbean",
+          "say": "The Portuguese carried the São Tomé model to Brazil. From there, it spread to the Caribbean, and later to North America.",
+          "map": { "view": [-90, -15, 15, 30], "points": ["São Tomé", "Pernambuco", "Barbados"], "routes": [["São Tomé", "Pernambuco"], ["Pernambuco", "Barbados"]] }
+        }
+      ]
+    },
+    {
+      "slug": "03-replaceable-by-design",
+      "part": 3,
+      "title": "Replaceable by design",
+      "hook": "Planters found it cheaper to replace people than to keep them alive.",
+      "hookMap": { "view": [-86, 8, -56, 26] },
+      "beats": [
+        {
+          "big": "60–100",
+          "label": "Holes dug per day",
+          "say": "At planting time, each worker in the first gang had to dig sixty to one hundred holes by hand, every day.",
+          "map": { "view": [-86, 8, -56, 26], "points": ["Jamaica", "Barbados"] }
+        },
+        {
+          "big": "18–20 hrs",
+          "label": "Harvest shifts",
+          "say": "During the harvest, enslaved people worked eighteen to twenty hour shifts in the mills and boiling houses, six days a week.",
+          "map": { "view": [-80, 10, -58, 22], "points": ["Saint-Domingue", "Barbados"] }
+        },
+        {
+          "big": "19 years",
+          "label": "Barbados",
+          "say": "A Barbados planter, Edward Littleton, estimated that a sugar estate would kill all one hundred of its enslaved workers in nineteen years.",
+          "map": { "view": [-63.5, 10.5, -55.5, 16], "points": ["Barbados"] }
+        },
+        {
+          "big": "2 in 5",
+          "label": "Dead within a year",
+          "say": "By one contemporary estimate, two in five newly arrived enslaved people died within their first year.",
+          "map": { "view": [-86, 8, -56, 26], "points": ["Jamaica"] }
+        },
+        {
+          "big": "Account books",
+          "label": "Owners in Britain",
+          "say": "Owners, often far away in Britain, tracked their return on investment in account books, much like today's spreadsheets.",
+          "map": { "view": [-85, 5, 10, 60], "points": ["Jamaica", "London"], "routes": [["Jamaica", "London"]] }
+        }
+      ]
+    },
+    {
+      "slug": "04-the-human-toll",
+      "part": 4,
+      "title": "The human toll",
+      "hook": "At least ten million people landed. The real number seized was far higher.",
+      "hookMap": { "view": [-100, -35, 25, 45] },
+      "beats": [
+        {
+          "big": "10 million+",
+          "label": "Landed in the Americas",
+          "say": "At least ten million enslaved Africans are estimated to have landed in the Americas and the Caribbean.",
+          "map": { "view": [-95, -20, 20, 30], "points": ["Elmina", "Jamaica", "Saint-Domingue", "Pernambuco"], "routes": [["Elmina", "Jamaica"], ["Elmina", "Saint-Domingue"], ["Elmina", "Pernambuco"]] }
+        },
+        {
+          "big": "14–20 million",
+          "label": "Total seized",
+          "say": "Counting deaths during capture, marches, detention and the Middle Passage, the total seized was plausibly fourteen to twenty million.",
+          "map": { "view": [-30, -12, 20, 22], "points": ["Elmina"] }
+        },
+        {
+          "big": "3.1 million",
+          "label": "On British ships, 1640–1807",
+          "say": "Between {1640|sixteen forty} and {1807|eighteen oh seven}, British ships forced about 3.1 million Africans across the Atlantic. Around 2.7 million survived.",
+          "map": { "view": [-85, 0, 15, 58], "points": ["London", "Bristol", "Elmina", "Jamaica"], "routes": [["London", "Elmina"], ["Elmina", "Jamaica"], ["Jamaica", "Bristol"]] }
+        },
+        {
+          "big": "2 → 15",
+          "label": "Muskets per person",
+          "say": "Early in the {1700s|seventeen hundreds}, one enslaved person was exchanged for two muskets. By the end of the century, at least fifteen.",
+          "map": { "view": [-25, 0, 15, 56], "points": ["London", "Elmina"], "routes": [["London", "Elmina"]] }
+        },
+        {
+          "big": "300%",
+          "label": "Population growth",
+          "say": "From the seventeenth to the nineteenth century, Asia and Europe grew by 300 percent or more. Africa stayed almost the same, and fell in many regions.",
+          "map": { "view": [-25, -38, 150, 65] }
+        }
+      ]
+    },
+    {
+      "slug": "05-britains-sugar-factories",
+      "part": 5,
+      "title": "Britain's sugar factories",
+      "hook": "Before the textile mills, some of Britain's earliest factories refined slave-grown sugar.",
+      "hookMap": { "view": [-11, 49, 4, 59] },
+      "beats": [
+        {
+          "big": "Sugar bakers",
+          "label": "Britain's refineries",
+          "say": "Refineries spread from Plymouth to Glasgow and London to Liverpool, burning coal under large copper pans.",
+          "map": { "view": [-11, 49, 4, 59], "points": ["Glasgow", "Liverpool", "Bristol", "London", "Plymouth"] }
+        },
+        {
+          "big": "7×",
+          "label": "Sugar imports, 1700–1800",
+          "say": "Between {1700|seventeen hundred} and {1800|eighteen hundred}, British sugar imports grew sevenfold, to about 152,000 tonnes.",
+          "map": { "view": [-85, 5, 10, 60], "points": ["Barbados", "Jamaica", "London", "Bristol"], "routes": [["Barbados", "London"], ["Jamaica", "Bristol"]] }
+        },
+        {
+          "big": "95%+",
+          "label": "Jamaica's sugar exports",
+          "say": "Between {1682|sixteen eighty-two} and {1701|seventeen oh one}, Britain took more than 95 percent of Jamaica's sugar exports.",
+          "map": { "view": [-85, 5, 10, 60], "points": ["Jamaica", "London"], "routes": [["Jamaica", "London"]] }
+        },
+        {
+          "big": "~40%",
+          "label": "Britain, 1770",
+          "say": "One estimate: in {1770|seventeen seventy}, close to 40 percent of the capital for Britain's commercial and industrial expansion came from slave trade profits.",
+          "map": { "view": [-11, 49, 4, 59], "points": ["London", "Bristol", "Liverpool", "Glasgow"] }
+        },
+        {
+          "big": "+25%",
+          "label": "Tariff on Indian sugar",
+          "say": "After conquering India, Britain added an extra 25 percent tariff, protecting its refiners and plantations from Indian sugar.",
+          "map": { "view": [-15, 0, 95, 60], "points": ["India", "London"], "routes": [["India", "London"]] }
+        }
+      ]
+    },
+    {
+      "slug": "06-sugar-silver-and-money",
+      "part": 6,
+      "title": "Sugar, silver and money",
+      "hook": "The global financial system grew out of sugar, silver and slavery.",
+      "hookMap": { "view": [-140, -45, 140, 65] },
+      "beats": [
+        {
+          "big": "1513",
+          "label": "The asiento",
+          "say": "In {1513|fifteen thirteen}, the Spanish Crown issued the first asiento: a licence to sell enslaved Africans to its colonies.",
+          "map": { "view": [-110, -25, 15, 45], "points": ["Seville", "West Africa", "Mexico", "Potosí"], "routes": [["West Africa", "Mexico"], ["West Africa", "Potosí"]] }
+        },
+        {
+          "big": "80%",
+          "label": "World silver, 1494–1850",
+          "say": "Between {1494|fourteen ninety-four} and {1850|eighteen fifty}, Spanish America, mostly Potosí and Mexico, supplied 80 percent of the world's silver.",
+          "map": { "view": [-115, -30, -40, 30], "points": ["Mexico", "Potosí"] }
+        },
+        {
+          "big": "Piece of eight",
+          "label": "Acapulco → Manila",
+          "say": "Minted into the Spanish silver dollar, it sailed from Acapulco to Manila, and was accepted for trade across Asia, the Americas and much of Europe.",
+          "map": { "view": [95, -5, 265, 40], "points": ["Acapulco", "Manila"], "routes": [["Acapulco", "Manila"]] }
+        },
+        {
+          "big": "Guilder → Pound",
+          "label": "Amsterdam → London",
+          "say": "Control of sugar and the trade in enslaved people helped make the Dutch guilder, then the British pound, the reserve currency of its era.",
+          "map": { "view": [-6, 48, 10, 56], "points": ["Amsterdam", "London"], "routes": [["Amsterdam", "London"]] }
+        },
+        {
+          "big": "500 years",
+          "label": "Still with us",
+          "say": "The configuration of power behind modern capitalism dates back at least around five hundred years.",
+          "map": { "view": [-140, -45, 140, 65] }
+        }
+      ]
+    }
+  ]
+}

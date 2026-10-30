@@ -1,0 +1,143 @@
+/* Shared layout for the Shorts, plus two looks selected by <html data-style>:
+   glass  - frosted cards floating over the map
+   brutal - flat colour, thick black outlines and hard offset shadows */
+@font-face { font-family: "Playfair Display"; font-weight: 700; src: url("vendor/playfair-display-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-weight: 900; src: url("vendor/playfair-display-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("vendor/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("vendor/inter-latin-600-normal.woff2") format("woff2"); }
+
+:root {
+  --serif: "Playfair Display", Georgia, serif;
+  --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+:root[data-style="glass"] {
+  --space: #061c27;
+  --ocean: #0d3a4f;
+  --land: #2a6177;
+  --borders: rgba(214, 236, 244, 0.28);
+  --graticule: rgba(214, 236, 244, 0.08);
+  --route: #e8b64a;
+  --pin: #e8b64a;
+  --pin-label: #f6efe2;
+  --accent: #e8b64a;
+  --ink: #f6efe2;
+  --muted: #b9d2dc;
+}
+:root[data-style="brutal"] {
+  --space: #111111;
+  --ocean: #4f9db8;
+  --land: #f3e6c4;
+  --borders: #111111;
+  --graticule: rgba(17, 17, 17, 0.14);
+  --route: #e4572e;
+  --pin: #e4572e;
+  --pin-label: #111111;
+  --accent: #ffcf3f;
+  --ink: #111111;
+  --muted: #111111;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--space); }
+#root { position: relative; width: 100%; height: 100%; font-family: var(--sans); color: var(--ink); }
+
+/* ---------- map ---------- */
+.map { position: absolute; inset: 0; }
+.map-svg { position: absolute; inset: 0; }
+.map-space { fill: var(--space); }
+.map-ocean { fill: var(--ocean); }
+.map-graticule { fill: none; stroke: var(--graticule); stroke-width: 1.5; }
+.map-land { fill: var(--land); }
+.map-borders { fill: none; stroke: var(--borders); stroke-width: 1.4; stroke-linejoin: round; }
+.map-route { fill: none; stroke: var(--route); stroke-width: 7; stroke-linecap: round; }
+.pin-dot { fill: var(--pin); }
+.pin-halo { fill: var(--pin); opacity: 0.28; }
+.pin-label { font-family: var(--sans); font-weight: 600; font-size: 34px; fill: var(--pin-label); }
+:root[data-style="glass"] .pin-label { paint-order: stroke; stroke: rgba(6, 28, 39, 0.85); stroke-width: 8px; stroke-linejoin: round; }
+:root[data-style="brutal"] .map-land { stroke: #111; stroke-width: 3; }
+:root[data-style="brutal"] .pin-dot { stroke: #111; stroke-width: 5; }
+:root[data-style="brutal"] .pin-halo { display: none; }
+:root[data-style="brutal"] .pin-label { paint-order: stroke; stroke: #f3e6c4; stroke-width: 10px; stroke-linejoin: round; }
+
+/* Darkens the lower half so cards and captions stay readable. */
+#scrim { position: absolute; inset: 0; }
+:root[data-style="glass"] #scrim { background: linear-gradient(180deg, rgba(6, 28, 39, 0.75) 0%, rgba(6, 28, 39, 0) 16%, rgba(6, 28, 39, 0) 50%, rgba(6, 28, 39, 0.6) 72%, rgba(6, 28, 39, 0.9) 100%); }
+
+/* ---------- header (kept below the Shorts title bar) ---------- */
+#series, #part-label {
+  position: absolute; left: 70px; width: 940px;
+  font-size: 30px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+}
+#series { top: 190px; color: var(--accent); }
+#part-label { top: 238px; color: var(--muted); letter-spacing: 0.06em; text-transform: none; font-size: 32px; }
+#progress-track, #progress { position: absolute; left: 70px; top: 298px; width: 940px; height: 8px; }
+#progress { background: var(--accent); transform-origin: left center; }
+:root[data-style="glass"] #progress-track { background: rgba(246, 239, 226, 0.18); border-radius: 4px; }
+:root[data-style="glass"] #progress { border-radius: 4px; }
+:root[data-style="brutal"] #series {
+  left: 70px; width: auto; padding: 10px 18px; background: var(--accent); color: #111;
+  border: 4px solid #111; box-shadow: 6px 6px 0 #111;
+}
+:root[data-style="brutal"] #part-label {
+  top: 262px; width: auto; padding: 8px 16px; background: #fff; color: #111;
+  border: 4px solid #111; box-shadow: 6px 6px 0 #111;
+}
+:root[data-style="brutal"] #progress-track { top: 338px; height: 14px; background: #fff; border: 4px solid #111; }
+:root[data-style="brutal"] #progress { top: 342px; left: 74px; width: 932px; height: 6px; background: #e4572e; }
+
+/* ---------- hook ---------- */
+#hook {
+  position: absolute; left: 70px; bottom: 560px; width: 940px; padding: 48px 52px;
+  font-family: var(--serif); font-weight: 900; font-size: 84px; line-height: 1.1;
+  transform-origin: left center;
+}
+:root[data-style="glass"] #hook,
+:root[data-style="glass"] .card,
+:root[data-style="glass"] #end-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 40px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+:root[data-style="brutal"] #hook,
+:root[data-style="brutal"] .card,
+:root[data-style="brutal"] #end-card {
+  background: #fff; border: 6px solid #111; border-radius: 0; box-shadow: 16px 16px 0 #111;
+}
+:root[data-style="brutal"] #hook { background: var(--accent); }
+
+/* ---------- beat cards ---------- */
+/* Bottom-anchored so a two-line headline grows up into the map, never into the captions. */
+.card { position: absolute; left: 70px; bottom: 560px; width: 940px; padding: 40px 52px 44px; }
+.card-label { font-size: 34px; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; }
+.card-big { margin-top: 10px; font-family: var(--serif); font-weight: 900; line-height: 1; color: var(--accent); letter-spacing: -0.02em; }
+:root[data-style="brutal"] .card-label {
+  display: inline-block; padding: 6px 14px; background: #111; color: var(--accent);
+}
+:root[data-style="brutal"] .card-big { color: #111; margin-top: 18px; }
+
+/* ---------- captions (above the Shorts caption/buttons zone) ---------- */
+.caption {
+  position: absolute; left: 50%; top: 1405px; width: max-content; max-width: 940px;
+  transform: translateX(-50%); padding: 14px 22px;
+  font-size: 56px; font-weight: 600; line-height: 1.25; text-align: center;
+}
+.caption .w { display: inline-block; padding: 0 6px; border-radius: 10px; }
+:root[data-style="glass"] .caption {
+  color: #f6efe2; background: rgba(6, 28, 39, 0.45); border-radius: 28px;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+}
+:root[data-style="glass"] .caption .w[data-on="1"] { color: #111; background: var(--accent); }
+:root[data-style="brutal"] .caption { color: #111; background: #fff; border: 5px solid #111; box-shadow: 10px 10px 0 #111; }
+:root[data-style="brutal"] .caption .w { border-radius: 0; }
+:root[data-style="brutal"] .caption .w[data-on="1"] { background: var(--accent); }
+
+/* ---------- end card ---------- */
+#end-card { position: absolute; left: 70px; top: 560px; width: 940px; padding: 56px 56px 60px; }
+#end-title { font-family: var(--serif); font-weight: 900; font-size: 84px; line-height: 1.05; color: var(--accent); }
+#end-credit { margin-top: 36px; font-size: 40px; line-height: 1.45; }
+#end-license { margin-top: 36px; font-size: 30px; line-height: 1.45; color: var(--muted); }
+:root[data-style="brutal"] #end-title { color: #111; background: var(--accent); display: inline-block; padding: 4px 14px; border: 5px solid #111; }

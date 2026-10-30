@@ -7,13 +7,17 @@
     "lint": "cd release-card && hyperframes lint",
     "check": "cd release-card && hyperframes check",
     "render": "cd release-card && hyperframes render",
-    "shorts:lint": "cd shorts-roots-of-capitalism && hyperframes lint",
-    "shorts:render": "cd shorts-roots-of-capitalism && hyperframes render --batch script.json --output \"renders/{slug}.mp4\""
+    "shorts:render": "cd shorts-roots-of-capitalism && for d in build/*/; do (cd \"$d\" && hyperframes render --output \"../../renders/$(basename \"$d\").mp4\"); done",
+    "shorts:build": "cd shorts-roots-of-capitalism && node build.mjs"
   },
   "devDependencies": {
     "@fontsource/inter": "^5.3.0",
     "@fontsource/playfair-display": "^5.3.0",
+    "d3-geo": "^3.1.1",
+    "d3-geo-projection": "^4.0.0",
     "gsap": "^3.15.0",
-    "hyperframes": "0.8.221"
+    "hyperframes": "0.8.221",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
   }
 }
