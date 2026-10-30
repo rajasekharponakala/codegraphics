@@ -150,14 +150,17 @@ function timeWords(text, start, audio) {
   });
 }
 
-// Groups of at most four words / 24 characters, broken after punctuation.
+// Groups of at most four words / 24 characters (one caption line), broken after punctuation.
 function captionGroups(words) {
   const groups = [];
   let cur = [];
   for (const w of words) {
+    if (cur.length && [...cur, w].map((x) => x.show).join(" ").length > 24) {
+      groups.push(cur);
+      cur = [];
+    }
     cur.push(w);
-    const chars = cur.map((x) => x.show).join(" ").length;
-    if (cur.length >= 4 || chars >= 24 || /[.,:;!?]$/.test(w.show)) {
+    if (cur.length >= 4 || /[.,:;!?]$/.test(w.show)) {
       groups.push(cur);
       cur = [];
     }
@@ -236,12 +239,32 @@ function renderMap(map, id) {
     d: path({ type: "LineString", coordinates: [PLACES[a], PLACES[b]] }),
   }));
 
+  // Place each label beside its pin, trying four corners and skipping any that
+  // would overlap a label or pin already placed.
+  const placed = points.map((p) => ({ x0: p.x - 14, y0: p.y - 14, x1: p.x + 14, y1: p.y + 14 }));
+  const overlaps = (a, b) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
   const pointSvg = points
     .map((p, i) => {
-      const right = p.x < W - 260;
+      const width = p.name.length * 19 + 8;
+      const corners = [
+        { dx: 22, dy: -20, anchor: "start" },
+        { dx: -22, dy: -20, anchor: "end" },
+        { dx: 22, dy: 46, anchor: "start" },
+        { dx: -22, dy: 46, anchor: "end" },
+      ];
+      const box = (c) => {
+        const x0 = c.anchor === "start" ? p.x + c.dx : p.x + c.dx - width;
+        return { x0, y0: p.y + c.dy - 32, x1: x0 + width, y1: p.y + c.dy + 6 };
+      };
+      const fits = (c) => {
+        const b = box(c);
+        return b.x0 > 20 && b.x1 < W - 20 && !placed.some((o) => overlaps(o, b));
+      };
+      const c = corners.find(fits) ?? corners[p.x < W - 260 ? 0 : 1];
+      placed.push(box(c));
       return `<g class="pin" id="${id}-pin-${i}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})">
           <circle class="pin-halo" r="26" /><circle class="pin-dot" r="11" />
-          <text class="pin-label" x="${right ? 22 : -22}" y="-20" text-anchor="${right ? "start" : "end"}">${esc(p.name)}</text>
+          <text class="pin-label" x="${c.dx}" y="${c.dy}" text-anchor="${c.anchor}">${esc(p.name)}</text>
         </g>`;
     })
     .join("\n");
