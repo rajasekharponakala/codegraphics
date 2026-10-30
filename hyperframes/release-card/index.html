@@ -1,0 +1,129 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+  {"id":"repo","type":"string","label":"Repository","description":"owner/name of the repository being released.","default":"rajasekharponakala/codegraphics"},
+  {"id":"version","type":"string","label":"Version","description":"Release tag, e.g. v1.2.0.","default":"v0.1.0"},
+  {"id":"title","type":"string","label":"Release title","description":"Headline of the release.","default":"First release"},
+  {"id":"highlight1","type":"string","label":"Highlight 1","default":"Render videos from GitHub Actions"},
+  {"id":"highlight2","type":"string","label":"Highlight 2","default":"HyperFrames and Remotion side by side"},
+  {"id":"highlight3","type":"string","label":"Highlight 3","default":"Lint gate on every pull request"},
+  {"id":"accent","type":"color","label":"Accent color","default":"#7c5cff"}
+]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      :root {
+        --ground: #0b0b12;
+        --ink: #f4f4f8;
+        --muted: #9a9ab0;
+        --accent: #7c5cff;
+        --font-display: "Inter", "Helvetica Neue", Arial, sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ground);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        font-family: var(--font-display);
+        color: var(--ink);
+        padding: 160px 200px;
+      }
+      #glow {
+        position: absolute;
+        width: 1200px;
+        height: 1200px;
+        right: -300px;
+        top: -400px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%);
+        opacity: 0.35;
+      }
+      #repo,
+      #version,
+      #title {
+        position: absolute;
+        left: 200px;
+      }
+      #repo {
+        top: 160px;
+        font-size: 36px;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+      }
+      #version {
+        top: 240px;
+        padding: 14px 32px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 44px;
+        font-weight: 700;
+      }
+      #title {
+        top: 360px;
+        font-size: 112px;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+        max-width: 1500px;
+      }
+      .hl {
+        position: absolute;
+        left: 200px;
+        font-size: 48px;
+        color: var(--ink);
+      }
+      .hl:empty {
+        display: none;
+      }
+      .hl::before {
+        content: "→ ";
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="8"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="glow" class="clip" data-start="0" data-duration="8" data-track-index="0"></div>
+      <div id="repo" class="clip" data-start="0" data-duration="8" data-track-index="1" data-var-text="repo">rajasekharponakala/codegraphics</div>
+      <div id="version" class="clip" data-start="0" data-duration="8" data-track-index="2" data-var-text="version">v0.1.0</div>
+      <h1 id="title" class="clip" data-start="0" data-duration="8" data-track-index="3" data-var-text="title">First release</h1>
+      <div id="highlight-1" class="hl clip" style="top:700px" data-start="0" data-duration="8" data-track-index="4" data-var-text="highlight1">Render videos from GitHub Actions</div>
+      <div id="highlight-2" class="hl clip" style="top:780px" data-start="0" data-duration="8" data-track-index="5" data-var-text="highlight2">HyperFrames and Remotion side by side</div>
+      <div id="highlight-3" class="hl clip" style="top:860px" data-start="0" data-duration="8" data-track-index="6" data-var-text="highlight3">Lint gate on every pull request</div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#glow", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 0.35, duration: 1.6, ease: "power2.out" }, 0);
+      tl.fromTo("#repo", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2);
+      tl.fromTo("#version", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.5);
+      tl.fromTo("#title", { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power4.out" }, 0.8);
+      tl.fromTo(".hl", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, stagger: 0.35, ease: "power3.out" }, 1.8);
+      tl.to("#root > *:not(#glow)", { opacity: 0, duration: 0.5, ease: "power2.in" }, 7.3);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

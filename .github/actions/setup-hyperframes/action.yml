@@ -1,0 +1,25 @@
+name: Set up HyperFrames
+description: Installs Node, FFmpeg, the hyperframes/ project dependencies and the render browser.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+        cache-dependency-path: hyperframes/package-lock.json
+    - name: Install FFmpeg
+      shell: bash
+      run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+    - name: Install dependencies
+      shell: bash
+      working-directory: hyperframes
+      run: npm ci
+    - name: Install render browser
+      shell: bash
+      working-directory: hyperframes
+      run: npx hyperframes browser ensure
+    - name: Disable telemetry
+      shell: bash
+      working-directory: hyperframes
+      run: npx hyperframes telemetry disable

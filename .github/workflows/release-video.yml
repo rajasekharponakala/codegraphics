@@ -1,0 +1,55 @@
+name: Release video
+
+# Renders hyperframes/release-card with the release's tag, name and first three
+# bullet points, then attaches the MP4 to the release.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to render a video for
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-video-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-hyperframes
+      - name: Build variables from the release
+        run: |
+          RELEASE_JSON=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json tagName,name,body)
+          RELEASE_TAG=$(jq -r .tagName <<<"$RELEASE_JSON") \
+          RELEASE_NAME=$(jq -r '.name // ""' <<<"$RELEASE_JSON") \
+          RELEASE_BODY=$(jq -r '.body // ""' <<<"$RELEASE_JSON") \
+          REPO="$GITHUB_REPOSITORY" \
+            node scripts/release-variables.mjs hyperframes/release-card/variables.json
+      - name: Lint
+        working-directory: hyperframes/release-card
+        run: npx hyperframes lint
+      - name: Render
+        working-directory: hyperframes/release-card
+        run: |
+          # Inline JSON: --variables-file fails to read files in hyperframes 0.8.221.
+          npx hyperframes render \
+            --variables "$(cat variables.json)" \
+            --strict-variables \
+            --output "$GITHUB_WORKSPACE/release-$TAG.mp4"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-video-${{ env.TAG }}
+          path: release-${{ env.TAG }}.mp4
+      - name: Attach to release
+        run: gh release upload "$TAG" "release-$TAG.mp4" --repo "$GITHUB_REPOSITORY" --clobber

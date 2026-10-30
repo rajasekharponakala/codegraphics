@@ -1,0 +1,15 @@
+{
+  "name": "codegraphics-hyperframes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "mkdir -p release-card/vendor && cp node_modules/gsap/dist/gsap.min.js release-card/vendor/",
+    "lint": "cd release-card && hyperframes lint",
+    "check": "cd release-card && hyperframes check",
+    "render": "cd release-card && hyperframes render"
+  },
+  "devDependencies": {
+    "gsap": "^3.15.0",
+    "hyperframes": "0.8.221"
+  }
+}

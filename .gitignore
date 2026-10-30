@@ -1,0 +1,8 @@
+node_modules/
+out/
+renders/
+.hyperframes/
+hyperframes/release-card/vendor/
+hyperframes/release-card/variables.json
+remotion/input-props.json
+*.mp4

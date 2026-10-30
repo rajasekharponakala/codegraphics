@@ -1,0 +1,67 @@
+name: Video lint
+
+# Blocks pull requests whose compositions fail HyperFrames lint/check or
+# Remotion type checks, and uploads key frames for review.
+on:
+  pull_request:
+    paths:
+      - "hyperframes/**"
+      - "remotion/**"
+      - ".github/workflows/video-lint.yml"
+      - ".github/actions/setup-hyperframes/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: video-lint-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hyperframes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: hyperframes/release-card
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-hyperframes
+      - name: Lint
+        run: npx hyperframes lint
+      - name: Check (runtime, layout, contrast)
+        run: npx hyperframes check
+      - name: Capture key frames
+        if: always()
+        run: npx hyperframes snapshot --frames 6
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hyperframes-snapshots
+          path: hyperframes/release-card/.hyperframes/artifacts/snapshots/
+          include-hidden-files: true
+          if-no-files-found: ignore
+
+  remotion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: remotion
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: remotion/package-lock.json
+      - run: npm ci
+      - name: Type check
+        run: npx tsc --noEmit
+      - name: Render a still
+        run: npx remotion still TitleCard out/still.png --frame=60
+      - uses: actions/upload-artifact@v4
+        with:
+          name: remotion-still
+          path: remotion/out/still.png
