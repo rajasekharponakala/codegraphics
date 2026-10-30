@@ -1,0 +1,36 @@
+name: Render Shorts
+
+# Renders one vertical MP4 per row of hyperframes/shorts-roots-of-capitalism/script.json.
+# Edit a row's text and push, or run it from the Actions tab.
+on:
+  push:
+    paths:
+      - "hyperframes/shorts-roots-of-capitalism/**"
+      - ".github/workflows/render-shorts.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: render-shorts-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: hyperframes/shorts-roots-of-capitalism
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-hyperframes
+      - name: Lint
+        run: npx hyperframes lint
+      - name: Render every part
+        run: npx hyperframes render --batch script.json --strict-variables --output "renders/{slug}.mp4"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shorts-roots-of-capitalism
+          path: hyperframes/shorts-roots-of-capitalism/renders/*.mp4

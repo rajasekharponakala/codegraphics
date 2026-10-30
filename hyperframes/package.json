@@ -3,12 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "mkdir -p release-card/vendor && cp node_modules/gsap/dist/gsap.min.js release-card/vendor/",
+    "prepare": "./vendor.sh",
     "lint": "cd release-card && hyperframes lint",
     "check": "cd release-card && hyperframes check",
-    "render": "cd release-card && hyperframes render"
+    "render": "cd release-card && hyperframes render",
+    "shorts:lint": "cd shorts-roots-of-capitalism && hyperframes lint",
+    "shorts:render": "cd shorts-roots-of-capitalism && hyperframes render --batch script.json --output \"renders/{slug}.mp4\""
   },
   "devDependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
     "gsap": "^3.15.0",
     "hyperframes": "0.8.221"
   }

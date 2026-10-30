@@ -1,0 +1,312 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+  {
+    "id": "slug",
+    "type": "string",
+    "label": "Output name",
+    "description": "File name for this part in batch renders.",
+    "default": "01-sugar-built-capitalism"
+  },
+  {
+    "id": "part",
+    "type": "string",
+    "label": "Part number",
+    "default": "1"
+  },
+  {
+    "id": "partTitle",
+    "type": "string",
+    "label": "Part title",
+    "default": "Sugar built capitalism"
+  },
+  {
+    "id": "hook",
+    "type": "string",
+    "label": "Hook",
+    "description": "Opening line shown for the first seconds; stops the scroll.",
+    "default": "The first global commodity wasn&#39;t oil. It was sugar."
+  },
+  {
+    "id": "b1Big",
+    "type": "string",
+    "label": "Beat 1 headline",
+    "description": "Short number or phrase, shown large.",
+    "default": "1226"
+  },
+  {
+    "id": "b1Text",
+    "type": "string",
+    "label": "Beat 1 line",
+    "description": "One sentence explaining the headline, taken from the study.",
+    "default": "England&#39;s King Henry III was ready to pay roughly US$450 in today&#39;s money for three pounds of sugar."
+  },
+  {
+    "id": "b2Big",
+    "type": "string",
+    "label": "Beat 2 headline",
+    "description": "Short number or phrase, shown large.",
+    "default": "Sugar + people"
+  },
+  {
+    "id": "b2Text",
+    "type": "string",
+    "label": "Beat 2 line",
+    "description": "One sentence explaining the headline, taken from the study.",
+    "default": "Sugar travelled with a second &#39;commodity&#39;: enslaved Africans, sold in the Caribbean and the Americas."
+  },
+  {
+    "id": "b3Big",
+    "type": "string",
+    "label": "Beat 3 headline",
+    "description": "Short number or phrase, shown large.",
+    "default": "Field + factory"
+  },
+  {
+    "id": "b3Text",
+    "type": "string",
+    "label": "Beat 3 line",
+    "description": "One sentence explaining the headline, taken from the study.",
+    "default": "Plantations grew, crushed and boiled the cane on one site, using enslaved labour at every step."
+  },
+  {
+    "id": "b4Big",
+    "type": "string",
+    "label": "Beat 4 headline",
+    "description": "Short number or phrase, shown large.",
+    "default": "4–7×"
+  },
+  {
+    "id": "b4Text",
+    "type": "string",
+    "label": "Beat 4 line",
+    "description": "One sentence explaining the headline, taken from the study.",
+    "default": "Investments in the sugar colonies were four to seven times more profitable than investments in England."
+  },
+  {
+    "id": "b5Big",
+    "type": "string",
+    "label": "Beat 5 headline",
+    "description": "Short number or phrase, shown large.",
+    "default": "1 in 5"
+  },
+  {
+    "id": "b5Text",
+    "type": "string",
+    "label": "Beat 5 line",
+    "description": "One sentence explaining the headline, taken from the study.",
+    "default": "By 1774, raw sugar made up one-fifth of all British imports, more than any other good."
+  }
+]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      /* Fonts are copied from @fontsource by ../vendor.sh (SIL Open Font License). */
+      @font-face { font-family: "Playfair Display"; font-weight: 700; src: url("vendor/playfair-display-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Playfair Display"; font-weight: 900; src: url("vendor/playfair-display-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("vendor/inter-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("vendor/inter-latin-600-normal.woff2") format("woff2"); }
+      :root {
+        --ground: #0f3f55;
+        --ground-deep: #082736;
+        --gold: #e8b64a;
+        --ink: #f6efe2;
+        --muted: #a9c3cf;
+        --serif: "Playfair Display", Georgia, serif;
+        --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--ground-deep);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        color: var(--ink);
+        font-family: var(--sans);
+      }
+      #backdrop {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(120% 70% at 50% 35%, var(--ground) 0%, var(--ground-deep) 75%);
+      }
+      /* Kept clear of the Shorts UI: title bar on top, caption and buttons at the bottom and right. */
+      #series {
+        position: absolute;
+        left: 90px;
+        top: 230px;
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      #part-label {
+        position: absolute;
+        left: 90px;
+        top: 282px;
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      #part-title {
+        position: absolute;
+        left: 90px;
+        top: 334px;
+        width: 900px;
+        font-family: var(--serif);
+        font-weight: 700;
+        font-size: 52px;
+        line-height: 1.15;
+        color: var(--ink);
+      }
+      #progress-track {
+        position: absolute;
+        left: 90px;
+        top: 470px;
+        width: 900px;
+        height: 6px;
+        border-radius: 3px;
+        background: rgba(246, 239, 226, 0.15);
+      }
+      #progress {
+        position: absolute;
+        left: 90px;
+        top: 470px;
+        width: 900px;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--gold);
+        transform-origin: left center;
+      }
+      #hook {
+        position: absolute;
+        left: 90px;
+        top: 640px;
+        width: 900px;
+        font-family: var(--serif);
+        font-weight: 900;
+        font-size: 92px;
+        line-height: 1.12;
+        letter-spacing: -0.01em;
+      }
+      .big {
+        position: absolute;
+        left: 90px;
+        top: 620px;
+        width: 900px;
+        font-family: var(--serif);
+        font-weight: 900;
+        font-size: 190px;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: var(--gold);
+      }
+      .line {
+        position: absolute;
+        left: 90px;
+        top: 1060px;
+        width: 860px;
+        font-size: 50px;
+        line-height: 1.35;
+        color: var(--ink);
+      }
+      #end-title {
+        position: absolute;
+        left: 90px;
+        top: 620px;
+        width: 900px;
+        font-family: var(--serif);
+        font-weight: 900;
+        font-size: 84px;
+        line-height: 1.1;
+        color: var(--gold);
+      }
+      #end-credit {
+        position: absolute;
+        left: 90px;
+        top: 900px;
+        width: 860px;
+        font-size: 40px;
+        line-height: 1.45;
+        color: var(--ink);
+      }
+      #end-license {
+        position: absolute;
+        left: 90px;
+        top: 1230px;
+        width: 860px;
+        font-size: 30px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="39"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="backdrop" class="clip" data-start="0" data-duration="39" data-track-index="0"></div>
+      <div id="series" class="clip" data-start="0" data-duration="32" data-track-index="1">The Roots of Capitalism</div>
+      <div id="part-label" class="clip" data-start="0" data-duration="32" data-track-index="2">Part <span data-var-text="part">1</span> of 6</div>
+      <h2 id="part-title" class="clip" data-start="0" data-duration="32" data-track-index="3" data-var-text="partTitle">Sugar built capitalism</h2>
+      <div id="progress-track" class="clip" data-start="0" data-duration="32" data-track-index="4"></div>
+      <div id="progress" class="clip" data-start="0" data-duration="32" data-track-index="5"></div>
+      <h1 id="hook" class="clip" data-start="0" data-duration="4.5" data-track-index="6" data-var-text="hook">The first global commodity wasn&#39;t oil. It was sugar.</h1>
+      <div id="beat-1-big" class="big clip" data-start="4.5" data-duration="5.5" data-track-index="11" data-var-text="b1Big">1226</div>
+      <p id="beat-1-text" class="line clip" data-start="4.5" data-duration="5.5" data-track-index="21" data-var-text="b1Text">England&#39;s King Henry III was ready to pay roughly US$450 in today&#39;s money for three pounds of sugar.</p>
+      <div id="beat-2-big" class="big clip" data-start="10" data-duration="5.5" data-track-index="12" data-var-text="b2Big">Sugar + people</div>
+      <p id="beat-2-text" class="line clip" data-start="10" data-duration="5.5" data-track-index="22" data-var-text="b2Text">Sugar travelled with a second &#39;commodity&#39;: enslaved Africans, sold in the Caribbean and the Americas.</p>
+      <div id="beat-3-big" class="big clip" data-start="15.5" data-duration="5.5" data-track-index="13" data-var-text="b3Big">Field + factory</div>
+      <p id="beat-3-text" class="line clip" data-start="15.5" data-duration="5.5" data-track-index="23" data-var-text="b3Text">Plantations grew, crushed and boiled the cane on one site, using enslaved labour at every step.</p>
+      <div id="beat-4-big" class="big clip" data-start="21" data-duration="5.5" data-track-index="14" data-var-text="b4Big">4–7×</div>
+      <p id="beat-4-text" class="line clip" data-start="21" data-duration="5.5" data-track-index="24" data-var-text="b4Text">Investments in the sugar colonies were four to seven times more profitable than investments in England.</p>
+      <div id="beat-5-big" class="big clip" data-start="26.5" data-duration="5.5" data-track-index="15" data-var-text="b5Big">1 in 5</div>
+      <p id="beat-5-text" class="line clip" data-start="26.5" data-duration="5.5" data-track-index="25" data-var-text="b5Text">By 1774, raw sugar made up one-fifth of all British imports, more than any other good.</p>
+      <div id="end-title" class="clip" data-start="32" data-duration="7" data-track-index="30">Read the full study</div>
+      <p id="end-credit" class="clip" data-start="32" data-duration="7" data-track-index="31">Adapted from <em>The Roots of Capitalism: Slavery and the Sugar Trade</em> by Prabir Purkayastha, Tricontinental: Institute for Social Research, Studies on Historical Materialism no. 1.</p>
+      <p id="end-license" class="clip" data-start="32" data-duration="7" data-track-index="32">Licensed CC BY-NC 4.0 (creativecommons.org/licenses/by-nc/4.0). Text condensed for video. thetricontinental.org</p>
+    </div>
+    <script>
+      const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+      // Shrink long headlines so they stay within two or three lines.
+      document.querySelectorAll(".big").forEach((el, i) => {
+        const text = vars[`b${i + 1}Big`] ?? el.textContent;
+        el.style.fontSize = text.length <= 6 ? "230px" : text.length <= 10 ? "170px" : text.length <= 15 ? "140px" : "110px";
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#progress", { scaleX: 0 }, { scaleX: 1, duration: 32, ease: "none" }, 0);
+      // Hook and header are on screen from frame 0: that frame is the Shorts thumbnail.
+      tl.fromTo("#hook", { scale: 1, transformOrigin: "left center" }, { scale: 1.04, duration: 4.5, ease: "none" }, 0);
+      for (let i = 1; i <= 5; i++) {
+        const start = 4.5 + 5.5 * (i - 1);
+        tl.fromTo(`#beat-${i}-big`, { opacity: 0, scale: 0.85, transformOrigin: "left center" }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, start);
+        tl.fromTo(`#beat-${i}-text`, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, start + 0.35);
+      }
+      tl.fromTo(["#end-title", "#end-credit", "#end-license"], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.25, ease: "power3.out" }, 32);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

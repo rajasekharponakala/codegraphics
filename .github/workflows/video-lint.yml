@@ -32,6 +32,9 @@ jobs:
         run: npx hyperframes lint
       - name: Check (runtime, layout, contrast)
         run: npx hyperframes check
+      - name: Lint Shorts
+        working-directory: hyperframes/shorts-roots-of-capitalism
+        run: npx hyperframes lint
       - name: Capture key frames
         if: always()
         run: npx hyperframes snapshot --frames 6
