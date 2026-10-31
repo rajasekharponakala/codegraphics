@@ -1,6 +1,7 @@
 // Builds one HyperFrames composition per part of script.json into build/<slug>/:
-// Kokoro voiceover (narration.wav), word-timed captions, Mollweide maps and the
-// chosen card style. Render each folder with `hyperframes render`.
+// Kokoro voiceover over an original music bed (soundtrack.wav), word-timed
+// captions, Mollweide maps and the chosen card style. Render each folder with
+// `hyperframes render`.
 //
 //   node build.mjs                    all parts, style from script.json
 //   node build.mjs --part 3           one part (number or slug)
@@ -209,6 +210,37 @@ function mixNarration(segments, total, out) {
   ]);
 }
 
+// Lays the music bed (music.py) under the narration. A sidechain compressor keyed
+// on the voice ducks the music while the narrator speaks and lets it back up in
+// the gaps and over the end card.
+function addMusic(narration, total, seed, out) {
+  const bed = join(dirname(out), "music.wav");
+  const python = process.env.HYPERFRAMES_PYTHON || "python3";
+  execFileSync(python, ["-I", join(HERE, "music.py"), "--seconds", total.toFixed(3), "--seed", String(seed), "--out", bed]);
+  const gain = script.music?.gainDb ?? -12;
+  execFileSync("ffmpeg", [
+    "-loglevel", "error", "-y", "-i", narration, "-i", bed,
+    "-filter_complex",
+    `[0]asplit=2[voice][key];[1]volume=${gain}dB[music];` +
+      "[music][key]sidechaincompress=threshold=0.02:ratio=8:attack=40:release=700[ducked];" +
+      "[voice][ducked]amix=inputs=2:normalize=0[out]",
+    "-map", "[out]", "-ac", "2", "-ar", "48000", out,
+  ]);
+}
+
+// Brings the final mix to YouTube's -14 LUFS with one fixed gain (so the ducking
+// shape is kept) and a limiter catching peaks above about -1 dBFS.
+function normalize(input, out) {
+  const log = spawnSync("ffmpeg", ["-i", input, "-af", "ebur128", "-f", "null", "-"], { encoding: "utf8" }).stderr;
+  const integrated = Number(log.slice(log.lastIndexOf("Summary:")).match(/I:\s+(-?[\d.]+) LUFS/)[1]);
+  const gain = (-14 - integrated).toFixed(2);
+  execFileSync("ffmpeg", [
+    "-loglevel", "error", "-y", "-i", input,
+    "-af", `volume=${gain}dB,alimiter=limit=0.89:level=disabled`,
+    "-ac", "2", "-ar", "48000", out,
+  ]);
+}
+
 // ---------- maps ----------
 
 function renderMap(map, id) {
@@ -304,6 +336,12 @@ function buildPart(part) {
   const endStart = outro.start - 0.3;
   const total = Math.max(outro.end + 1.5, endStart + END_HOLD);
   mixNarration(segments, total, join(out, "narration.wav"));
+  let mix = join(out, "narration.wav");
+  if (script.music !== false) {
+    addMusic(mix, total, part.part, join(out, "mix.wav"));
+    mix = join(out, "mix.wav");
+  }
+  normalize(mix, join(out, "soundtrack.wav"));
 
   // Scenes: each segment owns the screen from its start to the next segment's start.
   const scenes = segments.slice(0, -1).map((seg, i) => {
@@ -379,7 +417,7 @@ ${captions}
         <p id="end-credit">Adapted from <em>The Roots of Capitalism: Slavery and the Sugar Trade</em> by Prabir Purkayastha, Tricontinental: Institute for Social Research, Studies on Historical Materialism no. 1.</p>
         <p id="end-license">Licensed CC BY-NC 4.0 (creativecommons.org/licenses/by-nc/4.0). Text condensed and narrated for video. Map data: Natural Earth. thetricontinental.org</p>
       </div>
-      <audio id="narration" src="narration.wav" ${clip(0, total, 50)}></audio>
+      <audio id="soundtrack" src="soundtrack.wav" ${clip(0, total, 50)}></audio>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });

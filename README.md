@@ -40,6 +40,10 @@ term means these Shorts must not be monetized.
 
 - **Voiceover**: each segment's `say` text is spoken by Kokoro (`hyperframes tts`, voice `bm_george`).
   Years use `{1226|twelve twenty-six}`: captions show the first form, the voice reads the second.
+- **Music**: `music.py` composes an original ambient bed per part (D minor pad, drone and bells; seeded,
+  so each part has its own variation). A sidechain compressor ducks it about 16 dB under the voice and
+  lets it rise in the pauses and over the end card. Set `"music": false` in `script.json` to drop it,
+  or change `gainDb` to rebalance. The final mix is normalised to -14 LUFS for YouTube.
 - **Timing**: every beat lasts as long as its narration, so editing text re-times the video.
 - **Captions**: word-by-word, pinned to the pauses detected in the audio; words within a clause are
   spaced by syllables.

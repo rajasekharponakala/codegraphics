@@ -1,6 +1,7 @@
 {
   "voice": "bm_george",
   "speed": 1.0,
+  "music": { "gainDb": -12 },
   "style": "glass",
   "outro": "Adapted from The Roots of Capitalism, by Prabir Purkayastha, from Tricontinental.",
   "parts": [
