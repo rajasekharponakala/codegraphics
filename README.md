@@ -1,6 +1,6 @@
 # codegraphics
 
-Videos rendered from code by GitHub Actions, using
+Videos rendered from code by GitHub Actions (see [REPRODUCE.md](REPRODUCE.md) to rebuild them), using
 [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → video) and
 [Remotion](https://github.com/remotion-dev/remotion) (React → video).
 
