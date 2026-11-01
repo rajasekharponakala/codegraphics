@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - "hyperframes/shorts-roots-of-capitalism/**"
+      - "hyperframes/lib/**"
       - ".github/workflows/render-shorts.yml"
   workflow_dispatch:
     inputs:

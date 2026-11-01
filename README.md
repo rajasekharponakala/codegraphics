@@ -10,6 +10,8 @@ Videos rendered from code by GitHub Actions (see [REPRODUCE.md](REPRODUCE.md) to
 | --- | --- |
 | `hyperframes/release-card/` | 8s release announcement card. Text and accent color are HyperFrames variables. |
 | `hyperframes/shorts-roots-of-capitalism/` | 6-part YouTube Shorts series (1080×1920, 54–60s each) with voiceover, word-timed captions and maps. `script.json` holds the narration and map scenes; `build.mjs` turns it into one composition per part. |
+| `hyperframes/shorts-papers/` | "Papers, explained" Shorts: one per landmark paper, narrated in ASD-STE100 Simplified Technical English with redrawn neo-brutalist diagrams. Episode 1: *Attention Is All You Need*. |
+| `hyperframes/lib/` | Shared Shorts machinery: Kokoro voiceover, caption timing, music bed (`music.py`), ducking and loudness. |
 | `remotion/src/TitleCard.tsx` | 5s animated title card. Text and colors are Zod-typed props. |
 | `scripts/release-variables.mjs` | Turns a GitHub release (tag, name, bullet points) into release-card variables. |
 | `.github/actions/setup-hyperframes/` | Shared setup: Node 22, FFmpeg, npm deps, render browser. |
@@ -21,6 +23,7 @@ Videos rendered from code by GitHub Actions (see [REPRODUCE.md](REPRODUCE.md) to
 | **Render Remotion video** (`render-remotion.yml`) | Actions tab → Run workflow, fill in title/subtitle/colors | `remotion-video` artifact (MP4) |
 | **Release video** (`release-video.yml`) | Publishing a GitHub release, or run manually with a tag | MP4 attached to the release, plus an artifact |
 | **Render Shorts** (`render-shorts.yml`) | Push to `hyperframes/shorts-roots-of-capitalism/`, or run manually (choose style and part) | `shorts-roots-of-capitalism` artifact with one MP4 per part |
+| **Render paper Shorts** (`render-papers.yml`) | Push to `hyperframes/shorts-papers/`, or run manually (choose episode) | `shorts-papers` artifact with one MP4 per episode |
 | **Video lint** (`video-lint.yml`) | Pull requests touching `hyperframes/` or `remotion/` | Fails on HyperFrames lint/check errors or Remotion type errors; uploads key frames and a still |
 
 The release video uses the first three `-`/`*` bullet points of the release notes as highlights
@@ -40,7 +43,7 @@ term means these Shorts must not be monetized.
 
 - **Voiceover**: each segment's `say` text is spoken by Kokoro (`hyperframes tts`, voice `bm_george`).
   Years use `{1226|twelve twenty-six}`: captions show the first form, the voice reads the second.
-- **Music**: `music.py` composes an original ambient bed per part (D minor pad, drone and bells; seeded,
+- **Music**: `../lib/music.py` composes an original ambient bed per part (D minor pad, drone and bells; seeded,
   so each part has its own variation). A sidechain compressor ducks it about 16 dB under the voice and
   lets it rise in the pauses and over the end card. Set `"music": false` in `script.json` to drop it,
   or change `gainDb` to rebalance. The final mix is normalised to -14 LUFS for YouTube.

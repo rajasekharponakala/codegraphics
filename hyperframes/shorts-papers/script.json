@@ -1,0 +1,78 @@
+{
+  "voice": "bm_george",
+  "speed": 1.05,
+  "music": { "gainDb": -13 },
+  "series": "Papers, explained",
+  "language": "ASD-STE100 Simplified Technical English: max 20 words per sentence, one topic per sentence, active voice, simple tenses, no -ing forms, technical names kept as written.",
+  "episodes": [
+    {
+      "slug": "ep01-attention-is-all-you-need",
+      "episode": 1,
+      "paper": {
+        "title": "Attention Is All You Need",
+        "authors": "Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, Polosukhin",
+        "venue": "NeurIPS 2017 · arXiv:1706.03762",
+        "year": 2017
+      },
+      "hook": "Most AI language models of today use one architecture from a {2017|twenty seventeen} paper.",
+      "beats": [
+        {
+          "big": "1 word at a time",
+          "label": "Before 2017: recurrent networks",
+          "say": "Before {2017|twenty seventeen}, a recurrent network read a sentence one word after the other. It was slow to train on long sentences.",
+          "scene": { "type": "sequence", "words": ["The", "Law", "will", "never", "be", "perfect"] }
+        },
+        {
+          "big": "All at once",
+          "label": "The Transformer, 2017",
+          "say": "The Transformer has no recurrent steps. It uses only attention. It reads all the words of a sentence at the same time.",
+          "scene": { "type": "parallel", "words": ["The", "Law", "will", "never", "be", "perfect"] }
+        },
+        {
+          "big": "its → Law",
+          "label": "From the paper, Figure 4",
+          "say": "Attention connects each word to the other words. In this example from the paper, two attention heads connect ‘its’ to ‘Law’.",
+          "scene": {
+            "type": "attention",
+            "words": ["The", "Law", "will", "never", "be", "perfect", ",", "but", "its", "application", "should", "be", "just"],
+            "from": "its",
+            "links": [
+              { "to": "Law", "head": 5, "weight": 1 },
+              { "to": "Law", "head": 6, "weight": 1 },
+              { "to": "application", "head": 6, "weight": 0.45 }
+            ],
+            "note": "Redrawn from Figure 4: two heads (5 and 6), layer 5 of 6"
+          }
+        },
+        {
+          "big": "Q · K · V",
+          "label": "Query, key, value",
+          "say": "Each word has a query, a key and a value. The model compares the query with all keys. This gives a weight for each value.",
+          "scene": {
+            "type": "qkv",
+            "query": "its",
+            "keys": [["Law", 0.55], ["never", 0.06], ["perfect", 0.08], ["its", 0.06], ["application", 0.25]],
+            "note": "Weights: illustration, not from the paper"
+          }
+        },
+        {
+          "big": "28.4 BLEU",
+          "label": "English to German, WMT 2014",
+          "say": "The big Transformer got a BLEU score of 28.4 for English to German translation. This was more than 2 points better than the best previous results. The training time was 3.5 days on 8 GPUs.",
+          "scene": {
+            "type": "bars",
+            "axis": [20, 30],
+            "bars": [
+              ["GNMT + RL", 24.6, false],
+              ["ConvS2S Ensemble", 26.36, false],
+              ["Transformer (base)", 27.3, true],
+              ["Transformer (big)", 28.4, true]
+            ],
+            "note": "Table 2: BLEU, EN-DE newstest2014"
+          }
+        }
+      ],
+      "outro": "Source: Attention Is All You Need, {2017|twenty seventeen}. The full episode explains each part."
+    }
+  ]
+}

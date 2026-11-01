@@ -1,0 +1,66 @@
+name: Render paper Shorts
+
+# Builds and renders the "Papers, explained" Shorts: Kokoro voiceover in
+# ASD-STE100 English, timed captions, music and redrawn neo-brutalist diagrams,
+# one MP4 per episode of script.json.
+on:
+  push:
+    paths:
+      - "hyperframes/shorts-papers/**"
+      - "hyperframes/lib/**"
+      - ".github/workflows/render-papers.yml"
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: Only this episode (number), or blank for all
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: render-papers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: hyperframes/shorts-papers
+    env:
+      HYPERFRAMES_PYTHON: ${{ github.workspace }}/.venv/bin/python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-hyperframes
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Kokoro
+        working-directory: .
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -q kokoro-onnx soundfile
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/hyperframes/tts
+          key: kokoro-v1.0
+      - name: Build compositions (voiceover, captions, diagrams)
+        env:
+          EPISODE: ${{ inputs.episode }}
+        run: |
+          args=()
+          [ -n "${EPISODE:-}" ] && args+=(--episode "$EPISODE")
+          node build.mjs "${args[@]}"
+      - name: Lint and render each part
+        run: |
+          mkdir -p renders
+          for dir in build/*/; do
+            name=$(basename "$dir")
+            (cd "$dir" && npx hyperframes lint && npx hyperframes render --output "../../renders/$name.mp4")
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shorts-papers
+          path: hyperframes/shorts-papers/renders/*.mp4

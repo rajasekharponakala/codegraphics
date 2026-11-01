@@ -1,0 +1,146 @@
+/* Neo-brutalist look for "Papers, explained": cream graph paper, flat colour
+   blocks, thick black outlines and hard offset shadows. */
+@font-face { font-family: "Playfair Display"; font-weight: 700; src: url("vendor/playfair-display-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-weight: 900; src: url("vendor/playfair-display-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("vendor/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("vendor/inter-latin-600-normal.woff2") format("woff2"); }
+
+:root {
+  --ink: #111111;
+  --paper: #f4efe1;
+  --yellow: #ffcf3f;
+  --red: #ff5a36;
+  --blue: #3d7bff;
+  --white: #ffffff;
+  --serif: "Playfair Display", Georgia, serif;
+  --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --line: 5px solid var(--ink);
+  --shadow: 10px 10px 0 var(--ink);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+#root { position: relative; width: 100%; height: 100%; font-family: var(--sans); color: var(--ink); }
+
+#paper-bg {
+  position: absolute; inset: 0; background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.07) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.07) 2px, transparent 2px);
+  background-size: 54px 54px;
+}
+.scene { position: absolute; inset: 0; }
+.overlay { position: absolute; inset: 0; overflow: visible; }
+
+/* ---------- header (below the Shorts title bar) ---------- */
+#series, #episode-label {
+  position: absolute; left: 70px; padding: 10px 18px; border: 4px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink); font-weight: 600;
+}
+#series { top: 190px; background: var(--yellow); font-size: 30px; letter-spacing: 0.14em; text-transform: uppercase; }
+#episode-label { top: 262px; background: var(--white); font-size: 30px; }
+#progress-track { position: absolute; left: 70px; top: 338px; width: 940px; height: 16px; background: var(--white); border: 4px solid var(--ink); }
+#progress { position: absolute; left: 74px; top: 342px; width: 932px; height: 8px; background: var(--red); transform-origin: left center; }
+
+/* ---------- hook + cards: bottom-anchored above the captions ---------- */
+#hook, .card, #end-card { position: absolute; left: 70px; width: 940px; border: 6px solid var(--ink); box-shadow: 16px 16px 0 var(--ink); }
+#hook {
+  bottom: 560px; padding: 44px 50px; background: var(--yellow);
+  font-family: var(--serif); font-weight: 900; font-size: 80px; line-height: 1.08; transform-origin: left bottom;
+}
+.card { bottom: 560px; padding: 34px 48px 40px; background: var(--white); }
+.card-label { display: inline-block; padding: 6px 14px; background: var(--ink); color: var(--yellow); font-size: 32px; font-weight: 600; }
+.card-big { margin-top: 16px; font-family: var(--serif); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+
+/* ---------- word chips ---------- */
+.chip {
+  position: absolute; display: flex; align-items: center; justify-content: center;
+  background: var(--white); border: var(--line); box-shadow: 7px 7px 0 var(--ink);
+  font-weight: 600; white-space: nowrap;
+}
+.chip[data-on="1"] { background: var(--yellow); }
+.chip[data-on="2"] { background: var(--blue); color: var(--white); }
+.chip.source { background: var(--red); color: var(--white); }
+.chip.key { background: var(--white); }
+.arrow { stroke: var(--ink); stroke-width: 5; }
+.reader {
+  position: absolute; left: 0; top: 0; opacity: 0;
+  border: 8px solid var(--red); box-shadow: 0 0 0 4px var(--ink);
+}
+.counter, .badge {
+  position: absolute; left: 70px; top: 470px; padding: 10px 20px; opacity: 0;
+  background: var(--ink); color: var(--yellow); font-size: 38px; font-weight: 600;
+}
+.badge { opacity: 1; background: var(--blue); color: var(--white); border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); }
+.link { fill: none; stroke: var(--blue); stroke-width: 4; opacity: 0.85; }
+.arc { fill: none; stroke-linecap: round; }
+
+.legend { position: absolute; left: 70px; display: flex; gap: 20px; }
+.legend-item { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: var(--white); border: 4px solid var(--ink); font-size: 30px; font-weight: 600; }
+.legend-item i { display: block; width: 34px; height: 14px; border: 3px solid var(--ink); }
+.note { position: absolute; left: 70px; width: 940px; font-size: 26px; font-weight: 600; color: rgba(17, 17, 17, 0.7); }
+
+/* ---------- query / key / value ---------- */
+.formula {
+  position: absolute; left: 70px; padding: 14px 26px; background: var(--white); border: var(--line); box-shadow: var(--shadow);
+  font-family: var(--serif); font-size: 52px; font-weight: 700;
+}
+.formula b { color: var(--red); font-weight: 900; }
+.col-head { position: absolute; font-size: 28px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.compare { fill: none; stroke: var(--ink); stroke-width: 3; stroke-dasharray: 8 8; }
+.bar-track { position: absolute; height: 44px; background: var(--white); border: 4px solid var(--ink); }
+.bar-fill { position: absolute; height: 44px; background: var(--yellow); border: 4px solid var(--ink); }
+.bar-value { position: absolute; font-size: 34px; font-weight: 600; line-height: 44px; }
+
+/* ---------- results bars ---------- */
+.bar-name { position: absolute; font-size: 32px; font-weight: 600; }
+.hbar { position: absolute; height: 56px; background: var(--white); border: var(--line); box-shadow: 7px 7px 0 var(--ink); }
+.hbar.ours { background: var(--yellow); }
+.hbar-value { position: absolute; font-family: var(--serif); font-size: 44px; font-weight: 900; line-height: 56px; }
+.axis { position: absolute; height: 5px; background: var(--ink); }
+.tick { position: absolute; width: 60px; text-align: center; font-size: 28px; font-weight: 600; }
+
+/* ---------- hook scene: the paper ---------- */
+.sheet {
+  position: absolute; left: 130px; top: 430px; width: 820px; padding: 44px 50px 50px;
+  background: var(--white); border: 6px solid var(--ink); box-shadow: 18px 18px 0 var(--ink);
+}
+.sheet-kicker { font-size: 26px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(17, 17, 17, 0.65); }
+.sheet-title { margin-top: 14px; font-family: var(--serif); font-weight: 900; font-size: 68px; line-height: 1.05; }
+.sheet-authors { margin-top: 16px; font-size: 24px; line-height: 1.4; }
+.sheet-lines { margin-top: 26px; display: grid; gap: 14px; }
+.sheet-lines i { display: block; height: 12px; background: rgba(17, 17, 17, 0.14); }
+.sheet-lines i:nth-child(3) { width: 70%; }
+.sheet-lines i:nth-child(5) { width: 45%; }
+.stamp {
+  position: absolute; left: 780px; top: 380px; width: 190px; height: 190px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--red); color: var(--white); border: 6px solid var(--ink); box-shadow: 8px 8px 0 var(--ink);
+  font-family: var(--serif); font-weight: 900; font-size: 60px;
+}
+
+/* ---------- captions ---------- */
+.caption {
+  position: absolute; left: 50%; top: 1405px; width: max-content; max-width: 940px;
+  transform: translateX(-50%); padding: 12px 22px;
+  background: var(--white); border: 5px solid var(--ink); box-shadow: 10px 10px 0 var(--ink);
+  font-size: 56px; font-weight: 600; line-height: 1.25; text-align: center;
+}
+.caption .w { display: inline-block; padding: 0 6px; }
+.caption .w[data-on="1"] { background: var(--yellow); }
+
+/* ---------- end card ---------- */
+#end-card { top: 560px; padding: 52px 52px 56px; background: var(--white); }
+#end-title { display: inline-block; padding: 4px 14px; background: var(--yellow); border: 5px solid var(--ink); font-family: var(--serif); font-weight: 900; font-size: 74px; line-height: 1.1; }
+#end-credit { margin-top: 34px; font-size: 36px; line-height: 1.45; }
+#end-license { margin-top: 30px; font-size: 30px; line-height: 1.45; color: rgba(17, 17, 17, 0.7); }
+
+/* ---------- attention figure (two columns, like the paper's Figure 4) ---------- */
+.fig-frame { position: absolute; left: 70px; width: 940px; background: var(--white); border: var(--line); box-shadow: var(--shadow); }
+.fig-word { position: absolute; display: flex; align-items: center; padding: 0 10px; font-size: 32px; font-weight: 600; color: rgba(17, 17, 17, 0.45); }
+.fig-word.left { justify-content: flex-end; }
+.fig-word.source { color: var(--white); background: var(--red); border: 3px solid var(--ink); }
+.fig-word.target { color: var(--ink); background: var(--yellow); border: 3px solid var(--ink); }
+.note.right { left: auto; right: 70px; width: 470px; text-align: right; line-height: 1.3; }
+.fig-word { font-size: 27px; }
+.formula { font-size: 46px; padding: 10px 24px; }
