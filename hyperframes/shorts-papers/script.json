@@ -1,7 +1,9 @@
 {
   "voice": "bm_george",
   "speed": 1.05,
-  "music": { "gainDb": -13 },
+  "music": {
+    "gainDb": -13
+  },
   "series": "Papers, explained",
   "language": "ASD-STE100 Simplified Technical English: max 20 words per sentence, one topic per sentence, active voice, simple tenses, no -ing forms, technical names kept as written.",
   "episodes": [
@@ -20,13 +22,33 @@
           "big": "1 word at a time",
           "label": "Before 2017: recurrent networks",
           "say": "Before {2017|twenty seventeen}, a recurrent network read a sentence one word after the other. It was slow to train on long sentences.",
-          "scene": { "type": "sequence", "words": ["The", "Law", "will", "never", "be", "perfect"] }
+          "scene": {
+            "type": "sequence",
+            "words": [
+              "The",
+              "Law",
+              "will",
+              "never",
+              "be",
+              "perfect"
+            ]
+          }
         },
         {
           "big": "All at once",
           "label": "The Transformer, 2017",
           "say": "The Transformer has no recurrent steps. It uses only attention. It reads all the words of a sentence at the same time.",
-          "scene": { "type": "parallel", "words": ["The", "Law", "will", "never", "be", "perfect"] }
+          "scene": {
+            "type": "parallel",
+            "words": [
+              "The",
+              "Law",
+              "will",
+              "never",
+              "be",
+              "perfect"
+            ]
+          }
         },
         {
           "big": "its → Law",
@@ -34,12 +56,38 @@
           "say": "Attention connects each word to the other words. In this example from the paper, two attention heads connect ‘its’ to ‘Law’.",
           "scene": {
             "type": "attention",
-            "words": ["The", "Law", "will", "never", "be", "perfect", ",", "but", "its", "application", "should", "be", "just"],
+            "words": [
+              "The",
+              "Law",
+              "will",
+              "never",
+              "be",
+              "perfect",
+              ",",
+              "but",
+              "its",
+              "application",
+              "should",
+              "be",
+              "just"
+            ],
             "from": "its",
             "links": [
-              { "to": "Law", "head": 5, "weight": 1 },
-              { "to": "Law", "head": 6, "weight": 1 },
-              { "to": "application", "head": 6, "weight": 0.45 }
+              {
+                "to": "Law",
+                "head": 5,
+                "weight": 1
+              },
+              {
+                "to": "Law",
+                "head": 6,
+                "weight": 1
+              },
+              {
+                "to": "application",
+                "head": 6,
+                "weight": 0.45
+              }
             ],
             "note": "Redrawn from Figure 4: two heads (5 and 6), layer 5 of 6"
           }
@@ -51,7 +99,28 @@
           "scene": {
             "type": "qkv",
             "query": "its",
-            "keys": [["Law", 0.55], ["never", 0.06], ["perfect", 0.08], ["its", 0.06], ["application", 0.25]],
+            "keys": [
+              [
+                "Law",
+                0.55
+              ],
+              [
+                "never",
+                0.06
+              ],
+              [
+                "perfect",
+                0.08
+              ],
+              [
+                "its",
+                0.06
+              ],
+              [
+                "application",
+                0.25
+              ]
+            ],
             "note": "Weights: illustration, not from the paper"
           }
         },
@@ -61,18 +130,186 @@
           "say": "The big Transformer got a BLEU score of 28.4 for English to German translation. This was more than 2 points better than the best previous results. The training time was 3.5 days on 8 GPUs.",
           "scene": {
             "type": "bars",
-            "axis": [20, 30],
+            "axis": [
+              20,
+              30
+            ],
             "bars": [
-              ["GNMT + RL", 24.6, false],
-              ["ConvS2S Ensemble", 26.36, false],
-              ["Transformer (base)", 27.3, true],
-              ["Transformer (big)", 28.4, true]
+              [
+                "GNMT + RL",
+                24.6,
+                false
+              ],
+              [
+                "ConvS2S Ensemble",
+                26.36,
+                false
+              ],
+              [
+                "Transformer (base)",
+                27.3,
+                true
+              ],
+              [
+                "Transformer (big)",
+                28.4,
+                true
+              ]
             ],
             "note": "Table 2: BLEU, EN-DE newstest2014"
           }
         }
       ],
       "outro": "Source: Attention Is All You Need, {2017|twenty seventeen}. The full episode explains each part."
+    },
+    {
+      "slug": "ep02-gpt-1-generative-pre-training",
+      "episode": 2,
+      "paper": {
+        "title": "Improving Language Understanding by Generative Pre-Training",
+        "short": "GPT-1",
+        "authors": "Radford, Narasimhan, Salimans, Sutskever",
+        "venue": "OpenAI technical report · 2018",
+        "year": 2018
+      },
+      "hook": "In {2018|twenty eighteen}, OpenAI kept only the decoder half of the Transformer.",
+      "hookScene": {
+        "type": "split"
+      },
+      "beats": [
+        {
+          "big": "Decoder only",
+          "label": "12 layers, masked self-attention",
+          "say": "The model has 12 decoder layers. With masked self-attention, each word sees only the words before it.",
+          "scene": {
+            "type": "mask",
+            "words": [
+              "The",
+              "Law",
+              "will",
+              "never",
+              "be",
+              "perfect"
+            ]
+          }
+        },
+        {
+          "big": "Next word",
+          "label": "Pre-training objective",
+          "say": "In pre-training, the model has one task. It predicts the next word from the words before it.",
+          "scene": {
+            "type": "predict",
+            "words": [
+              "The",
+              "Law",
+              "will",
+              "never",
+              "be"
+            ],
+            "options": [
+              [
+                "perfect",
+                0.62
+              ],
+              [
+                "fair",
+                0.21
+              ],
+              [
+                "simple",
+                0.09
+              ]
+            ],
+            "note": "Probabilities: illustration, not from the paper"
+          }
+        },
+        {
+          "big": "7,000+ books",
+          "label": "BooksCorpus: text with no labels",
+          "say": "The pre-training text was more than 7,000 unpublished books. The books have long passages, so the model can use information from far back in the text.",
+          "scene": {
+            "type": "books",
+            "genres": [
+              "Adventure",
+              "Fantasy",
+              "Romance"
+            ],
+            "note": "BooksCorpus, Section 4.1"
+          }
+        },
+        {
+          "big": "Fine-tune",
+          "label": "Stage 2: one task, labeled data",
+          "say": "Then, fine-tuning adapts the model to each task. Start, delimiter and extract tokens put each task input into one sequence.",
+          "scene": {
+            "type": "transform",
+            "stages": [
+              "Pre-train: unlabeled books",
+              "Fine-tune: labeled task"
+            ],
+            "tokens": [
+              [
+                "Start",
+                "tok"
+              ],
+              [
+                "Premise",
+                "text"
+              ],
+              [
+                "Delim",
+                "tok"
+              ],
+              [
+                "Hypothesis",
+                "text"
+              ],
+              [
+                "Extract",
+                "tok"
+              ]
+            ],
+            "output": "Transformer → Linear",
+            "note": "Redrawn from Figure 1: textual entailment input"
+          }
+        },
+        {
+          "big": "9 of 12",
+          "label": "New best results",
+          "say": "The model got new best results on 9 of 12 tasks. On Story Cloze, it was 8.9 points better than the previous best.",
+          "scene": {
+            "type": "pairs",
+            "axis": [
+              40,
+              90
+            ],
+            "pairs": [
+              [
+                "Story Cloze",
+                77.6,
+                86.5
+              ],
+              [
+                "RACE",
+                53.3,
+                59.0
+              ],
+              [
+                "MultiNLI (matched)",
+                80.6,
+                82.1
+              ],
+              [
+                "GLUE score",
+                68.9,
+                72.8
+              ]
+            ],
+            "note": "Tables 2–4: previous best (white) vs this paper (yellow) · axis starts at 40"
+          }
+        }
+      ],
+      "outro": "Source: Improving Language Understanding by Generative Pre-Training, {2018|twenty eighteen}. Next: BERT reads text in two directions."
     }
   ]
 }

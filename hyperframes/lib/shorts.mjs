@@ -60,17 +60,22 @@ export function timeWords(text, start, audio) {
   let acc = 0;
   const guesses = sizes.slice(0, -1).map((n) => (acc += n) / total * audio.duration);
 
-  // Match each clause boundary to the nearest unused pause, in order.
+  // Match each clause boundary to the nearest unused pause, in order. Every
+  // boundary must come after the previous one, matched or not.
   const bounds = [{ end: 0, next: 0 }];
   let from = 0;
   for (const guess of guesses) {
+    const floor = bounds.at(-1).next + 0.2;
     let best = -1;
     for (let i = from; i < audio.pauses.length; i++) {
       const p = audio.pauses[i];
+      if (p.start < floor) continue;
       if (Math.abs((p.start + p.end) / 2 - guess) < 1.2 && (best === -1 || Math.abs(p.start - guess) < Math.abs(audio.pauses[best].start - guess))) best = i;
     }
-    if (best === -1) bounds.push({ end: guess, next: guess });
-    else {
+    if (best === -1) {
+      const t = Math.max(guess, floor);
+      bounds.push({ end: t, next: t });
+    } else {
       bounds.push({ end: audio.pauses[best].start, next: audio.pauses[best].end });
       from = best + 1;
     }
@@ -90,7 +95,8 @@ export function timeWords(text, start, audio) {
   });
 }
 
-// Groups of at most four words / 24 characters (one caption line), broken after punctuation.
+// Groups of at most four words / 24 characters (one caption line), broken after
+// punctuation once a group has two or more words.
 export function captionGroups(words) {
   const groups = [];
   let cur = [];
@@ -100,7 +106,8 @@ export function captionGroups(words) {
       cur = [];
     }
     cur.push(w);
-    if (cur.length >= 4 || /[.,:;!?]$/.test(w.show)) {
+    // A lone word like "Then," would only flash on screen; keep it with the next words.
+    if (cur.length >= 4 || (cur.length >= 2 && /[.,:;!?]$/.test(w.show))) {
       groups.push(cur);
       cur = [];
     }

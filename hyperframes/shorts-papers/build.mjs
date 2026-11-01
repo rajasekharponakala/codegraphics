@@ -257,7 +257,161 @@ function barsScene(scene, id) {
   };
 }
 
-const SCENES = { sequence: sequenceScene, parallel: parallelScene, attention: attentionScene, qkv: qkvScene, bars: barsScene };
+// Hook: the Transformer's two halves, with the encoder struck out.
+function splitScene(ep, id) {
+  return {
+    html: `<div id="${id}-enc" class="block enc" style="left:110px;top:440px">Encoder<small>×6</small></div>
+        <div id="${id}-dec" class="block dec" style="left:570px;top:440px">Decoder<small>×12</small></div>
+        <div id="${id}-cross" class="cross" style="left:110px;top:440px"></div>
+        <div class="note" style="top:910px">Ep 1: encoder + decoder · this paper: decoder only</div>`,
+    js: () => `
+      tl.fromTo("#${id}-dec", { rotation: 0 }, { rotation: -2, duration: 4, ease: "none" }, 0);`,
+  };
+}
+
+// Causal mask: row = the word that looks, column = the words it can see.
+function maskScene(scene, id) {
+  const n = scene.words.length;
+  const cell = 76;
+  const x0 = 1010 - n * cell;
+  const y0 = AREA.y0 + 90;
+  let html = "";
+  scene.words.forEach((w, i) => {
+    html += `<div class="grid-label row" style="right:${W - x0 + 14}px;top:${y0 + i * cell}px;height:${cell}px">${esc(w)}</div>`;
+    html += `<div class="grid-label col" style="left:${x0 + i * cell}px;top:${y0 - 54}px;width:${cell}px">${esc(w)}</div>`;
+    for (let j = 0; j < n; j++) {
+      const open = j <= i;
+      html += `<div id="${id}-c${i}-${j}" class="cell ${open ? "open" : "shut"}" style="left:${x0 + j * cell}px;top:${y0 + i * cell}px;width:${cell}px;height:${cell}px">${open ? "" : "×"}</div>`;
+    }
+  });
+  return {
+    html: `${html}
+        <div class="note" style="top:${y0 + n * cell + 20}px">Each row: the words that one word can see</div>`,
+    js: (from) =>
+      scene.words
+        .map((_, i) => `
+      tl.from("#${id} [id^='${id}-c${i}-'].open", { opacity: 0, scale: 0.5, duration: 0.25, stagger: 0.05, ease: "back.out(2)" }, ${f(from + 0.5 + i * 0.55)});`)
+        .join(""),
+  };
+}
+
+// Next-word prediction: the context, a blank, and candidate words with bars.
+function predictScene(scene, id) {
+  const chips = layoutChips([...scene.words, "?"], { y0: AREA.y0 + 120, font: 42, gapX: 16 });
+  const blank = chips.at(-1);
+  const top = AREA.y0 + 290;
+  const rows = scene.options
+    .map(([word, p], i) => {
+      const y = top + i * 104;
+      const chip = { word, x: AREA.x0, y, w: 230, h: 76, font: 40 };
+      return `${chipHtml(chip, `${id}-opt-${i}`, i === 0 ? "pick" : "")}
+        <div class="bar-track" style="left:330px;top:${y + 14}px;width:520px"></div>
+        <div id="${id}-bar-${i}" class="bar-fill" style="left:330px;top:${y + 14}px;width:${f(520 * p)}px"></div>
+        <div class="bar-value" style="left:${f(330 + 520 * p + 12)}px;top:${y + 14}px">${Math.round(p * 100)}%</div>`;
+    })
+    .join("");
+  return {
+    html: `${chips.map((c, i) => chipHtml(c, `${id}-chip-${i}`, i === chips.length - 1 ? "blank" : "")).join("")}
+        ${rows}
+        <div id="${id}-answer" class="chip answer" style="left:${f(blank.x)}px;top:${f(blank.y)}px;width:${blank.w + 120}px;height:${blank.h}px;font-size:${blank.font}px">${esc(scene.options[0][0])}</div>
+        <div class="note" style="top:${top + scene.options.length * 104 + 10}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .bar-fill", { scaleX: 0, transformOrigin: "left center", duration: 0.7, stagger: 0.15, ease: "power3.out" }, ${f(from + 1.2)});
+      tl.fromTo("#${id}-answer", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(2)" }, ${f(from + 3.2)});
+      tl.set("#${id}-chip-${chips.length - 1}", { opacity: 0 }, ${f(from + 3.2)});`,
+  };
+}
+
+// A shelf of book spines for the pre-training corpus.
+function booksScene(scene, id) {
+  const colors = ["#ffcf3f", "#ff5a36", "#3d7bff", "#ffffff", "#ff8fc7", "#29c48a"];
+  let x = 90;
+  let k = 0;
+  const spines = [];
+  while (x < 990) {
+    const w = 44 + ((k * 37) % 40);
+    const h = 260 + ((k * 53) % 120);
+    spines.push(`<div class="spine" style="left:${x}px;top:${AREA.y0 + 520 - h}px;width:${w}px;height:${h}px;background:${colors[k % colors.length]}"></div>`);
+    x += w + 8;
+    k++;
+  }
+  const genres = scene.genres
+    .map((g, i) => `<div class="genre" style="left:${110 + i * 300}px;top:${AREA.y0 + 40}px">${esc(g)}</div>`)
+    .join("");
+  return {
+    html: `${genres}
+        ${spines.join("")}
+        <div class="shelf" style="top:${AREA.y0 + 520}px"></div>
+        <div class="note" style="top:${AREA.y0 + 560}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .spine", { y: -120, opacity: 0, duration: 0.35, stagger: 0.04, ease: "bounce.out" }, ${f(from + 0.3)});
+      tl.from("#${id} .genre", { scale: 0, duration: 0.3, stagger: 0.15, ease: "back.out(2)" }, ${f(from + 1.4)});`,
+  };
+}
+
+// Two training stages, then one task input as a token sequence (Figure 1).
+function transformScene(scene, id) {
+  const stages = scene.stages
+    .map((s, i) => `<div id="${id}-stage-${i}" class="stage ${i ? "two" : ""}" style="left:${70 + i * 490}px;top:${AREA.y0}px">${esc(s)}</div>`)
+    .join(`<div class="stage-arrow" style="left:503px;top:${AREA.y0 + 30}px">→</div>`);
+  const chips = layoutChips(scene.tokens.map(([t]) => t), { y0: AREA.y0 + 290, font: 34, gapX: 10 });
+  const tokens = chips
+    .map((c, i) => chipHtml(c, `${id}-tok-${i}`, scene.tokens[i][1] === "tok" ? "token" : ""))
+    .join("");
+  return {
+    html: `${stages}
+        <div class="col-head" style="left:70px;top:${AREA.y0 + 220}px">Task input as one sequence</div>
+        ${tokens}
+        <div class="down-arrow" style="top:${AREA.y0 + 390}px">↓</div>
+        <div id="${id}-out" class="stage out" style="top:${AREA.y0 + 470}px">${esc(scene.output)}</div>
+        <div class="note" style="top:${AREA.y0 + 570}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id}-stage-1", { x: 60, opacity: 0, duration: 0.4, ease: "back.out(1.8)" }, ${f(from + 0.6)});
+      tl.from("#${id} .chip", { y: 40, opacity: 0, duration: 0.3, stagger: 0.18, ease: "back.out(2)" }, ${f(from + 2.6)});
+      tl.from("#${id}-out", { y: -30, opacity: 0, duration: 0.35, ease: "power3.out" }, ${f(from + 3.8)});`,
+  };
+}
+
+// Paired bars per task: previous best (white) and this paper (yellow).
+function pairsScene(scene, id) {
+  const [lo, hi] = scene.axis;
+  const x0 = AREA.x0 + 10;
+  const width = AREA.x1 - AREA.x0 - 130;
+  const scale = (v) => ((v - lo) / (hi - lo)) * width;
+  const rowH = 138;
+  const top = AREA.y0 + 10;
+  const rows = scene.pairs
+    .map(([name, before, after], i) => {
+      const y = top + i * rowH;
+      return `<div class="bar-name" style="left:${x0}px;top:${y}px">${esc(name)}</div>
+        <div class="pbar" style="left:${x0}px;top:${y + 42}px;width:${f(scale(before))}px"></div>
+        <div class="pbar-value" style="left:${f(x0 + scale(before) + 12)}px;top:${y + 40}px">${before}</div>
+        <div class="pbar ours" style="left:${x0}px;top:${y + 84}px;width:${f(scale(after))}px"></div>
+        <div class="pbar-value strong" style="left:${f(x0 + scale(after) + 12)}px;top:${y + 80}px">${after}</div>`;
+    })
+    .join("");
+  return {
+    html: `${rows}
+        <div class="note" style="top:${top + scene.pairs.length * rowH + 4}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .pbar", { scaleX: 0, transformOrigin: "left center", duration: 0.5, stagger: 0.18, ease: "power3.out" }, ${f(from + 0.4)});
+      tl.from("#${id} .pbar-value", { opacity: 0, duration: 0.2, stagger: 0.18 }, ${f(from + 0.7)});`,
+  };
+}
+
+const SCENES = {
+  sequence: sequenceScene,
+  parallel: parallelScene,
+  attention: attentionScene,
+  qkv: qkvScene,
+  bars: barsScene,
+  mask: maskScene,
+  predict: predictScene,
+  books: booksScene,
+  transform: transformScene,
+  pairs: pairsScene,
+};
+const HOOK_SCENES = { paper: paperScene, split: splitScene };
 
 // ---------- composition ----------
 
@@ -283,7 +437,7 @@ function buildEpisode(ep) {
 
   const parts = scenes.map((sc, i) => {
     const id = `scene-${i}`;
-    const s = i === 0 ? paperScene(ep, id) : SCENES[sc.beat.scene.type](sc.beat.scene, id);
+    const s = i === 0 ? HOOK_SCENES[ep.hookScene?.type ?? "paper"](ep, id) : SCENES[sc.beat.scene.type](sc.beat.scene, id);
     return { id, sc, ...s };
   });
   const sceneHtml = parts
@@ -322,7 +476,7 @@ function buildEpisode(ep) {
       <div id="paper-bg" class="clip" ${clip(0, total, 0)}></div>
 ${sceneHtml}
       <div id="series" class="clip" ${clip(0, endStart, 4)}>${esc(script.series)}</div>
-      <div id="episode-label" class="clip" ${clip(0, endStart, 5)}>Ep ${ep.episode} · ${esc(p.title)} (${p.year})</div>
+      <div id="episode-label" class="clip" ${clip(0, endStart, 5)}>Ep ${ep.episode} · ${esc(p.short ?? p.title)} (${p.year})</div>
       <div id="progress-track" class="clip" ${clip(0, endStart, 6)}></div>
       <div id="progress" class="clip" ${clip(0, endStart, 7)}></div>
       <h1 id="hook" class="clip" ${clip(0, scenes[0].to, 8)}>${esc(display(ep.hook))}</h1>
