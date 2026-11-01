@@ -257,6 +257,57 @@ function barsScene(scene, id) {
   };
 }
 
+// Data funnel: each step narrower than the last.
+function funnelScene(scene, id) {
+  const rows = scene.steps
+    .map(([big, label], i) => {
+      const w = 940 - i * 160;
+      return `<div id="${id}-step-${i}" class="funnel s${i}" style="left:${70 + i * 80}px;top:${AREA.y0 + 30 + i * 175}px;width:${w}px"><b>${esc(big)}</b><span>${esc(label)}</span></div>`;
+    })
+    .join("");
+  return {
+    html: `${rows}
+        <div class="note" style="top:${AREA.y0 + 30 + scene.steps.length * 175}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .funnel", { y: -40, opacity: 0, duration: 0.35, stagger: 0.9, ease: "back.out(1.8)" }, ${f(from + 0.4)});`,
+  };
+}
+
+// Prompts that set the task: a context, then a cue the model continues.
+function promptScene(scene, id) {
+  const cards = scene.prompts
+    .map(([name, context, cue], i) => {
+      const y = AREA.y0 + 20 + i * 290;
+      return `<div class="tag ${i ? "" : "yellow"}" style="top:${y}px">${esc(name)}</div>
+        <div id="${id}-card-${i}" class="prompt" style="top:${y + 66}px">${esc(context)}${cue ? ` <b class="cue">${esc(cue)}</b>` : ""}<span class="caret"></span></div>`;
+    })
+    .join("");
+  return {
+    html: `${cards}
+        <div class="note" style="top:${AREA.y0 + 20 + scene.prompts.length * 290}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .prompt", { x: 80, opacity: 0, duration: 0.35, stagger: 1.2, ease: "back.out(1.8)" }, ${f(from + 0.4)});
+      tl.from("#${id} .cue", { scale: 0, duration: 0.3, ease: "back.out(2.5)" }, ${f(from + 3.6)});`,
+  };
+}
+
+// A checklist of datasets: best result or not.
+function checksScene(scene, id) {
+  const items = scene.items
+    .map(([name, ok], i) => {
+      const col = i % 2;
+      const row = Math.floor(i / 2);
+      return `<div id="${id}-item-${i}" class="check ${ok ? "ok" : "no"}" style="left:${70 + col * 480}px;top:${AREA.y0 + 20 + row * 118}px"><i>${ok ? "✓" : "✗"}</i>${esc(name)}</div>`;
+    })
+    .join("");
+  return {
+    html: `${items}
+        <div class="note" style="top:${AREA.y0 + 20 + Math.ceil(scene.items.length / 2) * 118}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .check", { scale: 0.6, opacity: 0, duration: 0.25, stagger: 0.18, ease: "back.out(2.2)" }, ${f(from + 0.4)});`,
+  };
+}
+
 // Hook: one arrow for GPT, arrows both ways for BERT.
 function directionsScene(ep, id) {
   const words = ["The", "Law", "will", "never", "be"];
@@ -496,6 +547,9 @@ const SCENES = {
   pairs: pairsScene,
   masked: maskedScene,
   nsp: nspScene,
+  funnel: funnelScene,
+  prompt: promptScene,
+  checks: checksScene,
 };
 const HOOK_SCENES = { paper: paperScene, split: splitScene, directions: directionsScene };
 

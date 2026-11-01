@@ -210,3 +210,22 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .seg-label i.s0 { background: var(--ink); }
 .seg-label i.s1 { background: var(--red); }
 .seg-label i.s2 { background: var(--white); }
+
+/* ---------- episode 4 scenes ---------- */
+.funnel { position: absolute; height: 140px; padding: 0 28px; display: flex; flex-direction: column; justify-content: center; border: var(--line); box-shadow: 10px 10px 0 var(--ink); }
+.funnel b { font-family: var(--serif); font-weight: 900; font-size: 56px; line-height: 1; }
+.funnel span { margin-top: 6px; font-size: 28px; font-weight: 600; }
+.funnel.s0 { background: var(--white); }
+.funnel.s1 { background: var(--blue); color: var(--white); }
+.funnel.s2 { background: var(--yellow); }
+.prompt { position: absolute; left: 70px; width: 940px; min-height: 150px; padding: 26px 30px; background: var(--white); border: var(--line); box-shadow: 10px 10px 0 var(--ink); font-family: "Courier New", monospace; font-size: 38px; font-weight: 700; line-height: 1.35; }
+.prompt .cue { background: var(--red); color: var(--white); padding: 0 8px; }
+.prompt .caret { display: inline-block; width: 18px; height: 40px; margin-left: 8px; vertical-align: middle; background: var(--ink); }
+.check { position: absolute; width: 450px; height: 92px; display: flex; align-items: center; gap: 18px; padding: 0 20px; background: var(--white); border: var(--line); box-shadow: 8px 8px 0 var(--ink); font-size: 38px; font-weight: 600; }
+.check i { font-style: normal; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border: 4px solid var(--ink); font-size: 36px; }
+.check.ok i { background: #29c48a; }
+.check.no { background: #ffd9d0; }
+.check.no i { background: var(--red); color: var(--white); }
+/* Keep long titles clear of the year stamp. */
+.sheet-title { padding-right: 110px; }
+.sheet-kicker { padding-right: 150px; }

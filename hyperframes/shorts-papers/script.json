@@ -458,6 +458,171 @@
         }
       ],
       "outro": "Source: BERT, by Devlin and others, {2018|twenty eighteen}. Next: GPT-2 makes the model much larger."
+    },
+    {
+      "slug": "ep04-gpt-2",
+      "episode": 4,
+      "paper": {
+        "title": "Language Models are Unsupervised Multitask Learners",
+        "short": "GPT-2",
+        "authors": "Radford, Wu, Child, Luan, Amodei, Sutskever",
+        "venue": "OpenAI technical report · 2019",
+        "year": 2019
+      },
+      "hook": "In {2019|twenty nineteen}, GPT-2 did many tasks with no training for them.",
+      "hookScene": {
+        "type": "paper"
+      },
+      "beats": [
+        {
+          "big": "1.5B",
+          "label": "Largest of 4 model sizes",
+          "say": "The largest GPT-2 model has 1.5 billion parameters. The smallest model has the same size as GPT-1.",
+          "scene": {
+            "type": "bars",
+            "axis": [
+              0,
+              1600
+            ],
+            "bars": [
+              [
+                "117M parameters · 12 layers (= GPT-1)",
+                117,
+                false
+              ],
+              [
+                "345M · 24 layers",
+                345,
+                false
+              ],
+              [
+                "762M · 36 layers",
+                762,
+                false
+              ],
+              [
+                "1542M · 48 layers (GPT-2)",
+                1542,
+                true
+              ]
+            ],
+            "note": "Table 2: the 4 model sizes"
+          }
+        },
+        {
+          "big": "WebText",
+          "label": "8M+ documents, 40 GB",
+          "say": "The training text was WebText. It came from Reddit links with at least 3 karma. It has more than 8 million documents.",
+          "scene": {
+            "type": "funnel",
+            "steps": [
+              [
+                "45 million",
+                "Reddit links, 3+ karma"
+              ],
+              [
+                "8 million+",
+                "documents after cleaning"
+              ],
+              [
+                "40 GB",
+                "of text"
+              ]
+            ],
+            "note": "Section 2.1 · Wikipedia pages removed"
+          }
+        },
+        {
+          "big": "Zero-shot",
+          "label": "No fine-tuning",
+          "say": "GPT-2 gets no fine-tuning. The text of the prompt tells the model the task. For example, {TL;DR|T L D R} asks for a summary.",
+          "scene": {
+            "type": "prompt",
+            "prompts": [
+              [
+                "Summary",
+                "[news article]",
+                "TL;DR:"
+              ],
+              [
+                "Translation",
+                "english sentence = french sentence  …  english sentence =",
+                ""
+              ]
+            ],
+            "note": "Prompt formats from Sections 3.6 and 3.7"
+          }
+        },
+        {
+          "big": "19% → 52.66%",
+          "label": "LAMBADA accuracy",
+          "say": "On LAMBADA, a model predicts the last word of a long passage. GPT-2 increased the accuracy from 19 percent to 52.66 percent.",
+          "scene": {
+            "type": "bars",
+            "axis": [
+              0,
+              60
+            ],
+            "bars": [
+              [
+                "Previous best language model",
+                19,
+                false
+              ],
+              [
+                "GPT-2 (1542M)",
+                52.66,
+                true
+              ]
+            ],
+            "note": "Section 3.3: accuracy of language models on LAMBADA"
+          }
+        },
+        {
+          "big": "7 of 8",
+          "label": "Datasets, zero-shot",
+          "say": "GPT-2 got new best results on 7 of 8 language modeling datasets. But the largest model still underfits WebText.",
+          "scene": {
+            "type": "checks",
+            "items": [
+              [
+                "LAMBADA",
+                true
+              ],
+              [
+                "CBT",
+                true
+              ],
+              [
+                "WikiText-2",
+                true
+              ],
+              [
+                "PTB",
+                true
+              ],
+              [
+                "enwik8",
+                true
+              ],
+              [
+                "text8",
+                true
+              ],
+              [
+                "WikiText-103",
+                true
+              ],
+              [
+                "1BW",
+                false
+              ]
+            ],
+            "note": "Table 3, 1542M model vs previous best"
+          }
+        }
+      ],
+      "outro": "Source: Language Models are Unsupervised Multitask Learners, {2019|twenty nineteen}. Next: T5 makes each task text to text."
     }
   ]
 }
