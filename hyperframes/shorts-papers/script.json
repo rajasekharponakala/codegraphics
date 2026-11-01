@@ -310,6 +310,154 @@
         }
       ],
       "outro": "Source: Improving Language Understanding by Generative Pre-Training, {2018|twenty eighteen}. Next: BERT reads text in two directions."
+    },
+    {
+      "slug": "ep03-bert",
+      "episode": 3,
+      "paper": {
+        "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "short": "BERT",
+        "authors": "Devlin, Chang, Lee, Toutanova",
+        "venue": "NAACL 2019 · arXiv:1810.04805",
+        "year": 2018
+      },
+      "hook": "GPT reads from left to right. BERT reads in both directions.",
+      "hookScene": {
+        "type": "directions"
+      },
+      "beats": [
+        {
+          "big": "Both ways",
+          "label": "Bidirectional Transformer encoder",
+          "say": "BERT uses the Transformer encoder. Each word sees the words on its left and the words on its right.",
+          "scene": {
+            "type": "mask",
+            "full": true,
+            "words": [
+              "The",
+              "Law",
+              "will",
+              "never",
+              "be",
+              "perfect"
+            ],
+            "note": "Ep 2, GPT: left side only · BERT: all words"
+          }
+        },
+        {
+          "big": "[MASK]",
+          "label": "Masked language model",
+          "say": "In pre-training, BERT selects 15 percent of the words. It usually replaces them with a mask token. Then it predicts each word from both sides.",
+          "scene": {
+            "type": "masked",
+            "words": [
+              "The",
+              "Law",
+              "will",
+              "[MASK]",
+              "be",
+              "perfect"
+            ],
+            "answer": "never",
+            "split": [
+              [
+                "[MASK] token",
+                80
+              ],
+              [
+                "random word",
+                10
+              ],
+              [
+                "same word",
+                10
+              ]
+            ],
+            "note": "Of the selected 15%: replacement rule from Section 3.1"
+          }
+        },
+        {
+          "big": "IsNext?",
+          "label": "Next sentence prediction",
+          "say": "BERT also gets two sentences, A and B. It predicts if B is the next sentence after A. This is true for 50 percent of the examples.",
+          "scene": {
+            "type": "nsp",
+            "a": "the man went to [MASK] store",
+            "pairs": [
+              [
+                "he bought a gallon [MASK] milk",
+                "IsNext"
+              ],
+              [
+                "penguin [MASK] are flight ##less birds",
+                "NotNext"
+              ]
+            ],
+            "note": "Examples from the paper, Appendix A.1"
+          }
+        },
+        {
+          "big": "3.3B words",
+          "label": "BooksCorpus + English Wikipedia",
+          "say": "The pre-training text was BooksCorpus and English Wikipedia. Together, they have about 3.3 billion words.",
+          "scene": {
+            "type": "bars",
+            "axis": [
+              0,
+              3000
+            ],
+            "bars": [
+              [
+                "BooksCorpus (million words)",
+                800,
+                false
+              ],
+              [
+                "English Wikipedia (million words)",
+                2500,
+                true
+              ]
+            ],
+            "note": "Section 3.1"
+          }
+        },
+        {
+          "big": "80.5 GLUE",
+          "label": "New best results on 11 tasks",
+          "say": "BERT got new best results on eleven tasks. Its GLUE score was 80.5. The score of OpenAI GPT was 72.8.",
+          "scene": {
+            "type": "pairs",
+            "axis": [
+              40,
+              95
+            ],
+            "pairs": [
+              [
+                "GLUE score (leaderboard)",
+                72.8,
+                80.5
+              ],
+              [
+                "MultiNLI (matched)",
+                82.1,
+                86.7
+              ],
+              [
+                "QNLI",
+                87.4,
+                92.7
+              ],
+              [
+                "CoLA",
+                45.4,
+                60.5
+              ]
+            ],
+            "note": "Section 4.1 and Table 1: OpenAI GPT (white) vs BERT-Large (yellow) · axis starts at 40"
+          }
+        }
+      ],
+      "outro": "Source: BERT, by Devlin and others, {2018|twenty eighteen}. Next: GPT-2 makes the model much larger."
     }
   ]
 }

@@ -257,6 +257,90 @@ function barsScene(scene, id) {
   };
 }
 
+// Hook: one arrow for GPT, arrows both ways for BERT.
+function directionsScene(ep, id) {
+  const words = ["The", "Law", "will", "never", "be"];
+  const row = (y, cls) =>
+    layoutChips(words, { y0: y, font: 40, gapX: 14 })
+      .map((c, i) => chipHtml(c, `${id}-${cls}-${i}`, cls))
+      .join("");
+  return {
+    html: `<div class="tag" style="top:430px">GPT</div>
+        ${row(500, "gpt")}
+        <div class="dir-arrow gpt" style="top:590px">→</div>
+        <div class="tag yellow" style="top:700px">BERT</div>
+        ${row(770, "bert")}
+        <div class="dir-arrow bert" style="top:860px">← →</div>`,
+    js: () => `
+      tl.fromTo("#${id} .dir-arrow.gpt", { x: -40 }, { x: 40, duration: 4, ease: "none" }, 0);
+      tl.fromTo("#${id} .dir-arrow.bert", { scale: 1 }, { scale: 1.12, duration: 4, ease: "none" }, 0);`,
+  };
+}
+
+// Masked LM: context on both sides points into the [MASK], which resolves to
+// the answer; below, how the selected 15% are replaced.
+function maskedScene(scene, id) {
+  const chips = layoutChips(scene.words, { y0: AREA.y0 + 130, font: 42, gapX: 16 });
+  const m = chips.find((c) => c.word === "[MASK]");
+  const arcs = chips
+    .filter((c) => c !== m)
+    .map((c, k) => {
+      const x1 = c.x + c.w / 2;
+      const x2 = m.x + m.w / 2 + (c.x < m.x ? -18 : 18);
+      const lift = 50 + Math.abs(x2 - x1) * 0.28;
+      return `<path class="link ${c.x < m.x ? "left" : "right"}" d="M${f(x1)} ${f(c.y)} Q${f((x1 + x2) / 2)} ${f(c.y - lift)} ${f(x2)} ${f(m.y)}" />`;
+    })
+    .join("");
+  const y = AREA.y0 + 300;
+  let x = AREA.x0;
+  const total = 940;
+  const segs = scene.split
+    .map(([name, pct], i) => {
+      const w = (total * pct) / 100;
+      const seg = `<div class="seg s${i}" style="left:${f(x)}px;top:${y}px;width:${f(w)}px">${pct}%</div>
+        <div class="seg-label" style="left:${AREA.x0}px;top:${y + 92 + i * 44}px"><i class="s${i}"></i>${pct}%: ${esc(name)}</div>`;
+      x += w;
+      return seg;
+    })
+    .join("");
+  return {
+    html: `${svg(arcs)}
+        ${chips.map((c, i) => chipHtml(c, `${id}-chip-${i}`, c === m ? "masked" : "")).join("")}
+        <div id="${id}-answer" class="chip answer" style="left:${f(m.x)}px;top:${f(m.y)}px;width:${m.w}px;height:${m.h}px;font-size:${m.font}px;justify-content:center;padding:0">${esc(scene.answer)}</div>
+        ${segs}
+        <div class="note" style="top:${y + 92 + scene.split.length * 44 + 8}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      document.querySelectorAll("#${id} .link").forEach((p, k) => {
+        const len = p.getTotalLength();
+        p.style.strokeDasharray = len + " " + len;
+        tl.fromTo(p, { strokeDashoffset: len }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, ${f(from + 1.0)} + k * 0.12);
+      });
+      tl.fromTo("#${id}-answer", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.5)" }, ${f(from + 2.6)});
+      tl.from("#${id} .seg", { scaleX: 0, transformOrigin: "left center", duration: 0.5, stagger: 0.2, ease: "power3.out" }, ${f(from + 3.4)});`,
+  };
+}
+
+// Next sentence prediction: sentence A, then two candidate B sentences with labels.
+function nspScene(scene, id) {
+  const mark = (t) => esc(t).replace(/\[MASK\]/g, '<b class="mk">[MASK]</b>');
+  const rows = scene.pairs
+    .map(([b, label], i) => {
+      const y = AREA.y0 + 240 + i * 175;
+      return `<div class="sent b" style="top:${y}px"><span class="sent-tag">B</span>${mark(b)}</div>
+        <div id="${id}-label-${i}" class="nsp-label ${label === "IsNext" ? "yes" : "no"}" style="top:${y + 104}px">${label}</div>`;
+    })
+    .join("");
+  return {
+    html: `<div class="sent a" style="top:${AREA.y0 + 60}px"><span class="sent-tag">A</span>${mark(scene.a)}</div>
+        <div class="split-badge" style="top:${AREA.y0 + 170}px">50% IsNext · 50% NotNext</div>
+        ${rows}
+        <div class="note right" style="top:${AREA.y0 + 172}px">${esc(scene.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .sent.b", { x: 80, opacity: 0, duration: 0.35, stagger: 0.5, ease: "back.out(1.8)" }, ${f(from + 0.8)});
+      tl.from("#${id} .nsp-label", { scale: 0, duration: 0.3, stagger: 0.5, ease: "back.out(2.5)" }, ${f(from + 2.4)});`,
+  };
+}
+
 // Hook: the Transformer's two halves, with the encoder struck out.
 function splitScene(ep, id) {
   return {
@@ -280,13 +364,13 @@ function maskScene(scene, id) {
     html += `<div class="grid-label row" style="right:${W - x0 + 14}px;top:${y0 + i * cell}px;height:${cell}px">${esc(w)}</div>`;
     html += `<div class="grid-label col" style="left:${x0 + i * cell}px;top:${y0 - 54}px;width:${cell}px">${esc(w)}</div>`;
     for (let j = 0; j < n; j++) {
-      const open = j <= i;
+      const open = scene.full || j <= i;
       html += `<div id="${id}-c${i}-${j}" class="cell ${open ? "open" : "shut"}" style="left:${x0 + j * cell}px;top:${y0 + i * cell}px;width:${cell}px;height:${cell}px">${open ? "" : "×"}</div>`;
     }
   });
   return {
     html: `${html}
-        <div class="note" style="top:${y0 + n * cell + 20}px">Each row: the words that one word can see</div>`,
+        <div class="note" style="top:${y0 + n * cell + 20}px">${esc(scene.note ?? "Each row: the words that one word can see")}</div>`,
     js: (from) =>
       scene.words
         .map((_, i) => `
@@ -410,8 +494,10 @@ const SCENES = {
   books: booksScene,
   transform: transformScene,
   pairs: pairsScene,
+  masked: maskedScene,
+  nsp: nspScene,
 };
-const HOOK_SCENES = { paper: paperScene, split: splitScene };
+const HOOK_SCENES = { paper: paperScene, split: splitScene, directions: directionsScene };
 
 // ---------- composition ----------
 

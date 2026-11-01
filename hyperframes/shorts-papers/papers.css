@@ -181,3 +181,32 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .pbar.ours { height: 42px; background: var(--yellow); box-shadow: 6px 6px 0 var(--ink); }
 .pbar-value { position: absolute; font-size: 30px; font-weight: 600; }
 .pbar-value.strong { font-family: var(--serif); font-size: 40px; font-weight: 900; }
+
+/* ---------- episode 3 scenes ---------- */
+.tag { position: absolute; left: 70px; padding: 6px 16px; background: var(--white); border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); font-size: 34px; font-weight: 600; }
+.tag.yellow { background: var(--yellow); }
+.chip.gpt { background: var(--white); }
+.chip.bert { background: var(--yellow); }
+.dir-arrow { position: absolute; left: 0; width: 1080px; text-align: center; font-size: 84px; font-weight: 900; line-height: 1; }
+.dir-arrow.bert { color: var(--red); }
+.chip.masked { background: var(--ink); color: var(--yellow); }
+.link.left { stroke: var(--blue); }
+.link.right { stroke: var(--red); }
+.seg { position: absolute; height: 72px; display: flex; align-items: center; justify-content: center; border: 4px solid var(--ink); font-size: 32px; font-weight: 600; }
+.seg.s0 { background: var(--ink); color: var(--yellow); }
+.seg.s1 { background: var(--red); color: var(--white); }
+.seg.s2 { background: var(--white); }
+.seg-label { position: absolute; font-size: 26px; font-weight: 600; }
+.sent { position: absolute; left: 70px; width: 940px; padding: 18px 22px 18px 96px; background: var(--white); border: var(--line); box-shadow: 8px 8px 0 var(--ink); font-size: 36px; font-weight: 600; line-height: 1.3; }
+.sent.a { background: var(--yellow); }
+.sent-tag { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; background: var(--ink); color: var(--white); font-size: 34px; }
+.sent .mk { background: var(--ink); color: var(--yellow); padding: 0 6px; font-weight: 600; }
+.split-badge { position: absolute; left: 70px; padding: 8px 16px; background: var(--ink); color: var(--yellow); font-size: 30px; font-weight: 600; }
+.nsp-label { position: absolute; right: 70px; padding: 6px 18px; border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); font-size: 34px; font-weight: 600; }
+.nsp-label.yes { background: #29c48a; }
+.nsp-label.no { background: var(--red); color: var(--white); }
+.seg-label { display: flex; align-items: center; gap: 12px; font-size: 28px; }
+.seg-label i { display: block; width: 30px; height: 22px; border: 3px solid var(--ink); }
+.seg-label i.s0 { background: var(--ink); }
+.seg-label i.s1 { background: var(--red); }
+.seg-label i.s2 { background: var(--white); }
