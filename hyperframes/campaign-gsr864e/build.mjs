@@ -22,6 +22,16 @@ const img = (src) => `assets/${src}`;
 const backdrop = (src) => (src ? `<div class="backdrop" style="background-image:url('${img(src)}')"></div><div class="shade"></div>` : "");
 const photo = (src, cls, style) => `<div class="photo ${cls}" style="${style};background-image:url('${img(src)}')"></div>`;
 
+// Grid of photos for the end card, 3 across, filling the space above it.
+const collage = (srcs) =>
+  srcs
+    .map((src, i) => {
+      const x = 70 + (i % 3) * 318;
+      const y = 150 + Math.floor(i / 3) * 196;
+      return `<div class="tile collage" style="left:${x}px;top:${y}px;background-image:url('${img(src)}')"></div>`;
+    })
+    .join("");
+
 // ---------- scenes: each returns { html, js(from) } ----------
 
 function hookScene(id) {
@@ -158,7 +168,7 @@ const segments = [
   ...script.beats.map((b) => ({ kind: "beat", text: b.say, beat: b })),
   { kind: "outro", text: script.outro },
 ];
-const { endStart, total } = narrate(segments, { voice: script.voice, speed: script.speed, lang: script.lang, cacheDir: join(BUILD, ".tts") });
+const { endStart, total } = narrate(segments, { voice: script.voice, speed: script.speed, lang: script.lang, accent: script.accent, cacheDir: join(BUILD, ".tts") });
 writeSoundtrack(segments, total, out, { music: script.music, seed: 864 });
 
 const scenes = segments.slice(0, -1).map((seg, i) => ({
@@ -215,7 +225,7 @@ ${sceneHtml}
 ${cards}
       <div id="end-scene" class="clip" ${clip(endStart, total, 29)}>
         ${backdrop(e.photo)}
-        ${photo(e.photo, "", `left:70px;top:200px;width:940px;height:520px`)}
+        ${collage(e.collage)}
       </div>
 ${captions.html}
       <div id="end-card" class="clip" ${clip(endStart, total, 30)}>
@@ -238,6 +248,7 @@ ${scenes
   .join("\n")}
 ${CAPTION_TIMELINE}
       tl.from("#end-scene", { opacity: 0, duration: 0.4 }, endStart);
+      tl.from("#end-scene .collage", { scale: 0.8, opacity: 0, duration: 0.3, stagger: 0.07, ease: "back.out(2)" }, endStart + 0.1);
       tl.from("#end-card > *", { y: 30, opacity: 0, duration: 0.45, stagger: 0.18, ease: "power3.out" }, endStart);
 
       window.__timelines["main"] = tl;

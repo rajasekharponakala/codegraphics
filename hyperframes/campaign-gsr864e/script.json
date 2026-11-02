@@ -1,7 +1,7 @@
 {
   "voice": "hf_alpha",
-  "lang": "en-gb",
-  "speed": 1.1,
+  "accent": "indian",
+  "speed": 1.05,
   "music": {
     "gainDb": -15
   },
@@ -235,7 +235,18 @@
     "site": "protectouranimals.in",
     "small": "Takes two minutes. Sent from your own inbox. Quote G.S.R. 864(E), dated 30 September 2026.",
     "photo": "animals/street-dog-puppies.jpg",
-    "credits": "Photos: Wikimedia Commons (CC BY-SA 3.0/4.0, CC0), credits in the description. Creator stills from their public posts on G.S.R. 864(E)."
+    "credits": "Photos: Wikimedia Commons (CC BY-SA 3.0/4.0, CC0), credits in the description. Creator stills from their public posts on G.S.R. 864(E).",
+    "collage": [
+      "animals/street-dog-portrait.jpg",
+      "animals/street-cat-mumbai.jpg",
+      "animals/street-cow-road.jpg",
+      "animals/wild-rhesus-macaque.jpg",
+      "animals/wild-parakeet-lead.jpg",
+      "animals/street-dog-puppies.jpg",
+      "animals/street-donkey-cart.jpg",
+      "animals/wild-langur-nilgiri.jpg",
+      "animals/wild-monitor-head.jpg"
+    ]
   },
   "hookPhoto": "animals/street-dog-portrait.jpg"
 }

@@ -1,4 +1,4 @@
-"""EXPERIMENTAL, not yet tested or used by any build. Speaks English text with an Indian English accent using Kokoro.
+"""Speaks English text with an Indian English accent using Kokoro.
 
 HyperFrames' `tts` command only offers en-us / en-gb phonemes, which keep a
 British or American accent even with an Indian voice. This script phonemizes
@@ -26,6 +26,29 @@ MODEL = os.path.join(CACHE, "models", "kokoro-v1.0.onnx")
 VOICES = os.path.join(CACHE, "voices", "voices-v1.0.bin")
 
 
+def phonemize(kokoro, text):
+    """Word by word: en-us phonemes (they keep the r), but where British English
+    has the short o of "lot" (ɒ) and American English the long ɑː, use a short
+    ɔ: Indian English says "ob-ject", not "aab-ject"."""
+    words = []
+    for token in text.split():
+        core = token.strip(".,;:!?\"“”'’()")
+        if not core:
+            words.append(token)
+            continue
+        us = kokoro.tokenizer.phonemize(core, "en-us").strip()
+        gb = kokoro.tokenizer.phonemize(core, "en-gb").strip()
+        if "ɒ" in gb and "ɑː" in us:
+            us = us.replace("ɑː", "ɔ", gb.count("ɒ"))
+        # "birds", "first": keep the spelled r after the vowel.
+        if "ɜː" in us and "r" in core.lower() and "ɹ" not in us and "ɚ" not in us:
+            us = us.replace("ɜː", "ɜːɹ")
+        lead = token[: token.index(core[0])]
+        tail = token[token.rindex(core[-1]) + 1 :]
+        words.append(lead + us + tail)
+    return " ".join(words)
+
+
 def indianise(ph):
     ph = ph.replace("ᵻ", "ɪ")
     # en-us flaps t/d between vowels ("water"); Indian English keeps a hard t.
@@ -34,6 +57,7 @@ def indianise(ph):
     ph = re.sub(r"d(?!ʒ)", "ɖ", ph)
     ph = ph.replace("ɚ", "əɹ").replace("ɝ", "əɹ")
     ph = ph.replace("ɹ", "ɾ")
+    ph = re.sub(r"ɾ+", "ɾ", ph)  # "our" -> aʊəɾ, not aʊəɾɾ
     ph = ph.replace("θ", "tʰ").replace("ð", "d")
     ph = ph.replace("v", "ʋ").replace("w", "ʋ")
     ph = ph.replace("eɪ", "eː").replace("oʊ", "oː").replace("ɑː", "aː")
@@ -50,7 +74,7 @@ def main():
     args = parser.parse_args()
 
     kokoro = Kokoro(MODEL, VOICES)
-    phonemes = indianise(kokoro.tokenizer.phonemize(args.text, "en-us"))
+    phonemes = indianise(phonemize(kokoro, args.text))
     if args.print_phonemes:
         print(phonemes)
     samples, rate = kokoro.create(phonemes, voice=args.voice, speed=args.speed, is_phonemes=True)

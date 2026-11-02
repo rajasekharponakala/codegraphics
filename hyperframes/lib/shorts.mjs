@@ -4,6 +4,7 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync } from "node:fs";
+import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -118,20 +119,41 @@ export function captionGroups(words) {
 
 // ---------- audio ----------
 
+// One throwaway `hyperframes tts` call downloads the Kokoro model and voices.
+function ensureKokoroFiles(dir) {
+  const model = join(homedir(), ".cache", "hyperframes", "tts", "models", "kokoro-v1.0.onnx");
+  if (existsSync(model)) return;
+  execFileSync("npx", ["hyperframes", "tts", "ready", "-o", join(dir, "warmup.wav")], {
+    cwd: HF_ROOT,
+    stdio: ["ignore", "ignore", "inherit"],
+  });
+}
+
 // lang overrides the phonemizer language Kokoro would infer from the voice
 // prefix, e.g. an Indian voice (hf_/hm_) reading English text with "en-gb".
-function tts(text, voice, speed, cacheDir, lang) {
+// accent "indian" speaks through indian_tts.py, which rewrites the phonemes with
+// Indian English features; it needs the Kokoro files that `hyperframes tts` downloads.
+function tts(text, voice, speed, cacheDir, lang, accent) {
   const dir = cacheDir;
   mkdirSync(dir, { recursive: true });
-  const id = lang ? `${voice}|${speed}|${lang}|${text}` : `${voice}|${speed}|${text}`;
+  const tag = accent ? `accent:${accent}` : lang;
+  const id = tag ? `${voice}|${speed}|${tag}|${text}` : `${voice}|${speed}|${text}`;
   const key = createHash("sha256").update(id).digest("hex").slice(0, 16);
   const out = join(dir, `${key}.wav`);
   if (!existsSync(out)) {
-    const langArgs = lang ? ["-l", lang] : [];
-    execFileSync("npx", ["hyperframes", "tts", text, "-v", voice, "-s", String(speed), ...langArgs, "-o", out], {
-      cwd: HF_ROOT,
-      stdio: ["ignore", "ignore", "inherit"],
-    });
+    if (accent === "indian") {
+      ensureKokoroFiles(dir);
+      const python = process.env.HYPERFRAMES_PYTHON || "python3";
+      execFileSync(python, ["-I", join(LIB, "indian_tts.py"), "--text", text, "--voice", voice, "--speed", String(speed), "--out", out], {
+        stdio: ["ignore", "ignore", "inherit"],
+      });
+    } else {
+      const langArgs = lang ? ["-l", lang] : [];
+      execFileSync("npx", ["hyperframes", "tts", text, "-v", voice, "-s", String(speed), ...langArgs, "-o", out], {
+        cwd: HF_ROOT,
+        stdio: ["ignore", "ignore", "inherit"],
+      });
+    }
   }
   const duration = Number(
     execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", out]).toString(),
@@ -194,10 +216,10 @@ export function normalize(input, out) {
 
 // Speaks each segment ({ text }) and lays them end to end. Adds audio, start and
 // end to each segment; returns when the end card starts and the total length.
-export function narrate(segments, { voice, speed, cacheDir, lang }) {
+export function narrate(segments, { voice, speed, cacheDir, lang, accent }) {
   let t = LEAD;
   for (const seg of segments) {
-    seg.audio = tts(spoken(seg.text), voice, speed, cacheDir, lang);
+    seg.audio = tts(spoken(seg.text), voice, speed, cacheDir, lang, accent);
     seg.start = t;
     seg.end = t + seg.audio.duration;
     t = seg.end + GAP;
