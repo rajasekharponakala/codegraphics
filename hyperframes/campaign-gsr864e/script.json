@@ -1,0 +1,62 @@
+{
+  "voice": "bm_george",
+  "speed": 1.1,
+  "music": { "gainDb": -15 },
+  "slug": "gsr864e-object-by-5-nov",
+  "tag": "G.S.R. 864(E)",
+  "deadline": "Objections close 5 November 2026",
+  "hook": "India's draft lab rules put our animals in danger.",
+  "beats": [
+    {
+      "big": "Since 1998",
+      "label": "Draft rules · Gazette, 6 October 2026",
+      "say": "A new draft, {G.S.R. 864(E)|G S R eight sixty-four E}, would roll back protections in force since {1998|nineteen ninety-eight}. Once lost, they will not return.",
+      "scene": { "type": "timeline", "from": ["1998", "1998 Rules: protections in force"], "to": ["2026", "Draft G.S.R. 864(E): rolls them back"] }
+    },
+    {
+      "big": "Strays and wildlife",
+      "label": "Rules 5(1), 5(2), 5(3)",
+      "say": "Stray, feral and even protected wild animals could be taken for experiments, on the word of an undefined competent authority.",
+      "scene": {
+        "type": "animals",
+        "animals": [["🐕", "Street dogs"], ["🐈", "Street cats"], ["🐄", "Cattle"], ["🫏", "Donkeys"], ["🐒", "Rhesus macaques"], ["🐒", "Langurs"], ["🦜", "Parakeets"], ["🐦", "Mynas"], ["🦎", "Monitor lizards"]],
+        "stamp": "“Competent authority” = undefined"
+      }
+    },
+    {
+      "big": "Open market",
+      "label": "Rule 21(2)",
+      "say": "{Rule 21(2)|Rule twenty-one, two} reopens open-market buying of livestock, fish and birds. In 2006, this needed written permission.",
+      "scene": { "type": "quote", "before": "Rule 21(2), as drafted, includes the words:", "struck": "“non-registered establishments or open market”", "after": "", "note": "Our ask: delete these words and restore the 2006 requirement of written permission." }
+    },
+    {
+      "big": "No approver",
+      "label": "Rule 11 · severe experiments",
+      "say": "Severe experiments on mice, rats and rabbits have no stated approver. They fall between two rules.",
+      "scene": { "type": "gap", "rows": [["Mild and moderate · all species", "IAEC"], ["Severe · above rodents and lagomorphs", "CCSEA"], ["Severe · rodents and lagomorphs", ""]], "note": "Rule 11(2) and 11(3), as drafted" }
+    },
+    {
+      "big": "Pain",
+      "label": "Anaesthesia duty dropped",
+      "say": "The draft drops the duty to give anaesthesia, which the {1998|nineteen ninety-eight} rules required. Suffering need not be eased.",
+      "scene": { "type": "struck", "title": "Rule 9(d), 1998 Rules", "text": "Anaesthesia for any procedure more severe than a simple inoculation or superficial venesection.", "stamp": "Not in the draft" }
+    },
+    {
+      "big": "16 fixes",
+      "label": "Clause by clause",
+      "say": "Some parts of the draft are better. But these losses are major. We ask for sixteen fixes, or a full redraft.",
+      "scene": {
+        "type": "asks",
+        "asks": ["Close the approval gap", "Keep large animals with the Committee", "Delete open-market sourcing", "Remove the stray exemption", "Close the wildlife exception", "Resolve the primate contradiction", "A laboratory must be a place", "Make replacement a duty", "Stop using animals to teach manual skills", "Restore the anaesthesia duty", "Put aftercare in the rules", "Do not call this mild", "End severe pain, not just long pain", "Do not narrow who counts", "Test the rules against the Act", "Ask the Ministry to raise the fine"],
+        "note": "Full list and sources: protectouranimals.in"
+      }
+    }
+  ],
+  "outro": "Object before {5 November|the fifth of November}. Email {cpcsea-mef@gov.in|C P C S E A, dash, M E F, at gov dot in}, or use {protectouranimals.in|protect our animals dot in}.",
+  "end": {
+    "title": "Object by 5 November 2026",
+    "email": "cpcsea-mef@gov.in",
+    "site": "protectouranimals.in",
+    "small": "Takes two minutes. Sent from your own inbox. Quote G.S.R. 864(E), dated 30 September 2026."
+  }
+}

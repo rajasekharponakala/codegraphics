@@ -1,0 +1,111 @@
+/* Campaign look: gazette paper, ink, and a red alarm colour for what is
+   missing or struck out. Matches the site's #f2f6ff theme colour. */
+@font-face { font-family: "Playfair Display"; font-weight: 700; src: url("vendor/playfair-display-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-weight: 900; src: url("vendor/playfair-display-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("vendor/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("vendor/inter-latin-600-normal.woff2") format("woff2"); }
+/* System font: apt package fonts-noto-color-emoji (installed by the workflow). */
+@font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+
+:root {
+  --paper: #f2f6ff;
+  --sheet: #ffffff;
+  --ink: #0d1b2a;
+  --muted: #4a5a6e;
+  --red: #d62828;
+  --blue: #1d4ed8;
+  --mark: #ffd84d;
+  --serif: "Playfair Display", Georgia, serif;
+  --sans: "Inter", "Helvetica Neue", Arial, "Noto Color Emoji", sans-serif;
+  --line: 4px solid var(--ink);
+  --shadow: 10px 10px 0 var(--ink);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+#root { position: relative; width: 100%; height: 100%; font-family: var(--sans); color: var(--ink); }
+#bg {
+  position: absolute; inset: 0; background-color: var(--paper);
+  background-image: repeating-linear-gradient(0deg, rgba(13, 27, 42, 0.05) 0 2px, transparent 2px 64px);
+}
+.scene { position: absolute; inset: 0; }
+
+/* ---------- header ---------- */
+#tag { position: absolute; left: 70px; top: 190px; padding: 10px 20px; background: var(--red); color: #fff; font-size: 34px; font-weight: 600; letter-spacing: 0.04em; }
+#deadline { position: absolute; left: 70px; top: 262px; padding: 8px 18px; background: var(--sheet); border: 3px solid var(--ink); font-size: 30px; font-weight: 600; }
+#progress-track { position: absolute; left: 70px; top: 336px; width: 940px; height: 12px; background: rgba(13, 27, 42, 0.12); }
+#progress { position: absolute; left: 70px; top: 336px; width: 940px; height: 12px; background: var(--red); transform-origin: left center; }
+
+/* ---------- hook + cards (bottom-anchored above the captions) ---------- */
+#hook, .card, #end-card { position: absolute; left: 70px; width: 940px; background: var(--sheet); border: var(--line); box-shadow: var(--shadow); }
+#hook { bottom: 560px; padding: 44px 50px; font-family: var(--serif); font-weight: 900; font-size: 84px; line-height: 1.08; border-left: 18px solid var(--red); transform-origin: left bottom; }
+.card { bottom: 560px; padding: 30px 46px 38px; border-left: 18px solid var(--red); }
+.card-label { font-size: 32px; font-weight: 600; color: var(--red); }
+.card-big { margin-top: 10px; font-family: var(--serif); font-weight: 900; line-height: 1; letter-spacing: -0.015em; }
+
+/* ---------- gazette ---------- */
+.gazette { position: absolute; left: 120px; top: 430px; width: 840px; padding: 40px 48px 46px; background: var(--sheet); border: var(--line); box-shadow: var(--shadow); transform: rotate(-2deg); }
+.gz-kicker { font-size: 26px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.gz-title { margin-top: 12px; font-family: var(--serif); font-weight: 900; font-size: 96px; line-height: 1; }
+.gz-sub { margin-top: 14px; font-size: 30px; line-height: 1.3; }
+.gz-lines { margin-top: 24px; display: grid; gap: 12px; }
+.gz-lines i { display: block; height: 12px; background: rgba(13, 27, 42, 0.12); }
+.gz-lines i:nth-child(2) { width: 80%; }
+.gz-lines i:nth-child(4) { width: 55%; }
+.stamp {
+  position: absolute; z-index: 2; left: 600px; top: 640px; padding: 8px 26px; border: 8px solid var(--red); color: var(--red);
+  font-family: var(--serif); font-weight: 900; font-size: 76px; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- timeline ---------- */
+.tl-line { position: absolute; left: 132px; width: 10px; background: var(--ink); }
+.tl-node { position: absolute; left: 70px; width: 940px; display: flex; align-items: center; gap: 30px; }
+.tl-node b { width: 136px; height: 136px; flex: none; display: flex; align-items: center; justify-content: center; border: var(--line); font-family: var(--serif); font-size: 44px; font-weight: 900; background: var(--sheet); }
+.tl-node span { font-size: 38px; font-weight: 600; line-height: 1.25; }
+.tl-node.now b { background: var(--red); color: #fff; }
+
+/* ---------- animals ---------- */
+.tile { position: absolute; width: 300px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: var(--sheet); border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); font-size: 28px; font-weight: 600; }
+.tile-icon { font-family: "Noto Color Emoji", sans-serif; font-size: 56px; line-height: 1; }
+.tag-red { position: absolute; left: 70px; padding: 14px 24px; background: var(--red); color: #fff; font-size: 38px; font-weight: 600; transform: rotate(-1.5deg); }
+
+/* ---------- quoted / struck clause ---------- */
+.doc { position: absolute; left: 70px; width: 940px; padding: 36px 44px 44px; background: var(--sheet); border: var(--line); box-shadow: var(--shadow); }
+.doc-kicker { font-size: 30px; font-weight: 600; color: var(--muted); }
+.doc-quote { margin-top: 18px; font-family: var(--serif); font-weight: 900; font-size: 66px; line-height: 1.15; }
+.doc-text { margin-top: 18px; font-family: var(--serif); font-weight: 700; font-size: 52px; line-height: 1.25; }
+.struck {
+  --strike: 0%;
+  background-image: linear-gradient(var(--red), var(--red));
+  background-repeat: no-repeat; background-position: 0 58%; background-size: var(--strike) 8px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.ask-box { position: absolute; left: 70px; width: 940px; padding: 22px 28px; background: var(--ink); color: #fff; font-size: 34px; font-weight: 600; line-height: 1.35; }
+
+/* ---------- approval gap ---------- */
+.gap-head { position: absolute; left: 70px; font-size: 34px; font-weight: 600; }
+.gap-row { position: absolute; left: 70px; width: 940px; height: 110px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; background: var(--sheet); border: var(--line); }
+.gap-what { font-size: 32px; font-weight: 600; max-width: 640px; line-height: 1.2; }
+.gap-who { min-width: 170px; padding: 8px 14px; text-align: center; background: var(--ink); color: #fff; font-size: 36px; font-weight: 600; }
+.gap-row.missing { border-color: var(--red); box-shadow: 10px 10px 0 var(--red); }
+.gap-row.missing .gap-who { background: var(--red); font-family: var(--serif); font-weight: 900; font-size: 48px; }
+.note { position: absolute; left: 70px; width: 940px; font-size: 26px; font-weight: 600; color: var(--muted); }
+
+/* ---------- sixteen asks ---------- */
+.ask { position: absolute; width: 465px; height: 60px; display: flex; align-items: center; gap: 12px; padding: 0 12px; background: var(--sheet); border: 3px solid var(--ink); font-size: 25px; font-weight: 600; line-height: 1.1; }
+.ask b { flex: none; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: var(--red); color: #fff; font-size: 22px; }
+
+/* ---------- captions ---------- */
+.caption {
+  position: absolute; left: 50%; top: 1405px; width: max-content; max-width: 940px; transform: translateX(-50%);
+  padding: 12px 22px; background: var(--ink); color: #fff; font-size: 56px; font-weight: 600; line-height: 1.25; text-align: center;
+}
+.caption .w { display: inline-block; padding: 0 6px; }
+.caption .w[data-on="1"] { background: var(--mark); color: var(--ink); }
+
+/* ---------- end card ---------- */
+#end-card { top: 470px; padding: 48px 50px 52px; border-left: 18px solid var(--red); }
+#end-title { font-family: var(--serif); font-weight: 900; font-size: 86px; line-height: 1.05; color: var(--red); }
+.end-row { margin-top: 30px; display: flex; flex-direction: column; gap: 6px; }
+.end-row span { font-size: 28px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.end-row b { font-size: 56px; font-weight: 600; }
+#end-small { margin-top: 34px; font-size: 30px; line-height: 1.45; color: var(--muted); }
