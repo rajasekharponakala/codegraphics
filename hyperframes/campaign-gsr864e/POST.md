@@ -1,6 +1,6 @@
 # G.S.R. 864(E) campaign video: post kit
 
-Video: `renders/gsr864e-object-by-5-nov.mp4` (57 s, 1080×1920). Post before 5 November 2026.
+Video: `renders/gsr864e-object-by-5-nov.mp4` (59 s, 1080×1920). Post before 5 November 2026.
 
 ## Caption / title (under 100 characters)
 
@@ -30,7 +30,7 @@ Photographs (Wikimedia Commons):
 Street dog: akshatsgi, CC BY-SA 4.0 · Street dog and puppies: Sanasrin, CC BY-SA 4.0 · Street cat: Rudolph A. Furtado, CC0 · Cow on a Delhi road: John Hill, CC BY-SA 3.0 · Donkey cart: Alexandre Ultré, CC BY-SA 3.0 · Bull on a Varanasi street: Saaremees, CC BY-SA 4.0 · Rhesus macaque: Charles J. Sharp, CC BY-SA 4.0 · Nilgiri langur: Vasant944, CC BY-SA 4.0 · Young macaque: Giles Laurent, CC BY-SA 4.0 · Rose-ringed parakeet: Tisha Mukherjee, CC BY-SA 4.0 · Common myna: Tisha Mukherjee, CC BY-SA 4.0 · Monitor lizard: Charles J. Sharp, CC BY-SA 4.0.
 This video is shared under CC BY-SA 4.0.
 
-Creator stills are from their own public posts about G.S.R. 864(E); their views are their own. Voice: AI text-to-speech. Music: original.
+Creator stills are from their own public posts about G.S.R. 864(E); their views are their own. Voice: AI text-to-speech (Indian English). Music: original.
 
 #GSR864E #ProtectOurAnimals #AnimalWelfare #India #CCSEA
 ```
