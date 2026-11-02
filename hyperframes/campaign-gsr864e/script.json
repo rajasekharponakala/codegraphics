@@ -1,5 +1,6 @@
 {
-  "voice": "bm_george",
+  "voice": "hf_alpha",
+  "lang": "en-gb",
   "speed": 1.1,
   "music": {
     "gainDb": -15
@@ -12,7 +13,7 @@
     {
       "big": "Since 1998",
       "label": "Draft rules · Gazette, 6 October 2026",
-      "say": "A new draft, {G.S.R. 864(E)|G S R eight sixty-four E}, would roll back protections in force since {1998|nineteen ninety-eight}. Once lost, they will not return.",
+      "say": "Draft rules {G.S.R. 864(E)|G S R eight sixty-four E} would roll back protections in force since {1998|nineteen ninety-eight}.",
       "scene": {
         "type": "gazette",
         "image": "gazette-hero.jpg",
@@ -78,7 +79,7 @@
     {
       "big": "Open market",
       "label": "Rule 21(2)",
-      "say": "{Rule 21(2)|Rule twenty-one, two} reopens open-market buying of livestock, fish and birds. In 2006, this needed written permission.",
+      "say": "{Rule 21(2)|Rule twenty-one, two} reopens open-market buying of livestock, fish and birds.",
       "scene": {
         "type": "quote",
         "before": "Rule 21(2), as drafted, includes the words:",
@@ -92,7 +93,7 @@
     {
       "big": "No approver",
       "label": "Rule 11 · severe experiments",
-      "say": "Severe experiments on mice, rats and rabbits have no stated approver. They fall between two rules.",
+      "say": "Severe experiments on mice, rats and rabbits have no stated approver.",
       "scene": {
         "type": "gap",
         "rows": [
@@ -116,7 +117,7 @@
     {
       "big": "Pain",
       "label": "Anaesthesia duty dropped",
-      "say": "The draft drops the duty to give anaesthesia, which the {1998|nineteen ninety-eight} rules required. Suffering need not be eased.",
+      "say": "The draft drops the {1998|nineteen ninety-eight} duty to give anaesthesia. Suffering need not be eased.",
       "scene": {
         "type": "struck",
         "title": "Rule 9(d), 1998 Rules",
@@ -201,7 +202,7 @@
     {
       "big": "16 fixes",
       "label": "Clause by clause",
-      "say": "Some parts of the draft are better. But these losses are major. We ask for sixteen fixes, or a full redraft.",
+      "say": "Some parts are better, but the losses are major. We ask for sixteen fixes, or a full redraft.",
       "scene": {
         "type": "asks",
         "asks": [

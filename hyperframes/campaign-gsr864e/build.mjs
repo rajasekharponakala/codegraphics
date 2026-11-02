@@ -158,7 +158,7 @@ const segments = [
   ...script.beats.map((b) => ({ kind: "beat", text: b.say, beat: b })),
   { kind: "outro", text: script.outro },
 ];
-const { endStart, total } = narrate(segments, { voice: script.voice, speed: script.speed, cacheDir: join(BUILD, ".tts") });
+const { endStart, total } = narrate(segments, { voice: script.voice, speed: script.speed, lang: script.lang, cacheDir: join(BUILD, ".tts") });
 writeSoundtrack(segments, total, out, { music: script.music, seed: 864 });
 
 const scenes = segments.slice(0, -1).map((seg, i) => ({

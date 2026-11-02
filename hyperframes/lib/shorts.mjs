@@ -118,13 +118,17 @@ export function captionGroups(words) {
 
 // ---------- audio ----------
 
-function tts(text, voice, speed, cacheDir) {
+// lang overrides the phonemizer language Kokoro would infer from the voice
+// prefix, e.g. an Indian voice (hf_/hm_) reading English text with "en-gb".
+function tts(text, voice, speed, cacheDir, lang) {
   const dir = cacheDir;
   mkdirSync(dir, { recursive: true });
-  const key = createHash("sha256").update(`${voice}|${speed}|${text}`).digest("hex").slice(0, 16);
+  const id = lang ? `${voice}|${speed}|${lang}|${text}` : `${voice}|${speed}|${text}`;
+  const key = createHash("sha256").update(id).digest("hex").slice(0, 16);
   const out = join(dir, `${key}.wav`);
   if (!existsSync(out)) {
-    execFileSync("npx", ["hyperframes", "tts", text, "-v", voice, "-s", String(speed), "-o", out], {
+    const langArgs = lang ? ["-l", lang] : [];
+    execFileSync("npx", ["hyperframes", "tts", text, "-v", voice, "-s", String(speed), ...langArgs, "-o", out], {
       cwd: HF_ROOT,
       stdio: ["ignore", "ignore", "inherit"],
     });
@@ -190,10 +194,10 @@ export function normalize(input, out) {
 
 // Speaks each segment ({ text }) and lays them end to end. Adds audio, start and
 // end to each segment; returns when the end card starts and the total length.
-export function narrate(segments, { voice, speed, cacheDir }) {
+export function narrate(segments, { voice, speed, cacheDir, lang }) {
   let t = LEAD;
   for (const seg of segments) {
-    seg.audio = tts(spoken(seg.text), voice, speed, cacheDir);
+    seg.audio = tts(spoken(seg.text), voice, speed, cacheDir, lang);
     seg.start = t;
     seg.end = t + seg.audio.duration;
     t = seg.end + GAP;

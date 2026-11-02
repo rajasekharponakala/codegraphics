@@ -1,6 +1,6 @@
 # G.S.R. 864(E) campaign video: post kit
 
-Video: `renders/gsr864e-object-by-5-nov.mp4` (69 s, 1080×1920). Post before 5 November 2026.
+Video: `renders/gsr864e-object-by-5-nov.mp4` (57 s, 1080×1920). Post before 5 November 2026.
 
 ## Caption / title (under 100 characters)
 
