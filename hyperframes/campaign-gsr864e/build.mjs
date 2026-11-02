@@ -1,6 +1,7 @@
 // Builds the G.S.R. 864(E) campaign Short from script.json into build/<slug>/:
-// Kokoro voiceover over the music bed, word captions, and clause-by-clause
-// scenes. Every claim comes from the campaign page (protectouranimals.in).
+// Kokoro voiceover over the music bed, word captions, and photo-led scenes.
+// Every claim comes from the campaign page (protectouranimals.in); photos are
+// the site's CC-licensed Wikimedia Commons images.
 // Render with `hyperframes render` inside the build folder.
 import { cpSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -16,47 +17,45 @@ const TOP = 400; // first pixel below the header
 const script = JSON.parse(readFileSync(join(HERE, "script.json"), "utf8"));
 const f = (x) => Number(x.toFixed(3));
 const clip = (start, end, track) => `data-start="${f(start)}" data-duration="${f(end - start)}" data-track-index="${track}"`;
+const img = (src) => `assets/${src}`;
+// Blurred, darkened copy of a photo filling the frame behind a scene.
+const backdrop = (src) => (src ? `<div class="backdrop" style="background-image:url('${img(src)}')"></div><div class="shade"></div>` : "");
+const photo = (src, cls, style) => `<div class="photo ${cls}" style="${style};background-image:url('${img(src)}')"></div>`;
 
 // ---------- scenes: each returns { html, js(from) } ----------
 
-function gazetteScene(id) {
+function hookScene(id) {
   return {
-    html: `<div id="${id}-sheet" class="gazette">
-          <div class="gz-kicker">The Gazette of India · Extraordinary</div>
-          <div class="gz-title">${esc(script.tag)}</div>
-          <div class="gz-sub">Draft rules on laboratory animals · published 6 October 2026</div>
-          <div class="gz-lines"><i></i><i></i><i></i><i></i></div>
-        </div>
-        <div id="${id}-stamp" class="stamp" data-layout-allow-occlusion>Draft</div>`,
+    html: `${backdrop(script.hookPhoto)}
+        ${photo(script.hookPhoto, "hero", `left:70px;top:${TOP + 20}px;width:940px;height:600px`)}`,
     js: () => `
-      tl.fromTo("#${id}-stamp", { scale: 1.6, opacity: 0, rotation: -24 }, { scale: 1, opacity: 1, rotation: -12, duration: 0.35, ease: "back.out(2)" }, 0.6);`,
+      tl.fromTo("#${id} .hero", { backgroundSize: "100%" }, { backgroundSize: "112%", duration: 4.5, ease: "none" }, 0);`,
   };
 }
 
-function timelineScene(s, id) {
-  const node = ([year, text], cls, y) =>
-    `<div class="tl-node ${cls}" style="top:${y}px"><b>${esc(year)}</b><span>${esc(text)}</span></div>`;
+function gazetteScene(s, id) {
   return {
-    html: `<div class="tl-line" style="top:${TOP + 120}px;height:330px"></div>
-        ${node(s.from, "then", TOP + 60)}
-        ${node(s.to, "now", TOP + 330)}`,
+    html: `${backdrop(s.bg)}
+        <div class="gazette-img" style="background-image:url('${img(s.image)}')"></div>
+        <div id="${id}-stamp" class="stamp" data-layout-allow-occlusion>Draft</div>`,
     js: (from) => `
-      tl.from("#${id} .tl-line", { scaleY: 0, transformOrigin: "top center", duration: 0.8, ease: "power2.inOut" }, ${f(from + 0.6)});
-      tl.from("#${id} .tl-node.now", { x: 80, opacity: 0, duration: 0.4, ease: "back.out(1.8)" }, ${f(from + 1.4)});`,
+      tl.fromTo("#${id}-stamp", { scale: 1.8, opacity: 0, rotation: -24 }, { scale: 1, opacity: 1, rotation: -12, duration: 0.35, ease: "back.out(2)" }, ${f(from + 1.0)});
+`,
   };
 }
 
 function animalsScene(s, id) {
   const tiles = s.animals
-    .map(([icon, name], i) => {
-      const x = 70 + (i % 3) * 320;
-      const y = TOP + 10 + Math.floor(i / 3) * 160;
-      return `<div class="tile" style="left:${x}px;top:${y}px"><span class="tile-icon">${icon}</span><span>${esc(name)}</span></div>`;
+    .map(([src, name], i) => {
+      const x = 70 + (i % 3) * 318;
+      const y = TOP + 10 + Math.floor(i / 3) * 196;
+      return `<div class="tile" style="left:${x}px;top:${y}px;background-image:url('${img(src)}')"><span>${esc(name)}</span></div>`;
     })
     .join("");
   return {
-    html: `${tiles}
-        <div id="${id}-stamp" class="tag-red" style="top:${TOP + 500}px">${esc(s.stamp)}</div>`,
+    html: `${backdrop(s.bg)}
+        ${tiles}
+        <div id="${id}-stamp" class="tag-red" style="top:${TOP + 600}px">${esc(s.stamp)}</div>`,
     js: (from) => `
       tl.from("#${id} .tile", { scale: 0.7, opacity: 0, duration: 0.25, stagger: 0.12, ease: "back.out(2)" }, ${f(from + 0.3)});
       tl.from("#${id}-stamp", { scale: 1.5, opacity: 0, duration: 0.3, ease: "back.out(2)" }, ${f(from + 3.4)});`,
@@ -65,28 +64,30 @@ function animalsScene(s, id) {
 
 function quoteScene(s, id) {
   return {
-    html: `<div class="doc" style="top:${TOP + 40}px">
+    html: `${backdrop(s.bg)}
+        ${photo(s.photo, "", `left:70px;top:${TOP + 10}px;width:940px;height:400px`)}
+        <div class="doc" style="top:${TOP + 330}px">
           <div class="doc-kicker">${esc(s.before)}</div>
           <div class="doc-quote"><span id="${id}-struck" class="struck">${esc(s.struck)}</span></div>
-        </div>
-        <div class="ask-box" style="top:${TOP + 400}px">${esc(s.note)}</div>`,
+        </div>`,
     js: (from) => `
-      tl.fromTo("#${id}-struck", { "--strike": "0%" }, { "--strike": "100%", duration: 0.7, ease: "power2.inOut" }, ${f(from + 2.2)});
-      tl.from("#${id} .ask-box", { y: 40, opacity: 0, duration: 0.35, ease: "power3.out" }, ${f(from + 3.4)});`,
+      tl.from("#${id} .doc", { y: 60, opacity: 0, duration: 0.35, ease: "power3.out" }, ${f(from + 0.6)});
+      tl.fromTo("#${id}-struck", { "--strike": "0%" }, { "--strike": "100%", duration: 0.7, ease: "power2.inOut" }, ${f(from + 2.2)});`,
   };
 }
 
 function gapScene(s, id) {
   const rows = s.rows
-    .map(([what, who], i) => `<div class="gap-row ${who ? "" : "missing"}" style="top:${TOP + 70 + i * 130}px">
+    .map(([what, who], i) => `<div class="gap-row ${who ? "" : "missing"}" style="top:${TOP + 80 + i * 140}px">
           <span class="gap-what">${esc(what)}</span>
           <span class="gap-who">${who ? esc(who) : "?"}</span>
         </div>`)
     .join("");
   return {
-    html: `<div class="gap-head" style="top:${TOP}px">Who approves the experiment?</div>
+    html: `${backdrop(s.bg)}
+        <div class="gap-head" style="top:${TOP + 10}px">Who approves the experiment?</div>
         ${rows}
-        <div class="note" style="top:${TOP + 70 + s.rows.length * 130 + 6}px">${esc(s.note)}</div>`,
+        <div class="note" style="top:${TOP + 80 + s.rows.length * 140 + 6}px">${esc(s.note)}</div>`,
     js: (from) => `
       tl.from("#${id} .gap-row", { x: -60, opacity: 0, duration: 0.3, stagger: 0.45, ease: "power3.out" }, ${f(from + 0.4)});
       tl.fromTo("#${id} .gap-row.missing .gap-who", { scale: 1 }, { scale: 1.25, duration: 0.3, yoyo: true, repeat: 3, ease: "power1.inOut" }, ${f(from + 2.2)});`,
@@ -95,14 +96,33 @@ function gapScene(s, id) {
 
 function struckScene(s, id) {
   return {
-    html: `<div class="doc" style="top:${TOP + 40}px">
+    html: `${backdrop(s.bg)}
+        ${photo(s.photo, "", `left:220px;top:${TOP + 10}px;width:640px;height:330px`)}
+        <div class="doc" style="top:${TOP + 290}px">
           <div class="doc-kicker">${esc(s.title)}</div>
           <div class="doc-text"><span id="${id}-struck" class="struck">${esc(s.text)}</span></div>
         </div>
-        <div id="${id}-stamp" class="tag-red" style="top:${TOP + 470}px">${esc(s.stamp)}</div>`,
+        <div id="${id}-stamp" class="tag-red" style="top:${TOP + 230}px;left:600px">${esc(s.stamp)}</div>`,
     js: (from) => `
       tl.fromTo("#${id}-struck", { "--strike": "0%" }, { "--strike": "100%", duration: 0.8, ease: "power2.inOut" }, ${f(from + 2.0)});
       tl.from("#${id}-stamp", { scale: 1.5, opacity: 0, duration: 0.3, ease: "back.out(2)" }, ${f(from + 2.9)});`,
+  };
+}
+
+function voicesScene(s, id) {
+  const tiles = s.people
+    .map(([src, name, role], i) => {
+      const x = 70 + (i % 4) * 238;
+      const y = TOP + 70 + Math.floor(i / 4) * 196;
+      return `<div class="face" style="left:${x}px;top:${y}px;background-image:url('${img(src)}')"><span><b>${esc(name)}</b>${esc(role)}</span></div>`;
+    })
+    .join("");
+  return {
+    html: `${backdrop(s.bg)}
+        <div class="count" style="top:${TOP}px">${esc(s.count)}</div>
+        ${tiles}`,
+    js: (from) => `
+      tl.from("#${id} .face", { scale: 0.6, opacity: 0, duration: 0.25, stagger: 0.08, ease: "back.out(2)" }, ${f(from + 0.3)});`,
   };
 }
 
@@ -115,20 +135,22 @@ function asksScene(s, id) {
     })
     .join("");
   return {
-    html: `${items}
-        <div class="note" style="top:${TOP - 10 + Math.ceil(s.asks.length / 2) * 70 + 4}px">${esc(s.note)}</div>`,
+    html: `${backdrop(s.bg)}
+        ${items}
+        <div class="note light" style="top:${TOP - 10 + Math.ceil(s.asks.length / 2) * 70 + 4}px">${esc(s.note)}</div>`,
     js: (from) => `
       tl.from("#${id} .ask", { opacity: 0, x: -20, duration: 0.2, stagger: 0.16, ease: "power2.out" }, ${f(from + 0.2)});`,
   };
 }
 
-const SCENES = { timeline: timelineScene, animals: animalsScene, quote: quoteScene, gap: gapScene, struck: struckScene, asks: asksScene };
+const SCENES = { gazette: gazetteScene, animals: animalsScene, quote: quoteScene, gap: gapScene, struck: struckScene, voices: voicesScene, asks: asksScene };
 
 // ---------- composition ----------
 
 const out = join(BUILD, script.slug);
 mkdirSync(out, { recursive: true });
 cpSync(join(HERE, "vendor"), join(out, "vendor"), { recursive: true });
+cpSync(join(HERE, "assets"), join(out, "assets"), { recursive: true });
 cpSync(join(HERE, "campaign.css"), join(out, "campaign.css"));
 
 const segments = [
@@ -146,7 +168,7 @@ const scenes = segments.slice(0, -1).map((seg, i) => ({
 }));
 const parts = scenes.map((sc, i) => {
   const id = `scene-${i}`;
-  return { id, sc, ...(i === 0 ? gazetteScene(id) : SCENES[sc.beat.scene.type](sc.beat.scene, id)) };
+  return { id, sc, ...(i === 0 ? hookScene(id) : SCENES[sc.beat.scene.type](sc.beat.scene, id)) };
 });
 
 const sceneHtml = parts
@@ -155,14 +177,14 @@ const sceneHtml = parts
       </div>`)
   .join("\n");
 const sceneJs = parts
-  .map((p, i) => (i > 0 ? `\n      tl.from("#${p.id}", { y: 40, opacity: 0, duration: 0.3, ease: "power3.out" }, ${f(p.sc.from)});` : "") + p.js(p.sc.from))
+  .map((p, i) => (i > 0 ? `\n      tl.from("#${p.id}", { opacity: 0, duration: 0.3, ease: "power1.out" }, ${f(p.sc.from)});` : "") + p.js(p.sc.from))
   .join("");
 
 const cards = scenes
   .slice(1)
   .map((sc, i) => {
     const big = display(sc.beat.big);
-    const size = big.length <= 8 ? 150 : big.length <= 12 ? 120 : 96;
+    const size = big.length <= 9 ? 150 : big.length <= 12 ? 120 : 96;
     return `      <div id="card-${i + 1}" class="card clip" ${clip(sc.from, sc.to, 10)}>
         <div class="card-label">${esc(display(sc.beat.label))}</div>
         <div class="card-big" style="font-size:${size}px">${esc(big)}</div>
@@ -191,12 +213,17 @@ ${sceneHtml}
       <div id="progress" class="clip" ${clip(0, endStart, 7)}></div>
       <h1 id="hook" class="clip" ${clip(0, scenes[0].to, 8)}>${esc(display(script.hook))}</h1>
 ${cards}
+      <div id="end-scene" class="clip" ${clip(endStart, total, 29)}>
+        ${backdrop(e.photo)}
+        ${photo(e.photo, "", `left:70px;top:200px;width:940px;height:520px`)}
+      </div>
 ${captions.html}
       <div id="end-card" class="clip" ${clip(endStart, total, 30)}>
         <div id="end-title">${esc(e.title)}</div>
         <div class="end-row"><span>Email</span><b>${esc(e.email)}</b></div>
         <div class="end-row"><span>Or use</span><b>${esc(e.site)}</b></div>
         <p id="end-small">${esc(e.small)}</p>
+        <p id="end-credits">${esc(e.credits)}</p>
       </div>
       <audio id="soundtrack" src="soundtrack.wav" ${clip(0, total, 50)}></audio>
     </div>
@@ -204,15 +231,14 @@ ${captions.html}
       const tl = gsap.timeline({ paused: true });
       const endStart = ${f(endStart)};
       tl.fromTo("#progress", { scaleX: 0 }, { scaleX: 1, duration: endStart, ease: "none" }, 0);
-      // The hook is on screen from frame 0: that frame is the thumbnail.
-      tl.fromTo("#hook", { scale: 1 }, { scale: 1.02, duration: ${f(scenes[0].to)}, ease: "none" }, 0);
 ${sceneJs}
 ${scenes
   .slice(1)
   .map((sc, i) => `      tl.from("#card-${i + 1}", { y: 50, opacity: 0, duration: 0.35, ease: "power3.out" }, ${f(sc.from)});`)
   .join("\n")}
 ${CAPTION_TIMELINE}
-      tl.from("#end-card > *", { y: 30, opacity: 0, duration: 0.45, stagger: 0.2, ease: "power3.out" }, endStart);
+      tl.from("#end-scene", { opacity: 0, duration: 0.4 }, endStart);
+      tl.from("#end-card > *", { y: 30, opacity: 0, duration: 0.45, stagger: 0.18, ease: "power3.out" }, endStart);
 
       window.__timelines["main"] = tl;
       tl.seek(0);
