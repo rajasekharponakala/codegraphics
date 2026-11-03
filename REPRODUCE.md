@@ -17,6 +17,7 @@ scripts/render.sh campaign       # then any project below
 | Command | Video | Source to edit | Output |
 |---|---|---|---|
 | `scripts/render.sh campaign` | G.S.R. 864(E) campaign video (59 s, Indian English voice) | `hyperframes/campaign-gsr864e/script.json` | `hyperframes/campaign-gsr864e/renders/` |
+| `scripts/render.sh poverty` | India poverty data explainer (59 s, World Bank brief) | `hyperframes/explainer-india-poverty/script.json` | `hyperframes/explainer-india-poverty/renders/` |
 | `scripts/render.sh papers` | "Papers, explained" Shorts, episodes 1–4 | `hyperframes/shorts-papers/script.json` | `hyperframes/shorts-papers/renders/` |
 | `scripts/render.sh papers --episode 2` | One episode | | |
 | `scripts/render.sh roots` | Roots of Capitalism Shorts, parts 1–6 | `hyperframes/shorts-roots-of-capitalism/script.json` | `hyperframes/shorts-roots-of-capitalism/renders/` |
@@ -56,7 +57,7 @@ the bracketed parts.
 | [B3](#b3-campaign-web-page--campaign-video) | A campaign web page + its images | A one-minute campaign video | `campaign-gsr864e/` |
 | [B4](#b4-starter-repo-github-workflows-for-video) | An empty repository | HyperFrames + Remotion projects and render workflows | `release-card/`, `remotion/`, `.github/workflows/` |
 | [B5](#b5-campaign-video-with-a-telugu-voice-over) | The campaign page + images + a reviewed Telugu script | The campaign video in Telugu | Not built yet |
-| [B6](#b6-data-brief--data-explainer-video) | A short statistical brief (PDF), e.g. the World Bank's India Poverty & Equity Brief | A one-minute data-explainer video | Not built yet |
+| [B6](#b6-data-brief--data-explainer-video) | A short statistical brief (PDF), e.g. the World Bank's India Poverty & Equity Brief | A one-minute data-explainer video | `explainer-india-poverty/` |
 
 ### B1. Document → Shorts series
 

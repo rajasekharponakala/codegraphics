@@ -1,0 +1,174 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.15,
+  "music": {
+    "gainDb": -15
+  },
+  "slug": "india-poverty-2011-2023",
+  "tag": "India · Poverty & Equity",
+  "source": "Source: World Bank brief, October 2026",
+  "hook": "From {2011|twenty eleven} to {2023|twenty twenty-three}, India cut poverty from 57.7 to 16.1 percent.",
+  "hookNote": "Poverty line: $4.20 a day (2021 PPP)",
+  "beats": [
+    {
+      "big": "496 million",
+      "label": "Estimated · $4.20/day line",
+      "say": "An estimated 496 million people moved above {$4.20|four dollars twenty} a day.",
+      "src": "Summary, paragraph 1",
+      "scene": {
+        "type": "line",
+        "unit": "% of people below $4.20/day",
+        "points": [
+          [
+            "2011",
+            57.7
+          ],
+          [
+            "2023",
+            16.1
+          ]
+        ],
+        "max": 70,
+        "note": "World Bank estimates, 2011–12 CES and 2023–24 HCES"
+      }
+    },
+    {
+      "big": "27.1% → 2.6%",
+      "label": "Extreme poverty · $3.00/day",
+      "say": "Extreme poverty, at three dollars a day, fell from 27.1 to 2.6 percent.",
+      "src": "Summary, paragraph 1; Poverty at Different Lines table",
+      "scene": {
+        "type": "pair",
+        "unit": "% below $3.00/day",
+        "bars": [
+          [
+            "2011",
+            27.1
+          ],
+          [
+            "2023",
+            2.6
+          ]
+        ],
+        "max": 30
+      }
+    },
+    {
+      "big": "Why",
+      "label": "Main drivers, in the brief's words",
+      "say": "Mainly through consumption growth, more jobs, especially for women, and food subsidies.",
+      "src": "Summary, paragraph 1; jobs figure: paragraph 3",
+      "scene": {
+        "type": "drivers",
+        "items": [
+          "Strong consumption growth",
+          "Rising employment, especially among women",
+          "Social transfers, including food subsidies"
+        ],
+        "fact": "+134 million employed, 2017–2023: nearly twice the growth of the working-age population"
+      }
+    },
+    {
+      "big": "Who is still poor",
+      "label": "$4.20/day line · 2023",
+      "say": "Rural poverty is 19.3 percent. Urban is 8.6.",
+      "src": "Poverty by Group table",
+      "scene": {
+        "type": "groups",
+        "max": 25,
+        "rows": [
+          [
+            "Rural",
+            19.3
+          ],
+          [
+            "Urban",
+            8.6
+          ],
+          [
+            "Children 0–14",
+            21.8
+          ],
+          [
+            "No education (16+)",
+            21.3
+          ],
+          [
+            "Tertiary education (16+)",
+            7.4
+          ]
+        ]
+      }
+    },
+    {
+      "big": "57%",
+      "label": "of India's poor · Uttar Pradesh to West Bengal",
+      "say": "And about 57 percent of the poor live in one belt, from Uttar Pradesh to West Bengal.",
+      "src": "Summary, paragraph 2",
+      "scene": {
+        "type": "belt",
+        "share": 57,
+        "from": "Uttar Pradesh",
+        "to": "West Bengal"
+      }
+    },
+    {
+      "big": "13×",
+      "label": "Top 10% vs bottom 10% of workers",
+      "say": "Gaps remain. The top ten percent of workers earn about 13 times the bottom ten percent.",
+      "src": "Summary, paragraphs 1 and 3",
+      "scene": {
+        "type": "gap",
+        "ratio": 13,
+        "a": "Bottom 10%",
+        "b": "Top 10%",
+        "unit": "median earnings, 2023",
+        "chip": "Youth unemployment: 14.6% → 15.9% (Q1 FY2026 → Q1 FY2027)"
+      }
+    },
+    {
+      "big": "12.1% by 2028",
+      "label": "Projected · $4.20/day line",
+      "say": "By {2028|twenty twenty-eight}, poverty is projected at 12.1 percent. The brief warns that some gains may reflect better measurement.",
+      "src": "Summary, paragraph 1; Poverty Data & Methodology",
+      "scene": {
+        "type": "projection",
+        "unit": "% below $4.20/day",
+        "actual": [
+          [
+            "2011",
+            57.7
+          ],
+          [
+            "2023",
+            16.1
+          ]
+        ],
+        "projected": [
+          [
+            "2026",
+            14.2
+          ],
+          [
+            "2028",
+            12.1
+          ]
+        ],
+        "max": 70,
+        "caveat": "Part of the 2022–24 gain likely reflects better measurement. The surveys likely understate inequality."
+      }
+    }
+  ],
+  "outro": "Source: World Bank, India Poverty and Equity Brief, October {2026|twenty twenty-six}.",
+  "end": {
+    "title": "Poverty fell fast. Gaps remain.",
+    "source": "World Bank, Poverty & Equity Brief: India, October 2026",
+    "lines": [
+      "Poverty lines: $3.00 and $4.20 a day, 2021 PPP",
+      "Surveys: 2011–12 CES, 2022–23 and 2023–24 HCES; jobs: PLFS",
+      "Numbers are World Bank estimates; 2026–2028 are projections"
+    ],
+    "small": "Charts redrawn for this video. Not a World Bank product."
+  }
+}

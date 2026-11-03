@@ -12,6 +12,7 @@ Videos rendered from code by GitHub Actions (see [REPRODUCE.md](REPRODUCE.md) to
 | `hyperframes/shorts-roots-of-capitalism/` | 6-part YouTube Shorts series (1080×1920, 54–60s each) with voiceover, word-timed captions and maps. `script.json` holds the narration and map scenes; `build.mjs` turns it into one composition per part. |
 | `hyperframes/shorts-papers/` | "Papers, explained" Shorts: one per landmark paper, narrated in ASD-STE100 Simplified Technical English with redrawn neo-brutalist diagrams. Episode 1: *Attention Is All You Need*. |
 | `hyperframes/campaign-gsr864e/` | G.S.R. 864(E) campaign video: photo-led scenes from the campaign page, Indian English voice. Post text and photo credits in `POST.md`. |
+| `hyperframes/explainer-india-poverty/` | India poverty data explainer from the World Bank's Poverty & Equity Brief (October 2026): redrawn charts, Indian English voice. Sources table and post kit in `POST.md`. |
 | `scripts/` | `setup.sh` (one-time install) and `render.sh <project>` (build and render any video). |
 | `hyperframes/lib/` | Shared Shorts machinery: Kokoro voiceover, caption timing, music bed (`music.py`), ducking and loudness. |
 | `remotion/src/TitleCard.tsx` | 5s animated title card. Text and colors are Zod-typed props. |

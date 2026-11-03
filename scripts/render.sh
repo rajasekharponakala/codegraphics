@@ -2,6 +2,7 @@
 # Builds and renders one of the repo's videos. Run scripts/setup.sh first.
 #
 #   scripts/render.sh campaign                  G.S.R. 864(E) campaign video
+#   scripts/render.sh poverty                   India poverty data explainer (World Bank brief)
 #   scripts/render.sh papers [--episode N]      "Papers, explained" Shorts (all, or one)
 #   scripts/render.sh roots [--part N] [--style glass|brutal]
 #                                               Roots of Capitalism Shorts
@@ -13,7 +14,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 HF="$ROOT/hyperframes"
 
-usage() { sed -n '2,11p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'; }
 [ $# -ge 1 ] || { usage; exit 1; }
 target="$1"
 shift
@@ -40,6 +41,9 @@ render_builds() {
 case "$target" in
   campaign)
     render_builds campaign-gsr864e "$@"
+    ;;
+  poverty)
+    render_builds explainer-india-poverty "$@"
     ;;
   papers)
     rm -rf "$HF/shorts-papers/build"/ep*/
