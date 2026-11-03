@@ -55,6 +55,7 @@ the bracketed parts.
 | [B2](#b2-research-paper--explainer-short) | One research paper (PDF) per episode | An explainer Short with redrawn diagrams | `shorts-papers/` |
 | [B3](#b3-campaign-web-page--campaign-video) | A campaign web page + its images | A one-minute campaign video | `campaign-gsr864e/` |
 | [B4](#b4-starter-repo-github-workflows-for-video) | An empty repository | HyperFrames + Remotion projects and render workflows | `release-card/`, `remotion/`, `.github/workflows/` |
+| [B5](#b5-campaign-video-with-a-telugu-voice-over) | The campaign page + images + a reviewed Telugu script | The campaign video in Telugu | Not built yet |
 
 ### B1. Document → Shorts series
 
@@ -273,6 +274,118 @@ HyperFrames (HTML → MP4) and Remotion (React → MP4), side by side in hyperfr
 Known quirks: `hyperframes render --variables-file` (v0.8.x) fails with "io.readFile is not a
 function", so pass --variables "$(cat file.json)"; Remotion downloads its own Chrome on first render.
 ```
+
+### B5. Campaign video with a Telugu voice-over
+
+The B3 campaign video in Telugu. Attach the campaign page HTML (the Telugu version,
+`protectouranimals.in/te/`, if you have it), the assets zip and the English video as a reference.
+
+**Before you use it, have a native Telugu speaker review the script below.** It is a machine
+translation of the English narration, not yet checked against the site's reviewed Telugu page.
+Confirm in particular "feral" (అడవిపాలైన జంతువులు) and "competent authority" (సమర్థ అధికారి), and
+use the site's own terms where they differ.
+
+Kokoro has no Telugu voice, so allow one of the voice options in the prompt first: Hugging Face
+(`huggingface.co`, `cdn-lfs.huggingface.co`, `cas-bridge.xethub.hf.co`) for AI4Bharat Indic
+Parler-TTS, or an API key for Google Cloud TTS (te-IN) or Sarvam AI.
+
+```text
+Make a one-minute vertical campaign video (1080×1920, ≤ 60 s) with a TELUGU voice-over and
+Telugu captions, from the attached campaign page [HTML, Telugu version /te/ if attached] and its
+images [zip]. It is for Telugu-speaking viewers on YouTube Shorts, Instagram Reels and WhatsApp,
+and must be posted before the deadline: objections close [5 November 2026]. Use HyperFrames (npm
+"hyperframes", HTML → MP4), with all text in script.json and a build.mjs. Reuse the English
+version in this repo (hyperframes/campaign-gsr864e) as the design and structure reference.
+
+LANGUAGE
+- Use the Telugu script below exactly (narration and on-screen headlines). It has been reviewed
+  by a native speaker; do not rewrite it. If a line does not fit the 60 s limit, tell me which
+  one and suggest a shorter version for me to approve.
+- Keep G.S.R. 864(E), the rule numbers, CCSEA, cpcsea-mef@gov.in and protectouranimals.in in
+  English/Latin script. Show digits on screen; the voice says numbers and dates in Telugu.
+
+NARRATION (one line per scene)
+Hook:  భారతదేశపు ముసాయిదా ప్రయోగశాల నిబంధనలు మన జంతువులను ప్రమాదంలోకి నెడుతున్నాయి.
+1:     G.S.R. 864(E) ముసాయిదా నిబంధనలు, 1998 నుంచి అమల్లో ఉన్న రక్షణలను వెనక్కి తీసుకుంటాయి.
+2:     వీధి జంతువులు, అడవిపాలైన జంతువులు, చివరికి రక్షిత వన్యప్రాణులను కూడా ప్రయోగాల కోసం
+       తీసుకోవచ్చు. దానికి నిర్వచనమే లేని ఒక "సమర్థ అధికారి" మాట చాలు.
+3:     రూల్ 21(2), పశువులు, చేపలు, పక్షులను బహిరంగ మార్కెట్‌లో కొనడానికి మళ్లీ దారి తెరుస్తుంది.
+4:     చుంచెలుకలు, ఎలుకలు, కుందేళ్లపై చేసే తీవ్రమైన ప్రయోగాలకు ఆమోదం ఇచ్చేది ఎవరో నిబంధనల్లో లేదు.
+5:     1998 నిబంధనల్లో ఉన్న మత్తుమందు (అనస్థీషియా) ఇవ్వాల్సిన బాధ్యతను ముసాయిదా తొలగిస్తుంది.
+       జంతువుల బాధను తగ్గించాల్సిన అవసరమే ఉండదు.
+6:     దేశవ్యాప్తంగా నటులు, క్రియేటర్లు ఆరు భాషల్లో గళం విప్పుతున్నారు.
+7:     ముసాయిదాలో కొన్ని మంచి అంశాలు ఉన్నాయి. కానీ నష్టాలు చాలా పెద్దవి. పదహారు సవరణలు చేయాలి,
+       లేదా ముసాయిదాను పూర్తిగా తిరగ రాయాలి అని మేము కోరుతున్నాం.
+End:   నవంబర్ 5 లోపు మీ అభ్యంతరం పంపండి. cpcsea-mef@gov.in కు ఈమెయిల్ చేయండి, లేదా
+       protectouranimals.in ఉపయోగించండి.
+
+ON-SCREEN HEADLINES
+1998 నుంచి · వీధి, వన్య జంతువులు · బహిరంగ మార్కెట్ · ఆమోదించేవారు లేరు · నొప్పి ·
+35 గళాలు · 16 సవరణలు · End card: 5 నవంబర్ 2026 లోపు అభ్యంతరం పంపండి
+
+ACCURACY
+- Use only claims the page makes, with its clause numbers. Quote only words the page quotes.
+- Keep the page's honest caveat ("some parts of the draft are better").
+- The people shown are "speaking out", not "signatories": the page lists no signatories.
+- Scenes: hook (on screen from frame 0) → since 1998 (gazette page + DRAFT stamp) → strays and
+  wild animals, Rules 5(1)–(3) (photo grid) → open market, Rule 21(2) (struck quote) → no approver,
+  Rule 11 (table with the missing row in red) → anaesthesia duty dropped (struck rule) → people
+  speaking out (creator tiles, "35 videos · 6 languages") → sixteen asks → call to action over a
+  collage of the animal photos.
+
+TELUGU VOICE (Kokoro has no Telugu voice; pick one of these)
+1. AI4Bharat Indic Parler-TTS (free, Apache-2.0, has Telugu speakers): needs huggingface.co,
+   cdn-lfs.huggingface.co and cas-bridge.xethub.hf.co allowed in network settings. Use a female
+   speaker, with a description like "speaks clearly and warmly in Telugu at a moderate pace,
+   close-sounding, very clear audio". Fix the seed so each line is reproducible.
+2. Google Cloud Text-to-Speech, te-IN voices: needs an API key as a secret.
+3. Sarvam AI Bulbul (Indian, supports Telugu): needs an API key and api.sarvam.ai allowed.
+Generate one clip per scene and cache them. Send me a 15-second sample of the chosen voice
+before rendering the full video, and fix any word I say is wrong.
+
+CAPTIONS IN TELUGU
+- Install a Telugu font from npm (e.g. @fontsource/noto-sans-telugu) and copy it into the project.
+  Do not rely on system fonts or a CDN. Check that conjunct letters (ఒత్తులు) render correctly
+  in a snapshot.
+- Telugu words are longer than English words: one caption line holds 2–3 words, max ~18 characters.
+- Time the captions to the pauses detected in each clip. Weight words inside a clause by the
+  number of aksharas (syllables), not by Latin vowel counts. Keep boundaries in order: a caption
+  must never get a negative duration.
+
+PHOTOS AND RIGHTS
+- Use the page's CC-licensed animal photos; credit every one on the end card and in the
+  description. CC BY-SA photos make the video CC BY-SA; say so.
+- Creator stills are from their own posts: "their views are their own". Prefer Telugu creators
+  in the tiles where the page has them (e.g. Pru Channel Telugu).
+- Small photos: blurred, darkened copy full-screen behind each scene, the sharp photo as a framed
+  card. Keep full-screen layers behind the captions, and stamps off titles.
+
+AUDIO AND CHECKS
+- Original music bed ducked under the voice; final mix at -14 LUFS.
+- Lint and check the build. Render, then look at frames from every scene: Telugu text fits its
+  boxes, no overlaps, animations finish inside their scenes, total ≤ 60 s.
+
+Finish with the MP4 and a Telugu post kit: caption under 100 characters, a Telugu description
+with all photo credits (credits may stay in English) and the licence, a pinned comment with the
+action and deadline, and hashtags (#GSR864E #ProtectOurAnimals plus Telugu ones).
+```
+
+The English source of each line, for the reviewer:
+
+| # | English (current video) | Telugu |
+|---|---|---|
+| Hook | India's draft lab rules put our animals in danger. | భారతదేశపు ముసాయిదా ప్రయోగశాల నిబంధనలు మన జంతువులను ప్రమాదంలోకి నెడుతున్నాయి. |
+| 1 | Draft rules G.S.R. 864(E) would roll back protections in force since 1998. | G.S.R. 864(E) ముసాయిదా నిబంధనలు, 1998 నుంచి అమల్లో ఉన్న రక్షణలను వెనక్కి తీసుకుంటాయి. |
+| 2 | Stray, feral and even protected wild animals could be taken for experiments, on the word of an undefined competent authority. | వీధి జంతువులు, అడవిపాలైన జంతువులు, చివరికి రక్షిత వన్యప్రాణులను కూడా ప్రయోగాల కోసం తీసుకోవచ్చు. దానికి నిర్వచనమే లేని ఒక "సమర్థ అధికారి" మాట చాలు. |
+| 3 | Rule 21(2) reopens open-market buying of livestock, fish and birds. | రూల్ 21(2), పశువులు, చేపలు, పక్షులను బహిరంగ మార్కెట్‌లో కొనడానికి మళ్లీ దారి తెరుస్తుంది. |
+| 4 | Severe experiments on mice, rats and rabbits have no stated approver. | చుంచెలుకలు, ఎలుకలు, కుందేళ్లపై చేసే తీవ్రమైన ప్రయోగాలకు ఆమోదం ఇచ్చేది ఎవరో నిబంధనల్లో లేదు. |
+| 5 | The draft drops the 1998 duty to give anaesthesia. Suffering need not be eased. | 1998 నిబంధనల్లో ఉన్న మత్తుమందు (అనస్థీషియా) ఇవ్వాల్సిన బాధ్యతను ముసాయిదా తొలగిస్తుంది. జంతువుల బాధను తగ్గించాల్సిన అవసరమే ఉండదు. |
+| 6 | Actors and creators across India are speaking out, in six languages. | దేశవ్యాప్తంగా నటులు, క్రియేటర్లు ఆరు భాషల్లో గళం విప్పుతున్నారు. |
+| 7 | Some parts are better, but the losses are major. We ask for sixteen fixes, or a full redraft. | ముసాయిదాలో కొన్ని మంచి అంశాలు ఉన్నాయి. కానీ నష్టాలు చాలా పెద్దవి. పదహారు సవరణలు చేయాలి, లేదా ముసాయిదాను పూర్తిగా తిరగ రాయాలి అని మేము కోరుతున్నాం. |
+| End | Object before 5 November. Email cpcsea-mef@gov.in, or use protectouranimals.in. | నవంబర్ 5 లోపు మీ అభ్యంతరం పంపండి. cpcsea-mef@gov.in కు ఈమెయిల్ చేయండి, లేదా protectouranimals.in ఉపయోగించండి. |
+
+Telugu narration usually runs longer than English; lines 2 and 7 are the first to shorten if the
+video goes over 60 s.
 
 ## Tips
 
