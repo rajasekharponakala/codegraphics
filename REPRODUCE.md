@@ -1,27 +1,47 @@
-# Reproducing the Shorts pipeline
+# Reproducing the videos
 
-Two ways: reuse this repository (minutes), or rebuild it from scratch with an AI coding agent
-using the prompt below (works with Claude Code, Codex, Cursor, etc.).
+Two ways: reuse this repository with the scripts below (minutes), or rebuild the pipeline from
+scratch with an AI coding agent using the prompt in Option B.
 
 ## Option A: reuse this repository
 
-Requirements: Node 22+, FFmpeg, Python 3.10+.
+Requirements: Node 22+, FFmpeg, Python 3.10+, and about 2 GB of disk.
 
 ```bash
 git clone https://github.com/rajasekharponakala/codegraphics.git
-cd codegraphics/hyperframes
-npm install                          # also copies GSAP + fonts into vendor/ (vendor.sh)
-python3 -m venv ../.venv && ../.venv/bin/pip install kokoro-onnx soundfile
-export HYPERFRAMES_PYTHON=$PWD/../.venv/bin/python
-npx hyperframes browser ensure
-
-cd shorts-roots-of-capitalism
-node build.mjs                       # voiceover, music, captions, maps -> build/<slug>/
-for d in build/*/; do (cd "$d" && npx hyperframes render --output "../../renders/$(basename "$d").mp4"); done
+cd codegraphics
+scripts/setup.sh                 # once: npm packages, .venv with Kokoro, render browser, voice model
+scripts/render.sh campaign       # then any project below
 ```
 
-To make a series from a different document, replace `script.json` (same shape) and add any new
-places to `PLACES` in `build.mjs`. Or push to GitHub and run **Actions → Render Shorts**.
+| Command | Video | Source to edit | Output |
+|---|---|---|---|
+| `scripts/render.sh campaign` | G.S.R. 864(E) campaign video (59 s, Indian English voice) | `hyperframes/campaign-gsr864e/script.json` | `hyperframes/campaign-gsr864e/renders/` |
+| `scripts/render.sh papers` | "Papers, explained" Shorts, episodes 1–4 | `hyperframes/shorts-papers/script.json` | `hyperframes/shorts-papers/renders/` |
+| `scripts/render.sh papers --episode 2` | One episode | | |
+| `scripts/render.sh roots` | Roots of Capitalism Shorts, parts 1–6 | `hyperframes/shorts-roots-of-capitalism/script.json` | `hyperframes/shorts-roots-of-capitalism/renders/` |
+| `scripts/render.sh roots --part 1 --style brutal` | One part, other style | | |
+| `scripts/render.sh release-card '{"version":"v1.0.0","title":"Hello"}'` | 8 s release card | `hyperframes/release-card/index.html` | `hyperframes/release-card/renders/` |
+| `scripts/render.sh remotion '{"titleText":"Hello"}'` | Remotion title card | `remotion/src/TitleCard.tsx` | `remotion/out/video.mp4` |
+
+Each narrated project's `build.mjs` turns `script.json` into one HyperFrames composition per
+video under `build/` (voiceover, captions, music, scenes); `render.sh` lints and renders each one.
+Rendering takes about 2–4 minutes per minute of video on a 4-core machine.
+
+Notes:
+
+- **Voice.** Kokoro runs locally. The campaign uses `"accent": "indian"`: `hyperframes/lib/indian_tts.py`
+  rewrites the pronunciation with Indian English features for the Indian voice `hf_alpha`. If a word
+  sounds wrong, add a `{shown|spoken}` override in `script.json`, e.g. `{1998|nineteen ninety-eight}`.
+- **First run downloads** the Kokoro model (~330 MB) and the render browser. Remotion downloads its
+  own Chrome on its first render.
+- **Campaign photos** are CC BY-SA / CC0 from Wikimedia Commons; credits are in
+  `hyperframes/campaign-gsr864e/POST.md`, and the video must be shared under CC BY-SA.
+- **GitHub Actions** can render without a local setup: Actions → "Render campaign video",
+  "Render paper Shorts" or "Render Shorts" → Run workflow; the MP4s are attached to the run.
+
+To make a new series from a different document, copy one of the `script.json` files (same shape),
+replace the text, and run its `build.mjs`.
 
 ## Option B: rebuild from scratch with a coding agent
 

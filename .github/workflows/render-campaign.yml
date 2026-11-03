@@ -1,0 +1,56 @@
+name: Render campaign video
+
+# Builds and renders the G.S.R. 864(E) campaign video: Indian English Kokoro
+# voiceover, timed captions, music and the campaign photos.
+on:
+  push:
+    paths:
+      - "hyperframes/campaign-gsr864e/**"
+      - "hyperframes/lib/**"
+      - ".github/workflows/render-campaign.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: render-campaign-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: hyperframes/campaign-gsr864e
+    env:
+      HYPERFRAMES_PYTHON: ${{ github.workspace }}/.venv/bin/python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-hyperframes
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Kokoro
+        working-directory: .
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -q kokoro-onnx soundfile
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/hyperframes/tts
+          key: kokoro-v1.0
+      - name: Build composition (voiceover, captions, photos)
+        run: node build.mjs
+      - name: Lint and render each part
+        run: |
+          mkdir -p renders
+          for dir in build/*/; do
+            name=$(basename "$dir")
+            (cd "$dir" && npx hyperframes lint && npx hyperframes render --output "../../renders/$name.mp4")
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: campaign-gsr864e
+          path: hyperframes/campaign-gsr864e/renders/*.mp4
