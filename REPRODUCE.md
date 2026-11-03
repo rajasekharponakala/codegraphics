@@ -56,6 +56,7 @@ the bracketed parts.
 | [B3](#b3-campaign-web-page--campaign-video) | A campaign web page + its images | A one-minute campaign video | `campaign-gsr864e/` |
 | [B4](#b4-starter-repo-github-workflows-for-video) | An empty repository | HyperFrames + Remotion projects and render workflows | `release-card/`, `remotion/`, `.github/workflows/` |
 | [B5](#b5-campaign-video-with-a-telugu-voice-over) | The campaign page + images + a reviewed Telugu script | The campaign video in Telugu | Not built yet |
+| [B6](#b6-data-brief--data-explainer-video) | A short statistical brief (PDF), e.g. the World Bank's India Poverty & Equity Brief | A one-minute data-explainer video | Not built yet |
 
 ### B1. Document → Shorts series
 
@@ -386,6 +387,100 @@ The English source of each line, for the reviewer:
 
 Telugu narration usually runs longer than English; lines 2 and 7 are the first to shorten if the
 video goes over 60 s.
+
+### B6. Data brief → data-explainer video
+
+Example: the World Bank's "Poverty & Equity Brief: India, October 2026" (2 pages). Attach the PDF.
+The same structure works for other statistical briefs: replace the SCRIPT section with that
+brief's numbers and keep the ACCURACY rules.
+
+```text
+Make a one-minute vertical data-explainer video (1080×1920, ≤ 60 s) from the attached World Bank
+"Poverty & Equity Brief: India, October 2026" (2-page PDF). Audience: Indian viewers on YouTube
+Shorts and Instagram Reels. Use HyperFrames (npm "hyperframes", HTML → MP4), with all text in
+script.json and a build.mjs. Reuse the shared voice/caption/music library in hyperframes/lib of
+this repo, and the campaign video (hyperframes/campaign-gsr864e) as the reference for layout,
+captions and the Indian English voice.
+
+ACCURACY (this is the most important part)
+- Use only numbers and claims from the brief. Next to each one, note where it comes from
+  (summary text, headline boxes, "Poverty at Different Lines" table, "Poverty by Group" table,
+  "Multidimensional Poverty Components" table, or the methodology note).
+- Always say which poverty line a number uses: $3.00/day (extreme poverty) or $4.20/day (the
+  lower-middle-income line), both in 2021 PPP dollars. Never show a poverty rate without its line.
+- "496 million lifted out of poverty" is an estimate: say "an estimated".
+- 2026 → 2028 figures (14.2% → 12.1%) are projections the brief calls indicative: label them
+  "projected" on screen and in the narration.
+- Include the brief's own caveats in the video, not only in the description: part of the large
+  gain between 2022–23 and 2023–24 likely reflects better measurement, and the surveys likely
+  understate inequality (so the Gini of 23.0 is probably too low).
+- The $8.30/day rate is "N/A" in the headline box but 80.0% in the table: do not use it, and
+  tell me about the inconsistency.
+- Use the brief's wording for causes ("mainly driven by strong consumption growth, rising
+  employment, especially among women, and expanded social transfers, including food subsidies").
+  Do not add political credit or blame, government scheme names, or outside numbers.
+- Do not use the World Bank logo or make the video look like an official World Bank product.
+  Credit it as the source. Check the brief's licence (World Bank briefs are usually CC BY): if
+  it is CC BY, add "Source: World Bank, Poverty & Equity Brief: India, October 2026 (CC BY …)".
+  Otherwise use the numbers with attribution and redraw all charts.
+
+SCRIPT (plain spoken English, short sentences, one number per sentence; send it to me for
+approval before you make any audio)
+- Hook (on screen from frame 0): between 2011 and 2023, poverty at $4.20/day fell from 57.7%
+  to 16.1%.
+- An estimated 496 million people moved above that line.
+- Extreme poverty ($3.00/day) fell from 27.1% to 2.6%. Non-monetary poverty also fell (OPHI MPI
+  53.8% in 2005–06 → 16.4% in 2019–21; World Bank MPI 15.5% in 2022–23).
+- Why: consumption growth, more jobs (about 134 million more employed, 2017–2023, nearly twice
+  the growth of the working-age population, much of it rural women), and social transfers
+  including food subsidies.
+- Who is still poor (all at $4.20/day, 2023): rural 19.3% vs urban 8.6%; children 0–14 21.8%;
+  adults with no education 21.3% vs tertiary 7.4%; and a belt of states from Uttar Pradesh to
+  West Bengal holds about 57% of India's poor.
+- What is still hard: the top 10% of workers earn about 13 times the bottom 10% (median
+  earnings, 2023); youth unemployment rose from 14.6% to 15.9% (Q1 FY2026 → Q1 FY2027),
+  particularly among rural young women; real earnings broadly unchanged.
+- Outlook: projected 14.2% (2026) → 12.1% (2028), with the measurement caveat.
+- End card: full source line, survey years (2011–12 CES, 2022–23 and 2023–24 HCES; PLFS for
+  jobs), "2021 PPP", and that the numbers are the World Bank's estimates.
+
+VISUALS: clean data-journalism look
+- Each scene shows its number as a chart redrawn from the brief's values: a line from 57.7 to
+  16.1 (2011 → 2023), a 496M counter, paired bars (rural/urban, education levels, age groups),
+  a 13× earnings gap, the projection as a dashed line. Label every axis and unit; bars start at 0
+  unless the scene says otherwise.
+- The UP–West Bengal belt: either an India states map (use an openly licensed boundary file
+  that follows the Survey of India's official depiction of India's borders, which is required
+  for maps of India published here), or, if you cannot get one, a simple list/strip of the
+  belt's states with no map. Do not use a world map that shows disputed borders differently.
+- Calm palette (no campaign red), large readable numbers, safe zones as in the campaign video,
+  captions near y≈1400, fonts and GSAP from npm (no CDN).
+
+VOICE, CAPTIONS, MUSIC
+- Indian English female voice: Kokoro hf_alpha with accent "indian" (hyperframes/lib/
+  indian_tts.py). Write numbers for the voice where needed, e.g. {57.7%|fifty-seven point seven
+  percent}, {$4.20|four dollars twenty}, {2011|twenty eleven}; check how Kokoro reads "PPP",
+  "MPI", "Gini" and "FY2026" and spell them out if needed. Send me a 15-second sample first.
+- Captions one line, timed to detected pauses; calm original music bed, ducked; -14 LUFS.
+
+CHECKS AND OUTPUT
+- Lint and check, render, then look at frames from every scene: every number matches the brief,
+  units and poverty lines are visible, nothing overlaps, total ≤ 60 s.
+- Give me a table of every number in the video with its source location in the brief.
+- Post kit: caption under 100 characters, a description with the source line, licence and the
+  caveats, a pinned comment, and hashtags.
+```
+
+Why some rules are there:
+
+- **Poverty lines.** The brief uses $3.00/day and $4.20/day; mixing their percentages is the most
+  likely error, so every rate must name its line.
+- **Caveats on screen.** The brief says part of the 2022–24 gain is better measurement and that
+  inequality is probably understated; leaving that out would overstate the story.
+- **A conflict in the brief.** The $8.30/day rate is "N/A" in the headline box but 80.0% in the table.
+- **Maps of India** published in India must show the official boundaries; most open world maps do
+  not, so the prompt asks for a compliant map or no map.
+- **Licence.** The PDF does not state one; World Bank briefs are usually CC BY, but the agent must check.
 
 ## Tips
 
