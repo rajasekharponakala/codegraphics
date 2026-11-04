@@ -1,6 +1,6 @@
 # Weight-Space Programming explainer: post kit and sources
 
-Video: `renders/weight-space-programming.mp4` (58.5 s, 1080×1920).
+Video: `renders/weight-space-programming.mp4` (59 s, 1080×1920).
 Source: Takehi, Teoh, Zhang, Khattab (MIT CSAIL), "Sparks of Weight-Space Programming: LLMs can
 natively read & write neural network weights", blog post, 2 November 2026,
 https://rikiyat.github.io/blog/weight-space-programming/ (read from the page's source in the
@@ -66,7 +66,7 @@ https://rikiyat.github.io/blog/weight-space-programming/
 Logs: https://github.com/RikiyaT/lm_understand-logs
 
 Diagrams redrawn for this video from the authors' published numbers; the loop text and code diff are illustrations.
-Voice: AI text-to-speech (Indian English). Music: original.
+Voice: AI text-to-speech (English, male). Music: original.
 
 #AI #LLM #MachineLearning #Interpretability #Shorts
 ```

@@ -1,7 +1,6 @@
 {
-  "voice": "hf_alpha",
-  "accent": "indian",
-  "speed": 1.15,
+  "voice": "bm_george",
+  "speed": 1.14,
   "music": {
     "gainDb": -15
   },
