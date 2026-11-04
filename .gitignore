@@ -13,3 +13,4 @@ hyperframes/campaign-gsr864e/samples/
 .venv/
 hyperframes/explainer-india-poverty/build/
 hyperframes/explainer-weight-space/build/
+!hyperframes/explainer-weight-space/assets/*.mp4
