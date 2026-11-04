@@ -1,4 +1,5 @@
-// Builds the Weight-Space Programming explainer from script.json into build/<slug>/:
+// Builds the Weight-Space Programming explainer from script.json (59 s) or
+// script-full.json (all eight experiments) into build/<slug>/:
 // Indian English voiceover, word captions, and a dark "weight inspector" look
 // (the post's own fonts and accent colours) with diagrams redrawn from the
 // authors' published numbers. Render with `hyperframes render` in the build folder.
@@ -13,7 +14,10 @@ const W = 1080;
 const H = 1920;
 const TOP = 400; // first pixel below the header
 
-const script = JSON.parse(readFileSync(join(HERE, "script.json"), "utf8"));
+// node build.mjs [--script script-full.json]: the short and the full version share this build.
+const scriptArg = process.argv.indexOf("--script");
+const scriptFile = scriptArg === -1 ? "script.json" : process.argv[scriptArg + 1];
+const script = JSON.parse(readFileSync(join(HERE, scriptFile), "utf8"));
 const f = (x) => Number(x.toFixed(3));
 const clip = (start, end, track) => `data-start="${f(start)}" data-duration="${f(end - start)}" data-track-index="${track}"`;
 const pct = (v) => Number(v).toFixed(1); // keep "7.0", not "7"
@@ -28,7 +32,7 @@ function hookScene(id) {
     for (let c = 0; c < 32; c++) {
       const lit = (r === 15 || r === 19) && c >= 12 && c < 16;
       const shade = 0.08 + (((r * 37 + c * 61) % 23) / 23) * 0.22;
-      cells += `<rect class="${lit ? "lit" : "cell"}" x="${110 + c * 27}" y="${TOP + 20 + r * 24}" width="23" height="20" ${lit ? "" : `style="opacity:${shade.toFixed(2)}"`} />`;
+      cells += `<rect class="${lit ? "lit" : "cell"}" x="${110 + c * 27}" y="${TOP + 20 + r * 18}" width="23" height="14" ${lit ? "" : `style="opacity:${shade.toFixed(2)}"`} />`;
     }
   return { html: svg(cells), js: () => `
       tl.fromTo("#${id} .lit", { opacity: 1 }, { opacity: 0.35, duration: 0.5, repeat: 5, yoyo: true, ease: "sine.inOut" }, 0.4);` };
@@ -150,7 +154,192 @@ function controlScene(s, id) {
   };
 }
 
-const SCENES = { layers: layersScene, loop: loopScene, diff: diffScene, bars: barsScene, passes: passesScene, control: controlScene };
+
+// ---------- scenes for the full version ----------
+
+// Exp 1: the four game clips (video layers, see `media`) with Astra's answers.
+function gamesScene(s, id) {
+  const tile = (i) => ({ x: 70 + (i % 2) * 485, y: TOP + 10 + Math.floor(i / 2) * 320 });
+  const tiles = s.games
+    .map(([, name, answer], i) => {
+      const { x, y } = tile(i);
+      return `<div class="game-tile" style="left:${x}px;top:${y}px"><b>${esc(name)}</b><span>${esc(answer)}</span></div>`;
+    })
+    .join("");
+  return {
+    html: `${tiles}<div class="note" style="top:${TOP + 650}px">${esc(s.note)}</div>`,
+    media: (from, to, clipFn) =>
+      s.games
+        .map(([file], i) => {
+          const { x, y } = tile(i);
+          return `      <video id="${id}-clip-${i}" class="game-clip clip" src="assets/${file}" muted playsinline style="left:${x + 117}px;top:${y + 12}px" ${clipFn(from, to, 60 + i)}></video>`;
+        })
+        .join("\n"),
+    js: (from) => `
+      tl.from("#${id} .game-tile", { opacity: 0, y: 20, duration: 0.3, stagger: 0.25, ease: "power1.out" }, ${f(from + 0.2)});`,
+  };
+}
+
+// Exp 2: what the models generate (filled) and what Astra described (outlines).
+function shapesScene(s, id) {
+  const shape = (kind, cx, cy, cls) => {
+    if (kind === "circle") return `<circle class="${cls}" cx="${cx}" cy="${cy}" r="90" />`;
+    if (kind === "square") return `<rect class="${cls}" x="${cx - 85}" y="${cy - 85}" width="170" height="170" />`;
+    return `<polygon class="${cls}" points="${cx},${cy - 95} ${cx + 100},${cy + 80} ${cx - 100},${cy + 80}" />`;
+  };
+  const kinds = ["circle", "square", "triangle"];
+  const top = kinds.map((k, i) => shape(k, 230 + i * 310, TOP + 140, "shape-fill")).join("");
+  const bottom = kinds.map((k, i) => shape(k, 230 + i * 310, TOP + 440, "shape-line")).join("");
+  return {
+    html: `${svg(top + bottom)}
+        <div class="row-label" style="top:${TOP + 10}px">The models generate</div>
+        <div class="row-label green" style="top:${TOP + 300}px">Astra, from the weights alone</div>
+        <div class="note" style="top:${TOP + 560}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .shape-line", { opacity: 0, duration: 0.3, stagger: 0.3 }, ${f(from + 1.4)});`,
+  };
+}
+
+// Exp 3: 4 layers x 6 heads per model; copying heads Astra named, all matching.
+function headsScene(s, id) {
+  let body = "";
+  s.models.forEach(([name, heads], m) => {
+    const x0 = 90 + m * 315;
+    body += `<text class="grid-title" x="${x0 + 132}" y="${TOP + 40}" text-anchor="middle">${esc(name)}</text>`;
+    for (let l = 0; l < 4; l++)
+      for (let h = 0; h < 6; h++) {
+        const on = heads.includes(`${l}.${h}`);
+        body += `<rect class="${on ? "head-on" : "head"}" x="${x0 + h * 44}" y="${TOP + 70 + l * 44}" width="38" height="38" />`;
+      }
+    body += `<text class="mono-tag small" x="${x0 + 132}" y="${TOP + 290}" text-anchor="middle">${heads.join(" · ")}</text>`;
+  });
+  return {
+    html: `${svg(body)}
+        <div class="match" style="top:${TOP + 340}px">✓ Language named correctly · ✓ every copying head found</div>
+        <div class="note" style="top:${TOP + 420}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .head-on", { opacity: 0, scale: 0.4, transformOrigin: "center", duration: 0.3, stagger: 0.15 }, ${f(from + 1.0)});`,
+  };
+}
+
+// Exp 7: failure from weights alone, success with attention patterns.
+function sycoScene(s, id) {
+  const rows = s.rows
+    .map(([what, mark, text], i) => `<div class="status ${mark === "✓" ? "ok" : "no"}" style="top:${TOP + 10 + i * 100}px"><i>${mark}</i><b>${esc(what)}</b><span>${esc(text)}</span></div>`)
+    .join("");
+  const bars = s.head
+    .map(([name, question, answer], i) => {
+      const y = TOP + 260 + i * 150;
+      return `<div class="hlabel" style="top:${y}px">${esc(name)}</div>
+        <div class="hbar base" style="top:${y + 44}px;width:${f(question * 6)}px"></div>
+        <div class="hval mono" style="left:${f(70 + question * 6 + 12)}px;top:${y + 40}px">${pct(question)}% question</div>
+        <div class="hbar ${i ? "warn" : "edit"}" style="top:${y + 90}px;width:${f(Math.max(answer * 6, 4))}px"></div>
+        <div class="hval mono" style="left:${f(70 + Math.max(answer * 6, 4) + 12)}px;top:${y + 86}px">${answer}% user's answer</div>`;
+    })
+    .join("");
+  return {
+    html: `${rows}${bars}
+        <div class="note" style="top:${TOP + 560}px">Where attention head 10.2 looks from the answer position (Figure 2)</div>`,
+    js: (from) => `
+      tl.from("#${id} .status.ok", { opacity: 0, x: 40, duration: 0.35, ease: "power3.out" }, ${f(from + 3.2)});`,
+  };
+}
+
+// Exp 4: the car scene and before/after success.
+function carScene(s, id) {
+  return {
+    html: `<div class="scene-img" style="top:${TOP + 10}px;background-image:url('assets/${s.image}')"></div>
+        <div class="hlabel" style="top:${TOP + 300}px">Trained PPO network</div>
+        <div class="meter" style="top:${TOP + 344}px"><b>0 of 256 episodes</b></div>
+        <div class="hlabel" style="top:${TOP + 420}px">After Astra's edit (3.5% of 171,664 weights)</div>
+        <div class="meter good" style="top:${TOP + 464}px"><i style="width:100%"></i><b>1,024 of 1,024 episodes</b></div>
+        <div class="note" style="top:${TOP + 540}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .meter.good i", { scaleX: 0, transformOrigin: "left center", duration: 0.9, ease: "power2.out" }, ${f(from + 2.6)});`,
+  };
+}
+
+// Exp 5: three games, PPO 100M / PPO 500M / Astra, bars scaled within each game.
+function games3Scene(s, id) {
+  const width = 470;
+  const rows = s.rows
+    .map(([game, ...vals], r) => {
+      const y = TOP + 10 + r * 200;
+      const max = Math.max(...vals);
+      const bars = vals
+        .map((v, k) => `<div class="hbar ${k === 2 ? "edit" : "base"}" style="top:${y + 40 + k * 46}px;width:${f(Math.max((v / max) * width, 4))}px"></div>
+        <div class="hval mono ${k === 2 ? "strong" : ""}" style="left:${f(70 + Math.max((v / max) * width, 4) + 12)}px;top:${y + 36 + k * 46}px">${pct(v)} · ${esc(s.cols[k])}</div>`)
+        .join("");
+      return `<div class="hlabel" style="top:${y}px">${esc(game)}</div>${bars}`;
+    })
+    .join("");
+  return {
+    html: `${rows}<div class="note" style="top:${TOP + 610}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .hbar.edit", { scaleX: 0, transformOrigin: "left center", duration: 0.6, stagger: 0.5, ease: "power3.out" }, ${f(from + 0.8)});`,
+  };
+}
+
+// Exp 6: an illustrative 9x9 board and the reported win rates.
+function goScene(s, id) {
+  const size = 300;
+  const x0 = 70;
+  const y0 = TOP + 10;
+  const step = size / 8;
+  let board = `<rect class="go-board" x="${x0 - 20}" y="${y0 - 20}" width="${size + 40}" height="${size + 40}" />`;
+  for (let i = 0; i < 9; i++) {
+    board += `<line class="go-line" x1="${x0}" y1="${y0 + i * step}" x2="${x0 + size}" y2="${y0 + i * step}" />`;
+    board += `<line class="go-line" x1="${x0 + i * step}" y1="${y0}" x2="${x0 + i * step}" y2="${y0 + size}" />`;
+  }
+  const stones = [[2, 2, 0], [6, 6, 1], [2, 6, 0], [6, 2, 1], [4, 4, 0], [3, 4, 1], [4, 3, 1], [5, 4, 0], [4, 5, 0], [3, 3, 0]];
+  board += stones.map(([c, r, w]) => `<circle class="${w ? "go-white" : "go-black"}" cx="${x0 + c * step}" cy="${y0 + r * step}" r="15" />`).join("");
+  const bars = s.bars
+    .map(([label, a, b], i) => {
+      const y = TOP + 10 + i * 160;
+      return `<div class="hlabel" style="left:440px;top:${y}px">${esc(label)}</div>
+        <div class="hbar ${i ? "edit" : "base"}" style="left:440px;top:${y + 44}px;width:${f(a * 5)}px"></div>
+        <div class="hval mono" style="left:${f(440 + a * 5 + 10)}px;top:${y + 40}px">${pct(a)}</div>
+        <div class="hbar ${i ? "edit" : "base"}" style="left:440px;top:${y + 90}px;width:${f(b * 5)}px"></div>
+        <div class="hval mono" style="left:${f(440 + b * 5 + 10)}px;top:${y + 86}px">${pct(b)}</div>`;
+    })
+    .join("");
+  return {
+    html: `${svg(board)}${bars}
+        <div class="fact-line" style="top:${TOP + 380}px">50 test runs: beats the equal-sized PPO network trained on 20 million games</div>
+        <div class="note" style="top:${TOP + 480}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .hbar.edit", { scaleX: 0, transformOrigin: "left center", duration: 0.6, stagger: 0.3, ease: "power3.out" }, ${f(from + 1.6)});`,
+  };
+}
+
+// Closing summary: what worked, what partly worked, what did not.
+function caveatsScene(s, id) {
+  const rows = s.items
+    .map(([mark, text], i) => `<div class="cav ${mark === "✓" ? "ok" : mark === "✗" ? "no" : mark === "~" ? "part" : "link"}" style="top:${TOP + 10 + i * 112}px"><i>${mark}</i>${esc(text)}</div>`)
+    .join("");
+  return {
+    html: rows,
+    js: (from) => `
+      tl.from("#${id} .cav", { opacity: 0, x: -30, duration: 0.3, stagger: 0.4, ease: "power3.out" }, ${f(from + 0.3)});`,
+  };
+}
+
+const SCENES = {
+  layers: layersScene,
+  loop: loopScene,
+  diff: diffScene,
+  bars: barsScene,
+  passes: passesScene,
+  control: controlScene,
+  games: gamesScene,
+  shapes: shapesScene,
+  heads: headsScene,
+  syco: sycoScene,
+  car: carScene,
+  games3: games3Scene,
+  go: goScene,
+  caveats: caveatsScene,
+};
 
 // ---------- composition ----------
 
@@ -158,6 +347,7 @@ const out = join(BUILD, script.slug);
 mkdirSync(out, { recursive: true });
 cpSync(join(HERE, "vendor"), join(out, "vendor"), { recursive: true });
 cpSync(join(HERE, "weights.css"), join(out, "weights.css"));
+cpSync(join(HERE, "assets"), join(out, "assets"), { recursive: true });
 
 const segments = [
   { kind: "hook", text: script.hook },
@@ -181,6 +371,16 @@ const sceneHtml = parts
   .map((p) => `      <div id="${p.id}" class="scene clip" ${clip(p.sc.from, p.sc.to, 2)}>
         ${p.html}
       </div>`)
+  .join("\n");
+// Video layers (the game clips) sit outside the scene divs so HyperFrames can seek them.
+const mediaHtml = parts
+  .filter((p) => p.media)
+  .map((p) => p.media(p.sc.from, p.sc.to, clip))
+  .join("\n");
+const chapters = scenes
+  .slice(1)
+  .filter((sc) => sc.beat.chapter)
+  .map((sc, i) => `      <div id="chapter-${i + 1}" class="chapter clip" ${clip(sc.from, sc.to, 9)}>${esc(sc.beat.chapter)}</div>`)
   .join("\n");
 const sceneJs = parts
   .map((p, i) => (i > 0 ? `\n      tl.from("#${p.id}", { opacity: 0, duration: 0.3, ease: "power1.out" }, ${f(p.sc.from)});` : "") + p.js(p.sc.from))
@@ -213,6 +413,8 @@ const html = `<!doctype html>
     <div id="root" data-composition-id="main" data-start="0" data-duration="${f(total)}" data-width="${W}" data-height="${H}">
       <div id="bg" class="clip" ${clip(0, total, 0)}></div>
 ${sceneHtml}
+${mediaHtml}
+${chapters}
       <div id="tag" class="clip" ${clip(0, endStart, 4)}>${esc(script.tag)}</div>
       <div id="source" class="clip" ${clip(0, endStart, 5)}>${esc(script.source)}</div>
       <div id="progress-track" class="clip" ${clip(0, endStart, 6)}></div>

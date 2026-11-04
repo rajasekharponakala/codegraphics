@@ -3,7 +3,7 @@
 #
 #   scripts/render.sh campaign                  G.S.R. 864(E) campaign video
 #   scripts/render.sh poverty                   India poverty data explainer (World Bank brief)
-#   scripts/render.sh weights                   Weight-Space Programming explainer (MIT CSAIL post)
+#   scripts/render.sh weights                   Weight-Space Programming explainer, 59 s and full 2 min
 #   scripts/render.sh papers [--episode N]      "Papers, explained" Shorts (all, or one)
 #   scripts/render.sh roots [--part N] [--style glass|brutal]
 #                                               Roots of Capitalism Shorts
@@ -44,6 +44,7 @@ case "$target" in
     render_builds campaign-gsr864e "$@"
     ;;
   weights)
+    (cd "$HF/explainer-weight-space" && node build.mjs --script script-full.json)
     render_builds explainer-weight-space "$@"
     ;;
   poverty)

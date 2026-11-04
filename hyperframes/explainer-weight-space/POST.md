@@ -83,3 +83,76 @@ So is this "programming weights", or a very good debugger? 👇
 - [ ] Watch once with sound.
 - [ ] Check the post and logs links open.
 - [ ] Optional: tag the authors when sharing on X.
+
+---
+
+# Full version (all eight experiments)
+
+Video: `renders/weight-space-programming-full.mp4` (2:00, 1080×1920; under the 3-minute Shorts limit).
+Built from `script-full.json` with the same voice, look and caveats; four chapters: Read, Fix, Write, Improve, then Limits.
+
+## Additional numbers and their sources
+
+| On screen / spoken | Value | Where in the post |
+|---|---|---|
+| Exp 1: weights given to Astra | 17,253 per network, no game named | Experiment 1 setup |
+| Exp 1: Astra's answers | Breakout 99%, Pong 96%, Pac-Man 96%, Freeway answered "Frogger", a traffic-crossing variant, 97% (counted correct by the authors) | assets/traces/exp1_games.json |
+| Exp 2: shapes | named circle, square, triangle; drew outlines although the models generate filled shapes | Experiment 2 text |
+| Exp 3: copying heads | Python 2.1, 3.1, 3.5 · Romaji 3.3 · English 3.1, all matching the measured heads; language right in both attempts | Experiment 3 table and Figure 1 |
+| Exp 7: sycophancy | not identified from weights in 4 attempts; with attention patterns, found in all 3 pairs | Experiment 7 text |
+| Exp 7: head 10.2 | honest 94.3% question / 0.75% user's answer · sycophant 3.5% / 85.7% | Figure 2 |
+| Exp 4: car | PPO never succeeds in 256 episodes; Astra's edit to 3.5% of 171,664 weights succeeds in 1,024 of 1,024 | Experiment 4 |
+| Exp 5: scores | Breakout 15.8 / 25.3 / 517.4 · Seaquest 5.6 / 88.9 / 53.1 · Asterix 25.8 / 55.2 / 53.2 (PPO 100M / PPO 500M / Astra) | Experiment 5 table |
+| Exp 6: Go | 1,480,274 weights; win rate vs two small PPO networks 54.1% / 54.9% with no test runs, 84.0% / 80.8% with 50; with 50 it beats the equal-sized PPO trained on 20 million games | Experiment 6; assets/gohand/gohand.json |
+
+Assets from the post (used with your go-ahead; the post states no content licence): the four
+game clips (assets/which_game/*.gif, converted to MP4) and the Kinetix car scene
+(assets/carjump_scene.svg). They are credited on screen. The Go board is an illustration.
+
+## Caption / title (under 100 characters)
+
+```
+An AI read and rewrote other AIs' weights, no training. 8 experiments, explained #AI #LLM
+```
+
+## Description
+
+```
+Can a frontier model read and rewrite neural network weights directly, without training? MIT CSAIL researchers tested GPT-6 Astra in eight experiments.
+
+READ
+• Named which game each of four networks was trained on from 17,253 raw weights (Breakout 99%, Pong 96%, Pac-Man 96%, Freeway: "Frogger" traffic crossing, 97%).
+• Named the shape three diffusion models draw (it drew outlines; the models make filled shapes).
+• From only the middle layers, named each small language model's training language and found every copying head.
+• Could NOT spot a sycophantic model from weights alone; with attention patterns, found it in all 3 pairs.
+
+FIX
+• A car network that always stalled on a ramp: editing 3.5% of its weights took it from 0 to 1,024 of 1,024 successes.
+
+WRITE
+• Game networks written from scratch beat PPO trained for 100M steps in Breakout, Seaquest and Asterix; against 500M steps, only in Breakout (517.4 vs 25.3).
+• A 1.5M-weight Go network: with 50 test runs it beat an equal-sized PPO network trained on 20M games.
+
+IMPROVE
+• Editing 0.016% of Qwen3.5-0.8B's weights removed reasoning loops: MATH-500 7.9% → 48.1%, IFEval 21.0% → 62.3%. It needed 50 test runs; 10 or 25 gave small gains.
+
+LIMITS
+• On Gemma 3 270M, which rarely loops, the edits did not help: "Editing weights could remove an obstacle that hid an ability, but it could not add an ability the model lacked."
+• Early results in a blog post, not peer-reviewed. Full logs are public.
+
+Source: Takehi, Teoh, Zhang, Khattab (MIT CSAIL). "Sparks of Weight-Space Programming: LLMs can natively read & write neural network weights", 2 November 2026.
+https://rikiyat.github.io/blog/weight-space-programming/
+Logs: https://github.com/RikiyaT/lm_understand-logs
+
+Game clips and the car scene are from the authors' post; other charts are redrawn from their numbers. The Go board, loop text and code diff are illustrations.
+Voice: AI text-to-speech (English, male). Music: original.
+
+#AI #LLM #MachineLearning #Interpretability #Shorts
+```
+
+## Pinned comment
+
+```
+Reading weights: mostly yes. Writing small networks: yes. Teaching a model new skills by editing weights: not yet.
+Which result surprised you most? 👇
+```

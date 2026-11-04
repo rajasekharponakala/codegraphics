@@ -101,3 +101,40 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 #end-source { margin-top: 22px; font-size: 32px; font-weight: 600; line-height: 1.35; color: var(--green); }
 #end-lines { margin-top: 22px; padding-left: 28px; font-family: var(--mono); font-size: 24px; line-height: 1.7; color: var(--text); }
 #end-small { margin-top: 20px; font-size: 24px; color: var(--muted); }
+
+/* ---------- full version ---------- */
+.chapter { position: absolute; right: 70px; top: 190px; padding: 8px 18px; background: var(--green); color: var(--bg); font-family: var(--mono); font-size: 28px; font-weight: 700; text-transform: uppercase; }
+.game-tile { position: absolute; width: 455px; height: 300px; background: var(--panel); border: 2px solid var(--line); }
+.game-tile b { position: absolute; left: 0; right: 0; top: 240px; text-align: center; font-size: 28px; font-weight: 800; }
+.game-tile span { position: absolute; left: 10px; right: 10px; top: 272px; text-align: center; font-family: var(--mono); font-size: 18px; color: var(--green); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.game-clip { position: absolute; width: 220px; height: 220px; image-rendering: pixelated; border: 2px solid var(--line); }
+.shape-fill { fill: var(--muted); }
+.shape-line { fill: none; stroke: var(--green); stroke-width: 10; }
+.row-label { position: absolute; left: 70px; font-family: var(--mono); font-size: 26px; color: var(--muted); }
+.row-label.green { color: var(--green); }
+.grid-title { font-family: var(--sans); font-size: 32px; font-weight: 800; fill: var(--text); }
+.head { fill: var(--text); opacity: 0.12; }
+.head-on { fill: var(--green); }
+.mono-tag.small { font-size: 22px; }
+.match { position: absolute; left: 70px; width: 940px; padding: 16px 22px; background: rgba(63, 185, 80, 0.12); border-left: 6px solid var(--green); font-size: 30px; font-weight: 600; }
+.status { position: absolute; left: 70px; width: 940px; height: 80px; display: flex; align-items: center; gap: 18px; padding: 0 20px; background: var(--panel); border: 2px solid var(--line); font-size: 30px; }
+.status i { font-style: normal; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--bg); }
+.status.no i { background: var(--red); }
+.status.ok i { background: var(--green); }
+.status span { margin-left: auto; font-family: var(--mono); font-size: 24px; color: var(--muted); }
+.hbar.warn { background: var(--red); }
+.scene-img { position: absolute; left: 70px; width: 940px; height: 261px; background: #fff center / contain no-repeat; border: 2px solid var(--line); }
+.meter.good i { background: var(--green); }
+.meter b { left: 16px; right: auto; }
+.go-board { fill: #c79a52; }
+.go-line { stroke: #3b2a12; stroke-width: 2; }
+.go-black { fill: #111; }
+.go-white { fill: #f2f2f2; stroke: #444; stroke-width: 1.5; }
+.fact-line { position: absolute; left: 70px; width: 940px; padding: 16px 22px; background: var(--panel); border-left: 6px solid var(--green); font-size: 30px; font-weight: 600; line-height: 1.3; }
+.cav { position: absolute; left: 70px; width: 940px; min-height: 92px; display: flex; align-items: center; gap: 20px; padding: 0 22px; background: var(--panel); border: 2px solid var(--line); font-size: 32px; font-weight: 600; line-height: 1.25; }
+.cav i { font-style: normal; flex: none; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 700; color: var(--bg); }
+.cav.ok i { background: var(--green); }
+.cav.no i { background: var(--red); }
+.cav.part i { background: #d29922; }
+.cav.link i { background: var(--muted); }
+.cav.link { font-family: var(--mono); font-size: 24px; }

@@ -1,0 +1,110 @@
+{
+  "voice": "bm_george",
+  "speed": 1.1,
+  "music": { "gainDb": -16 },
+  "slug": "weight-space-programming-full",
+  "tag": "New research · November 2026",
+  "source": "Takehi, Teoh, Zhang, Khattab · MIT CSAIL",
+  "hook": "Can an AI read another AI's weights, and rewrite them, with no training? New research says: sometimes, yes.",
+  "beats": [
+    {
+      "chapter": "1 · Read",
+      "big": "Which game?",
+      "label": "Exp 1 · 17,253 weights as text",
+      "say": "First, reading. The researchers trained four small game-playing networks, all the same shape. Given only the raw weights, {GPT-6 Astra|G P T six Astra} named every game.",
+      "src": "Experiment 1; traces/exp1_games.json (answers and confidence)",
+      "scene": { "type": "games", "games": [["breakout.mp4", "Breakout", "“Breakout” · 99%"], ["pong.mp4", "Pong", "“Pong” · 96%"], ["pacman.mp4", "Pac-Man", "“Pac-Man” · 96%"], ["freeway.mp4", "Freeway", "“Frogger”, traffic crossing · 97%"]], "note": "Green: Astra's answer and confidence · no game names were given · clips: the authors' blog post" }
+    },
+    {
+      "chapter": "1 · Read",
+      "big": "Which shape?",
+      "label": "Exp 2 · three diffusion models",
+      "say": "It also named the shape each of three image models draws. It drew them as outlines, though the models make filled shapes.",
+      "src": "Experiment 2",
+      "scene": { "type": "shapes", "note": "Top: what the models generate (filled) · bottom: what Astra described (outlines) · redrawn" }
+    },
+    {
+      "chapter": "1 · Read",
+      "big": "Copying heads",
+      "label": "Exp 3 · middle layers only",
+      "say": "From only the middle layers of three small language models, it named each training language, and found every copying head.",
+      "src": "Experiment 3 table and Figure 1",
+      "scene": { "type": "heads", "models": [["Python", ["2.1", "3.1", "3.5"]], ["Romaji", ["3.3"]], ["English", ["3.1"]]], "note": "Rows: layers 0–3 · columns: heads 0–5 · green: copying heads Astra named, all matching the measured ones" }
+    },
+    {
+      "chapter": "1 · Read",
+      "big": "Sycophant?",
+      "label": "Exp 7 · Gemma 3 270M pairs",
+      "say": "But from weights alone, it could not spot which model was sycophantic. Given attention patterns as well, it found the sycophant in all three pairs.",
+      "src": "Experiment 7 and Figure 2",
+      "scene": { "type": "syco", "rows": [["Weights only", "✗", "not identified in 4 attempts"], ["+ attention patterns", "✓", "found in 3 of 3 pairs"]], "head": [["Honest model", 94.3, 0.75], ["Sycophant", 3.5, 85.7]] }
+    },
+    {
+      "chapter": "2 · Fix",
+      "big": "0% → 100%",
+      "label": "Exp 4 · 3.5% of weights edited",
+      "say": "Next, fixing. A trained car network always stalled on a ramp. One edit to 3.5 percent of its weights made it succeed in all 1,024 episodes.",
+      "src": "Experiment 4",
+      "scene": { "type": "car", "image": "carjump_scene.svg", "note": "Scene from the authors' blog post · Kinetix car-on-ramp level" }
+    },
+    {
+      "chapter": "3 · Write",
+      "big": "Breakout: 517",
+      "label": "Exp 5 · networks written from scratch",
+      "say": "Then, writing. With no data and no training, it wrote game networks that beat P P O trained for 100 million steps. Against longer training, it won only in Breakout.",
+      "src": "Experiment 5 table",
+      "scene": { "type": "games3", "cols": ["PPO 100M steps", "PPO 500M steps", "Astra, one shot"], "rows": [["Breakout", 15.8, 25.3, 517.4], ["Seaquest", 5.6, 88.9, 53.1], ["Asterix", 25.8, 55.2, 53.2]], "note": "Average score over 1,000 episodes · bars scaled within each game" }
+    },
+    {
+      "chapter": "3 · Write",
+      "big": "Go: 1.5M weights",
+      "label": "Exp 6 · 9×9 Go, from zero",
+      "say": "It even wrote a 1.5 million weight Go network. With 50 test runs, it beat a same-size network trained on 20 million games.",
+      "src": "Experiment 6; gohand/gohand.json (win rates vs the two small PPO networks)",
+      "scene": { "type": "go", "bars": [["No test runs", 54.1, 54.9], ["50 test runs", 84.0, 80.8]], "note": "Win rate (%) against two small PPO networks · board is an illustration" }
+    },
+    {
+      "chapter": "4 · Improve",
+      "big": "0.016%",
+      "label": "Exp 8 · 131,072 of 0.8B weights",
+      "say": "Finally, a real language model. Editing 0.016 percent of {Qwen3.5-0.8B|Kwen three point five}'s weights removed its reasoning loops.",
+      "src": "Experiment 8",
+      "scene": { "type": "layers", "layers": 24, "edited": [15, 19], "note": "Qwen3.5-0.8B, 24 layers · edited: 64 MLP output columns in layers 15 and 19" }
+    },
+    {
+      "chapter": "4 · Improve",
+      "big": "6×",
+      "label": "MATH-500: 7.9% → 48.1%",
+      "say": "They report math accuracy rising from 7.9 to 48.1 percent, and instruction following tripling. But it took 50 test runs. With 10 or 25, the gains were small.",
+      "src": "Experiment 8 table",
+      "scene": { "type": "bars", "max": 70, "rows": [["MATH-500", 7.9, 48.1], ["GSM8K", 13.8, 67.1], ["IFEval (instructions)", 21.0, 62.3]], "note": "Base vs edited · authors' reported results, 50 forward passes" }
+    },
+    {
+      "chapter": "Limits",
+      "big": "No new skill",
+      "label": "Control: Gemma 3 270M",
+      "say": "On a model that does not loop, the edits did not help. The fix unlocked an ability. It did not add one.",
+      "src": "Additional experiment; authors' conclusion",
+      "scene": { "type": "control", "base": 6.8, "edited": 7.0, "max": 70, "quote": "“Editing weights could remove an obstacle that hid an ability, but it could not add an ability the model lacked.”" }
+    },
+    {
+      "chapter": "Limits",
+      "big": "Early sparks",
+      "label": "Blog post · not peer-reviewed",
+      "say": "These are early results in a blog post, not a peer-reviewed paper. The full logs are public, so others can check them.",
+      "src": "Post introduction and Logs section",
+      "scene": { "type": "caveats", "items": [["✓", "Read: games, shapes, languages from raw weights"], ["✓", "Fix and write small networks with no training"], ["~", "Real LLM: removed loops, needed 50 test runs"], ["✗", "Sycophancy from weights alone; new skills"], ["→", "Logs: github.com/RikiyaT/lm_understand-logs"]] }
+    }
+  ],
+  "outro": "Source: Sparks of Weight-Space Programming, M I T C SAIL, November {2026|twenty twenty-six}.",
+  "end": {
+    "title": "Sparks of Weight-Space Programming",
+    "byline": "Rikiya Takehi, Jayden Teoh, Alex Zhang, Omar Khattab · MIT CSAIL · 2 Nov 2026",
+    "lines": [
+      "rikiyat.github.io/blog/weight-space-programming",
+      "Logs: github.com/RikiyaT/lm_understand-logs",
+      "Blog post: early results, not peer-reviewed"
+    ],
+    "small": "Game clips and car scene from the authors' post. Other charts redrawn from their published numbers."
+  }
+}
