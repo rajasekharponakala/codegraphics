@@ -1,0 +1,103 @@
+/* Dark "weight inspector" look for the Weight-Space Programming explainer. Fonts
+   are the post's own (Source Sans 3, JetBrains Mono); green marks edited weights
+   and fixed results, red marks loops, as in the post's accents. */
+@font-face { font-family: "Source Sans 3"; font-weight: 400; src: url("vendor/source-sans-3-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-weight: 600; src: url("vendor/source-sans-3-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-weight: 800; src: url("vendor/source-sans-3-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; src: url("vendor/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("vendor/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --line: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --green: #3fb950;
+  --red: #f85149;
+  --base: #6e7681;
+  --sans: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "Courier New", monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+#root { position: relative; width: 100%; height: 100%; font-family: var(--sans); color: var(--text); }
+#bg {
+  position: absolute; inset: 0; background-color: var(--bg);
+  background-image: radial-gradient(rgba(230, 237, 243, 0.06) 1.5px, transparent 1.5px);
+  background-size: 36px 36px;
+}
+.scene { position: absolute; inset: 0; }
+.overlay { position: absolute; inset: 0; }
+
+/* ---------- header ---------- */
+#tag { position: absolute; left: 70px; top: 190px; padding: 8px 18px; border: 2px solid var(--green); color: var(--green); font-family: var(--mono); font-size: 28px; font-weight: 700; }
+#source { position: absolute; left: 70px; top: 258px; font-size: 30px; font-weight: 600; color: var(--muted); }
+#progress-track { position: absolute; left: 70px; top: 328px; width: 940px; height: 6px; background: var(--line); }
+#progress { position: absolute; left: 70px; top: 328px; width: 940px; height: 6px; background: var(--green); transform-origin: left center; }
+
+/* ---------- hook + cards (bottom-anchored above the captions) ---------- */
+#hook, .card, #end-card { position: absolute; left: 70px; width: 940px; background: var(--panel); border: 2px solid var(--line); border-left: 10px solid var(--green); }
+#hook { bottom: 560px; padding: 38px 44px; font-size: 70px; font-weight: 800; line-height: 1.1; }
+.card { bottom: 560px; padding: 26px 42px 32px; }
+.card-label { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--green); }
+.card-big { margin-top: 8px; font-weight: 800; line-height: 1.02; letter-spacing: -0.01em; }
+
+/* ---------- weight grids ---------- */
+.cell { fill: var(--text); opacity: 0.12; }
+.lit { fill: var(--green); }
+.mono-label { font-family: var(--mono); font-size: 16px; fill: var(--muted); }
+.mono-tag { font-family: var(--mono); font-size: 26px; font-weight: 700; fill: var(--green); }
+.note { position: absolute; left: 70px; width: 940px; font-family: var(--mono); font-size: 22px; line-height: 1.4; color: var(--muted); }
+
+/* ---------- panels: output and diff ---------- */
+.panel { position: absolute; left: 70px; width: 940px; padding: 22px 26px 26px; background: var(--panel); border: 2px solid var(--line); }
+.panel-title { font-family: var(--mono); font-size: 22px; color: var(--muted); padding-bottom: 14px; margin-bottom: 14px; border-bottom: 2px solid var(--line); }
+.out { font-family: var(--mono); font-size: 34px; line-height: 1.6; }
+.out-line.rep { color: var(--red); }
+.meter-label { position: absolute; left: 70px; font-size: 30px; font-weight: 600; }
+.meter { position: absolute; left: 70px; width: 940px; height: 44px; background: var(--line); }
+.meter i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--red); }
+.meter b { position: absolute; right: 16px; top: 0; line-height: 44px; font-family: var(--mono); font-size: 30px; color: var(--text); }
+.diff-line { font-family: var(--mono); font-size: 29px; line-height: 1.5; padding: 4px 10px; white-space: pre-wrap; }
+.diff-line span { display: inline-block; width: 30px; color: var(--muted); }
+.diff-line.ctx { color: var(--muted); }
+.diff-line.del { background: rgba(248, 81, 73, 0.15); color: #ffa198; }
+.diff-line.add { background: rgba(63, 185, 80, 0.15); color: #7ee787; }
+
+/* ---------- charts ---------- */
+.legend { position: absolute; left: 70px; top: 360px; display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 24px; color: var(--muted); }
+.legend i { display: inline-block; width: 28px; height: 16px; }
+.legend i.base { background: var(--base); }
+.legend i.edit { background: var(--green); margin-left: 18px; }
+.hlabel { position: absolute; left: 70px; font-size: 32px; font-weight: 600; }
+.hbar { position: absolute; left: 70px; height: 36px; }
+.hbar.base { background: var(--base); }
+.hbar.edit { background: var(--green); }
+.hbar.edit.dim { background: #2e6b37; }
+.hval { position: absolute; font-size: 28px; line-height: 40px; color: var(--muted); }
+.hval.mono { font-family: var(--mono); }
+.hval.strong { color: var(--text); font-weight: 700; font-size: 32px; }
+.grid { stroke: var(--line); stroke-width: 2; }
+.tick { font-family: var(--mono); font-size: 24px; fill: var(--muted); }
+.unit { font-family: var(--mono); font-size: 24px; fill: var(--text); }
+.line { fill: none; stroke: var(--green); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+.dot { fill: var(--green); stroke: var(--bg); stroke-width: 4; }
+.val { font-family: var(--mono); font-size: 34px; font-weight: 700; fill: var(--text); }
+.quote { position: absolute; left: 70px; width: 940px; padding: 28px 32px; background: var(--panel); border-left: 8px solid var(--muted); font-size: 42px; font-weight: 600; line-height: 1.3; }
+.quote small { display: block; margin-top: 14px; font-family: var(--mono); font-size: 24px; color: var(--muted); }
+
+/* ---------- captions ---------- */
+.caption {
+  position: absolute; left: 50%; top: 1405px; width: max-content; max-width: 940px; transform: translateX(-50%);
+  padding: 12px 22px; background: var(--panel); border: 2px solid var(--line); color: var(--text); font-size: 54px; font-weight: 600; line-height: 1.25; text-align: center;
+}
+.caption .w { display: inline-block; padding: 0 6px; }
+.caption .w[data-on="1"] { background: var(--green); color: var(--bg); }
+
+/* ---------- end card ---------- */
+#end-card { top: 330px; padding: 42px 44px; }
+#end-title { font-size: 72px; font-weight: 800; line-height: 1.05; color: var(--text); }
+#end-source { margin-top: 22px; font-size: 32px; font-weight: 600; line-height: 1.35; color: var(--green); }
+#end-lines { margin-top: 22px; padding-left: 28px; font-family: var(--mono); font-size: 24px; line-height: 1.7; color: var(--text); }
+#end-small { margin-top: 20px; font-size: 24px; color: var(--muted); }

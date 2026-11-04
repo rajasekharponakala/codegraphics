@@ -1,0 +1,154 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.15,
+  "music": {
+    "gainDb": -15
+  },
+  "slug": "weight-space-programming",
+  "tag": "New paper · November 2026",
+  "source": "Takehi, Teoh, Zhang, Khattab · MIT CSAIL",
+  "hook": "An AI edited another AI's weights by reasoning. No training. No gradients.",
+  "beats": [
+    {
+      "big": "0.016%",
+      "label": "131,072 of 0.8 billion weights",
+      "say": "The authors asked {GPT-6 Astra|G P T six Astra} to improve {Qwen3.5-0.8B|Kwen three point five, zero point eight B} at math. It changed just 0.016 percent of the weights.",
+      "src": "Experiment 8: 64 MLP output columns in layers 15 and 19 (131,072 weights)",
+      "scene": {
+        "type": "layers",
+        "layers": 24,
+        "edited": [
+          15,
+          19
+        ],
+        "note": "Qwen3.5-0.8B, 24 layers · edited: 64 MLP output columns in layers 15 and 19"
+      }
+    },
+    {
+      "big": "Stuck in loops",
+      "label": "93% of answers hit the token limit",
+      "say": "The small model often got stuck in reasoning loops. 93 percent of its answers ran out of tokens.",
+      "src": "Experiment 8 table: Hit token limit, Base 93.0%",
+      "scene": {
+        "type": "loop",
+        "lines": [
+          "Let me check this again.",
+          "Wait, let me check this again.",
+          "Wait, let me check this again.",
+          "Wait, let me check this again."
+        ],
+        "note": "Illustration of a reasoning loop · 32,768-token limit"
+      }
+    },
+    {
+      "big": "One direction",
+      "label": "Layers 15 and 19",
+      "say": "Astra traced the loops to one direction inside two layers, and subtracted it.",
+      "src": "Experiment 8 text; Astra's final report (64 columns each in layers 15 and 19)",
+      "scene": {
+        "type": "diff",
+        "lines": [
+          [
+            "ctx",
+            "# Qwen3.5-0.8B · layer 15 and 19 MLP outputs"
+          ],
+          [
+            "ctx",
+            "loop_dir = measured repetition direction"
+          ],
+          [
+            "del",
+            "W[:, 64 cols]"
+          ],
+          [
+            "add",
+            "W[:, 64 cols] - (projection on loop_dir)"
+          ]
+        ],
+        "note": "Simplified · exact edit and neuron indices are in the authors' logs"
+      }
+    },
+    {
+      "big": "6×",
+      "label": "MATH-500: 7.9% → 48.1%",
+      "say": "They report math accuracy rising from 7.9 to 48.1 percent, and instruction following tripling.",
+      "src": "Experiment 8 table, 50 forward passes",
+      "scene": {
+        "type": "bars",
+        "max": 70,
+        "rows": [
+          [
+            "MATH-500",
+            7.9,
+            48.1
+          ],
+          [
+            "GSM8K",
+            13.8,
+            67.1
+          ],
+          [
+            "IFEval (instructions)",
+            21.0,
+            62.3
+          ]
+        ],
+        "note": "Base vs edited · authors' reported results, 50 forward passes"
+      }
+    },
+    {
+      "big": "50 test runs",
+      "label": "No gradients, but not free",
+      "say": "But it needed 50 test runs on practice problems. With 10 or 25, the gains were small.",
+      "src": "Experiment 8 table and benchmarks.json: MATH-500 at 0, 10, 25, 50 forward passes",
+      "scene": {
+        "type": "passes",
+        "max": 50,
+        "points": [
+          [
+            0,
+            7.9
+          ],
+          [
+            10,
+            12.3
+          ],
+          [
+            25,
+            14.1
+          ],
+          [
+            50,
+            48.1
+          ]
+        ],
+        "unit": "MATH-500 (%) by forward passes allowed"
+      }
+    },
+    {
+      "big": "No new skill",
+      "label": "Control: Gemma 3 270M",
+      "say": "On a model that does not loop, the edits did not help. The fix unlocked an ability. It did not add one.",
+      "src": "Additional experiment: Gemma 3 270M, MATH-500 6.8% to 7.0% at 50 passes; authors' conclusion",
+      "scene": {
+        "type": "control",
+        "base": 6.8,
+        "edited": 7.0,
+        "max": 70,
+        "quote": "“Editing weights could remove an obstacle that hid an ability, but it could not add an ability the model lacked.”"
+      }
+    }
+  ],
+  "outro": "Source: Sparks of Weight-Space Programming, M I T C SAIL, November {2026|twenty twenty-six}. The logs are public.",
+  "end": {
+    "title": "Sparks of Weight-Space Programming",
+    "byline": "Rikiya Takehi, Jayden Teoh, Alex Zhang, Omar Khattab · MIT CSAIL · 2 Nov 2026",
+    "lines": [
+      "rikiyat.github.io/blog/weight-space-programming",
+      "Logs: github.com/RikiyaT/lm_understand-logs",
+      "Blog post: early results, not peer-reviewed"
+    ],
+    "small": "Charts and diagrams redrawn for this video from the authors' published numbers."
+  }
+}

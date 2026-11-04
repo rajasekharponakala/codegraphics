@@ -18,6 +18,7 @@ scripts/render.sh campaign       # then any project below
 |---|---|---|---|
 | `scripts/render.sh campaign` | G.S.R. 864(E) campaign video (59 s, Indian English voice) | `hyperframes/campaign-gsr864e/script.json` | `hyperframes/campaign-gsr864e/renders/` |
 | `scripts/render.sh poverty` | India poverty data explainer (59 s, World Bank brief) | `hyperframes/explainer-india-poverty/script.json` | `hyperframes/explainer-india-poverty/renders/` |
+| `scripts/render.sh weights` | Weight-Space Programming explainer (58 s, dark "weight inspector" look) | `hyperframes/explainer-weight-space/script.json` | `hyperframes/explainer-weight-space/renders/` |
 | `scripts/render.sh papers` | "Papers, explained" Shorts, episodes 1–4 | `hyperframes/shorts-papers/script.json` | `hyperframes/shorts-papers/renders/` |
 | `scripts/render.sh papers --episode 2` | One episode | | |
 | `scripts/render.sh roots` | Roots of Capitalism Shorts, parts 1–6 | `hyperframes/shorts-roots-of-capitalism/script.json` | `hyperframes/shorts-roots-of-capitalism/renders/` |
