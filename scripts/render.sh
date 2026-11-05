@@ -4,6 +4,7 @@
 #   scripts/render.sh campaign                  G.S.R. 864(E) campaign video
 #   scripts/render.sh poverty                   India poverty data explainer (World Bank brief)
 #   scripts/render.sh weights                   Weight-Space Programming explainer, 59 s and full 2 min
+#   scripts/render.sh qwengpu                   qgpu (a GPU compiled into Qwen's weights) explainer
 #   scripts/render.sh papers [--episode N]      "Papers, explained" Shorts (all, or one)
 #   scripts/render.sh roots [--part N] [--style glass|brutal]
 #                                               Roots of Capitalism Shorts
@@ -15,7 +16,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 HF="$ROOT/hyperframes"
 
-usage() { sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,14p' "$0" | sed 's/^# \{0,1\}//'; }
 [ $# -ge 1 ] || { usage; exit 1; }
 target="$1"
 shift
@@ -44,8 +45,13 @@ case "$target" in
     render_builds campaign-gsr864e "$@"
     ;;
   weights)
+    rm -rf "$HF/explainer-weight-space/build"/qwengpu-*/
     (cd "$HF/explainer-weight-space" && node build.mjs --script script-full.json)
     render_builds explainer-weight-space "$@"
+    ;;
+  qwengpu)
+    rm -rf "$HF/explainer-weight-space/build"/weight-space-*/
+    render_builds explainer-weight-space --script script-qwengpu.json
     ;;
   poverty)
     render_builds explainer-india-poverty "$@"

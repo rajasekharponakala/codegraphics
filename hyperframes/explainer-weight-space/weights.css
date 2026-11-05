@@ -138,3 +138,31 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .cav.part i { background: #d29922; }
 .cav.link i { background: var(--muted); }
 .cav.link { font-family: var(--mono); font-size: 24px; }
+
+/* ---------- qgpu video: blue accent (the project's own), and its scenes ---------- */
+:root[data-theme="blue"] { --green: #7c8cff; }
+.layer-qwen { fill: var(--base); }
+.layer-gpu { fill: var(--green); }
+.stack-tag { position: absolute; left: 730px; padding: 6px 14px; font-family: var(--mono); font-size: 24px; font-weight: 700; }
+.stack-tag.qwen { background: var(--base); color: var(--text); }
+.stack-tag.gpu { background: var(--green); color: var(--bg); }
+.spec { position: absolute; width: 455px; height: 130px; padding: 18px 24px; background: var(--panel); border: 2px solid var(--line); }
+.spec b { display: block; font-family: var(--mono); font-size: 56px; font-weight: 700; color: var(--green); line-height: 1; }
+.spec span { display: block; margin-top: 10px; font-size: 28px; font-weight: 600; }
+.state-on { fill: var(--green); }
+.key-col { position: absolute; left: 960px; transform: translateX(-50%); font-family: var(--mono); font-size: 22px; color: var(--muted); }
+.key-bit { position: absolute; left: 940px; width: 40px; height: 38px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 24px; color: var(--muted); border: 2px solid var(--line); }
+.key-bit.on { background: var(--green); color: var(--bg); border-color: var(--green); }
+.flow-step { position: absolute; width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; background: var(--panel); border: 2px solid var(--line); font-family: var(--mono); font-size: 24px; font-weight: 700; }
+.flow-step.last { border-color: var(--green); color: var(--green); }
+.flow-arrow { position: absolute; font-size: 40px; color: var(--muted); }
+.toks { display: flex; flex-wrap: wrap; gap: 12px; }
+.tok { padding: 8px 14px; font-family: var(--mono); font-size: 28px; font-weight: 700; }
+.tok.host { background: var(--line); color: var(--text); }
+.tok.model { background: var(--green); color: var(--bg); }
+.lane { position: absolute; width: 180px; text-align: center; font-family: var(--mono); font-size: 24px; color: var(--muted); }
+.reg { position: absolute; width: 180px; height: 64px; display: flex; align-items: center; justify-content: center; background: var(--panel); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; font-weight: 700; }
+.reg.out { border-color: var(--green); color: var(--green); }
+.reg-name { position: absolute; left: 70px; font-family: var(--mono); font-size: 22px; color: var(--muted); }
+.shuffle { position: absolute; left: 70px; width: 940px; padding: 20px 26px; background: var(--panel); border-left: 8px solid var(--green); font-family: var(--mono); font-size: 36px; }
+.shuffle b { color: var(--green); font-size: 48px; }

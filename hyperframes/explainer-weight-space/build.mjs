@@ -324,6 +324,114 @@ function caveatsScene(s, id) {
   };
 }
 
+
+// ---------- scenes for the qgpu video ----------
+
+// The merged model as a tower: Qwen's layers on top, the compiled GPU layers below.
+function stackScene(s, id) {
+  const total = s.qwen + s.gpu;
+  const h = 560;
+  const row = h / total;
+  let bars = "";
+  for (let i = 0; i < total; i++) {
+    const gpu = i >= s.qwen;
+    bars += `<rect class="${gpu ? "layer-gpu" : "layer-qwen"}" x="380" y="${f(TOP + 20 + i * row)}" width="320" height="${f(row - 2)}" />`;
+  }
+  const qMid = TOP + 20 + (s.qwen * row) / 2;
+  const gMid = TOP + 20 + (s.qwen + s.gpu / 2) * row;
+  return {
+    html: `${svg(bars)}
+        <div class="stack-tag qwen" style="top:${f(qMid - 26)}px">${s.qwen} Qwen layers · trained</div>
+        <div class="stack-tag gpu" style="top:${f(gMid - 26)}px">${s.gpu} GPU layers · compiled</div>
+        <div class="note" style="top:${TOP + 600}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .layer-gpu", { scaleX: 0, transformOrigin: "center", duration: 0.2, stagger: 0.02, ease: "power2.out" }, ${f(from + 1.0)});
+      tl.from("#${id} .stack-tag.gpu", { opacity: 0, x: 30, duration: 0.3 }, ${f(from + 2.0)});`,
+  };
+}
+
+// The GPU's specs as chips, plus what it supports.
+function specScene(s, id) {
+  const chips = s.chips
+    .map(([num, what], i) => `<div class="spec" style="left:${70 + (i % 2) * 475}px;top:${TOP + 10 + Math.floor(i / 2) * 150}px"><b>${esc(num)}</b><span>${esc(what)}</span></div>`)
+    .join("");
+  const rows = Math.ceil(s.chips.length / 2);
+  return {
+    html: `${chips}<div class="fact-line" style="top:${TOP + 10 + rows * 150 + 10}px">${esc(s.features)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .spec", { opacity: 0, y: 20, duration: 0.25, stagger: 0.25, ease: "power2.out" }, ${f(from + 0.3)});`,
+  };
+}
+
+// Recurrent state as memory: a one-hot key selects the row that is overwritten.
+function stateScene(s, id) {
+  let body = "";
+  const rows = 10;
+  const cols = 12;
+  for (let r = 0; r < rows; r++) {
+    body += `<text class="mono-label" x="210" y="${TOP + 64 + r * 46}" text-anchor="end">row ${r}</text>`;
+    for (let c = 0; c < cols; c++) body += `<rect class="${r === 6 ? "state-on" : "cell"}" x="${230 + c * 58}" y="${TOP + 40 + r * 46}" width="52" height="38" />`;
+  }
+  const key = Array.from({ length: rows }, (_, r) => (r === 6 ? 1 : 0));
+  return {
+    html: `${svg(body)}
+        <div class="key-col" style="top:${TOP}px">key</div>
+        ${key.map((k, r) => `<div class="key-bit ${k ? "on" : ""}" style="top:${TOP + 40 + r * 46}px">${k}</div>`).join("")}
+        <div class="note" style="top:${TOP + 520}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .state-on", { opacity: 0, duration: 0.2, stagger: 0.04 }, ${f(from + 1.4)});
+      tl.from("#${id} .key-bit.on", { scale: 0, duration: 0.3, ease: "back.out(2)" }, ${f(from + 1.0)});`,
+  };
+}
+
+// CUDA to tokens, then the token stream with who wrote each token.
+function flowScene(s, id) {
+  const steps = s.steps
+    .map((t, i) => `<div class="flow-step ${i === s.steps.length - 1 ? "last" : ""}" style="left:${70 + i * 238}px;top:${TOP + 10}px">${esc(t)}</div>`)
+    .join("");
+  const arrows = s.steps
+    .slice(1)
+    .map((_, i) => `<div class="flow-arrow" style="left:${70 + (i + 1) * 238 - 30}px;top:${TOP + 22}px">→</div>`)
+    .join("");
+  const toks = s.tokens
+    .map(([who, t], i) => `<span class="tok ${who}">${esc(t)}</span>`)
+    .join("");
+  return {
+    html: `${steps}${arrows}
+        <div class="panel" style="top:${TOP + 140}px">
+          <div class="panel-title">token stream</div>
+          <div class="toks">${toks}</div>
+        </div>
+        <div class="note" style="top:${TOP + 480}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .flow-step", { opacity: 0, x: -20, duration: 0.25, stagger: 0.35 }, ${f(from + 0.3)});
+      tl.from("#${id} .tok", { opacity: 0, y: 10, duration: 0.15, stagger: 0.35 }, ${f(from + 2.2)});`,
+  };
+}
+
+// A dot product on 4 lanes: products in the register file, then a shuffle sum.
+function smScene(s, id) {
+  const prods = s.a.map((v, i) => v * s.b[i]);
+  const sum = prods.reduce((x, y) => x + y, 0);
+  const lanes = s.a
+    .map((v, i) => `<div class="lane" style="left:${190 + i * 210}px;top:${TOP + 10}px">lane ${i}</div>
+        <div class="reg" style="left:${190 + i * 210}px;top:${TOP + 60}px">${v}</div>
+        <div class="reg" style="left:${190 + i * 210}px;top:${TOP + 140}px">${s.b[i]}</div>
+        <div class="reg out" style="left:${190 + i * 210}px;top:${TOP + 220}px">${prods[i]}</div>`)
+    .join("");
+  const names = [["r1 = a", 60], ["r2 = b", 140], ["r3 = a·b", 220]]
+    .map(([n, y]) => `<div class="reg-name" style="top:${TOP + y + 18}px">${n}</div>`)
+    .join("");
+  return {
+    html: `${names}${lanes}
+        <div class="shuffle" style="top:${TOP + 320}px">warp shuffle sum → <b>${sum}</b></div>
+        <div class="note" style="top:${TOP + 430}px">${esc(s.note)}</div>`,
+    js: (from) => `
+      tl.from("#${id} .reg.out", { opacity: 0, scale: 0.6, duration: 0.25, stagger: 0.2, ease: "back.out(2)" }, ${f(from + 1.2)});
+      tl.from("#${id} .shuffle", { opacity: 0, y: 20, duration: 0.35, ease: "power3.out" }, ${f(from + 2.6)});`,
+  };
+}
+
 const SCENES = {
   layers: layersScene,
   loop: loopScene,
@@ -339,6 +447,11 @@ const SCENES = {
   games3: games3Scene,
   go: goScene,
   caveats: caveatsScene,
+  stack: stackScene,
+  spec: specScene,
+  state: stateScene,
+  flow: flowScene,
+  sm: smScene,
 };
 
 // ---------- composition ----------
@@ -402,7 +515,7 @@ const captions = captionClips(segments, clip);
 const e = script.end;
 const html = `<!doctype html>
 <!-- Generated by build.mjs from script.json. Edit those, not this file. -->
-<html lang="en">
+<html lang="en" data-theme="${script.theme ?? "green"}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=${W}, height=${H}" />
