@@ -15,6 +15,7 @@ Videos rendered from code by GitHub Actions (see [REPRODUCE.md](REPRODUCE.md) to
 | `hyperframes/explainer-india-poverty/` | India poverty data explainer from the World Bank's Poverty & Equity Brief (October 2026): redrawn charts, Indian English voice. Sources table and post kit in `POST.md`. |
 | `hyperframes/explainer-weight-space/` | Explainer of "Sparks of Weight-Space Programming" (MIT CSAIL blog post, Nov 2026): a dark weight-inspector look in the post's own fonts, with its caveats kept. Sources and post kit in `POST.md`. |
 | `hyperframes/explainer-weight-space/script-qwengpu.json` | Explainer of qgpu ("Qwen runs CUDA"): a SIMT GPU compiled into Qwen3.5-2B's weights, in the same dark engine with qgpu's blue. Sources and post kit in `POST-qwengpu.md`. |
+| `hyperframes/explainer-masala-lab/` | Walkthrough Short of Masala Lab Atlas (rajasekharponakala.github.io/scicook): the site's tools recorded in use with a real mouse (`record.cjs`, Chrome screencast at 2x), framed in the site's neobrutalist look. Post kit in `POST.md`. |
 | `scripts/` | `setup.sh` (one-time install) and `render.sh <project>` (build and render any video). |
 | `hyperframes/lib/` | Shared Shorts machinery: Kokoro voiceover, caption timing, music bed (`music.py`), ducking and loudness. |
 | `remotion/src/TitleCard.tsx` | 5s animated title card. Text and colors are Zod-typed props. |

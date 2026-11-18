@@ -1,0 +1,73 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.12,
+  "music": { "gainDb": -15 },
+  "slug": "masala-lab-atlas",
+  "url": "rajasekharponakala.github.io/scicook",
+  "hook": "Why does dal take forever in Shimla?",
+  "hookSay": "Why does dal take forever in Shimla? This free website lets you play with the science of Indian cooking.",
+  "hookClip": "home",
+  "beats": [
+    {
+      "clip": "thermal",
+      "label": "1 · Heat & pressure",
+      "big": "0–480 °C",
+      "say": "Drag the heat from zero to {480|four hundred and eighty} degrees, and watch water molecules speed up as each change happens."
+    },
+    {
+      "clip": "boiling",
+      "label": "Boiling point vs altitude",
+      "big": "92 °C in Shimla",
+      "say": "Seal a pressure cooker, and water boils at about {116|one hundred and sixteen} degrees, even in Shimla. Open it, and it boils at just {92|ninety-two}."
+    },
+    {
+      "clip": "spices",
+      "label": "2 · Spices & flavour",
+      "big": "23 spices",
+      "say": "{23|Twenty-three} spices, linked by the flavour molecules they share. Tap one to see its partners."
+    },
+    {
+      "clip": "onion",
+      "label": "3 · Maillard & frying",
+      "big": "Raw → jammy",
+      "say": "Brown an onion stage by stage, from raw to jammy, and see what changes inside."
+    },
+    {
+      "clip": "ph",
+      "label": "4 · Dropping acid",
+      "big": "pH 4.3–4.9",
+      "say": "Cola sits at a {pH|P H} of {2.5|two point five}. Most balanced dishes sit between {4.3|four point three} and {4.9|four point nine}."
+    },
+    {
+      "clip": "umami",
+      "label": "5 · Umami synergy",
+      "big": "y = u + γuv",
+      "say": "Add dried mushroom to tomato, and the umami model jumps to about {29|twenty-nine} times."
+    },
+    {
+      "clip": "microwave",
+      "label": "6 · Modernist lab",
+      "big": "λ = 12 cm",
+      "say": "A microwave's {12|twelve} centimetre wave leaves cold stripes on a flat papad. Roll it in a glass, and it cooks evenly."
+    },
+    {
+      "clip": "gravy",
+      "label": "7 · Dish generators",
+      "big": "Gravy stack",
+      "say": "Pick a main ingredient and a regional style, and it builds the gravy, layer by layer."
+    },
+    {
+      "clip": "biryani",
+      "label": "8 · Biryani planner",
+      "big": "6 tracks",
+      "say": "And plan a biryani as six tracks that run in parallel, ticking off each task."
+    }
+  ],
+  "outro": "It's called Masala Lab Atlas: a free, fan-made companion to Krish Ashok's book, Masala Lab. The link is in the description.",
+  "end": {
+    "title": "Masala Lab Atlas",
+    "lines": ["30+ interactive science tools", "8 chapters · free · no sign-up", "Search any tool with /"],
+    "small": "Unofficial fan-made companion to Krish Ashok's Masala Lab. Not affiliated with the author or publisher. Buy the book."
+  }
+}
