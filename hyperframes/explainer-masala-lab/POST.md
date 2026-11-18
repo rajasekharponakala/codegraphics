@@ -63,3 +63,43 @@ Try them all free: rajasekharponakala.github.io/scicook
 - [ ] Watch once with sound (check "Shimla", "papad", "umami" pronunciation).
 - [ ] Check the site link opens on a phone.
 - [ ] Optional: tag @krishashok when sharing on X, as a fan project.
+
+---
+
+# Teaser (glimpse) version
+
+Video: `renders/masala-lab-atlas-glimpse.mp4` (44 s, 1080×1920). Built from `script-glimpse.json`:
+opens with Krish Ashok's book, then seven tools (heat, Shimla boiling point, spices, onion, umami,
+microwave, biryani). Voice: Kokoro `af_heart` (US English). Same recordings, sped up to 1.8×.
+Numbers are a subset of the table above (480 °C, 92 °C in Shimla, 23 spices, 12 cm, 6 tracks).
+
+## Caption / title (under 100 characters)
+
+```
+Krish Ashok's Masala Lab, made playable: the science of Indian cooking #Shorts #FoodScience
+```
+
+## Description
+
+```
+Krish Ashok's book Masala Lab explains the science of Indian cooking. Masala Lab Atlas lets you play with it: a free, fan-made website with 30+ interactive tools.
+
+Try it: https://rajasekharponakala.github.io/scicook/
+
+• Drag the heat up to 480 °C and watch water molecules speed up.
+• See why dal takes forever in Shimla (water boils at about 92 °C there).
+• 23 spices linked by the flavour molecules they share.
+• Onion browning, umami synergy, the microwave papad trick, and a 6-track biryani planner.
+
+Unofficial and fan-made. Not affiliated with or endorsed by Krish Ashok or the publisher. Please buy the book.
+Footage: screen recordings of the site. Voice: AI text-to-speech. Music: original.
+
+#Shorts #FoodScience #IndianCooking #MasalaLab #Cooking
+```
+
+## Pinned comment
+
+```
+Read Masala Lab? Which chapter would you want as an interactive tool next? 👇
+rajasekharponakala.github.io/scicook
+```

@@ -1,0 +1,69 @@
+{
+  "voice": "af_heart",
+  "speed": 1.0,
+  "music": {
+    "gainDb": -15
+  },
+  "slug": "masala-lab-atlas-glimpse",
+  "url": "rajasekharponakala.github.io/scicook",
+  "hookLabel": "Krish Ashok · Masala Lab",
+  "hook": "The science of Indian cooking, now playable",
+  "hookSize": 68,
+  "hookSay": "Krish Ashok's book, Masala Lab, explains the science of Indian cooking. Now you can play with it.",
+  "hookClip": "home",
+  "beats": [
+    {
+      "clip": "thermal",
+      "label": "Heat & pressure",
+      "big": "0–480 °C",
+      "say": "Drag the heat up to {480|four hundred and eighty} degrees, and watch water molecules speed up."
+    },
+    {
+      "clip": "boiling",
+      "label": "Boiling point vs altitude",
+      "big": "92 °C in Shimla",
+      "say": "See why dal takes forever in Shimla, where water boils at just {92|ninety-two} degrees.",
+      "clipStart": 7
+    },
+    {
+      "clip": "spices",
+      "label": "Spices & flavour",
+      "big": "23 spices",
+      "say": "Explore {23|twenty-three} spices, linked by the flavour molecules they share."
+    },
+    {
+      "clip": "onion",
+      "label": "Maillard & frying",
+      "big": "Raw → jammy",
+      "say": "Brown an onion stage by stage, from raw to jammy."
+    },
+    {
+      "clip": "umami",
+      "label": "Umami synergy",
+      "big": "y = u + γuv",
+      "say": "Mix tomato with dried mushroom, and watch the umami multiply."
+    },
+    {
+      "clip": "microwave",
+      "label": "Modernist lab",
+      "big": "λ = 12 cm",
+      "say": "Find out why a flat papad gets cold stripes in the microwave."
+    },
+    {
+      "clip": "biryani",
+      "label": "Biryani planner",
+      "big": "6 tracks",
+      "say": "And plan a biryani as six tracks running in parallel."
+    }
+  ],
+  "outro": "Masala Lab Atlas. Free and fan-made. The link is in the description.",
+  "end": {
+    "title": "Masala Lab Atlas",
+    "lines": [
+      "30+ interactive science tools",
+      "8 chapters · free · no sign-up",
+      "Based on Krish Ashok's Masala Lab"
+    ],
+    "small": "Unofficial fan-made companion. Not affiliated with the author or publisher. Buy the book."
+  }
+}

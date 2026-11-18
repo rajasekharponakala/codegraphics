@@ -1,4 +1,5 @@
-// Builds the Masala Lab Atlas Short from script.json into build/<slug>/:
+// Builds the Masala Lab Atlas Short from script.json (or the 45 s teaser,
+// script-glimpse.json) into build/<slug>/:
 // an Indian English voiceover, word captions, and screen recordings of the
 // site's own tools (made by record.cjs) inside a browser window, in the site's
 // neobrutalist "kitchen zine" look. Render with `hyperframes render` there.
@@ -14,7 +15,10 @@ const W = 1080;
 const H = 1920;
 const MAX_SPEEDUP = 1.8; // a recording longer than its beat plays at most this much faster
 
-const script = JSON.parse(readFileSync(join(HERE, "script.json"), "utf8"));
+// node build.mjs [--script script-glimpse.json]: the full walkthrough and the teaser share this build.
+const scriptArg = process.argv.indexOf("--script");
+const scriptFile = scriptArg === -1 ? "script.json" : process.argv[scriptArg + 1];
+const script = JSON.parse(readFileSync(join(HERE, scriptFile), "utf8"));
 const f = (x) => Number(x.toFixed(3));
 const clip = (start, end, track) => `data-start="${f(start)}" data-duration="${f(end - start)}" data-track-index="${track}"`;
 const seconds = (file) => Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file]).toString());
@@ -27,7 +31,7 @@ cpSync(join(HERE, "masala.css"), join(out, "masala.css"));
 // ---------- narration ----------
 
 const segments = [
-  { kind: "intro", text: script.hookSay, clip: script.hookClip, label: "Free website", big: script.hook },
+  { kind: "intro", text: script.hookSay, clip: script.hookClip, label: script.hookLabel ?? "Free website", big: script.hook },
   ...script.beats.map((b) => ({ kind: "beat", text: b.say, ...b })),
   { kind: "outro", text: script.outro },
 ];
@@ -45,11 +49,12 @@ const scenes = segments.slice(0, -1).map((seg, i) => ({
 // Shorter: the last frame is held.
 for (const sc of scenes) {
   const src = join(HERE, "assets", `${sc.clip}.mp4`);
-  const len = seconds(src);
+  const skip = sc.clipStart ?? 0; // seconds of the recording to skip
+  const len = seconds(src) - skip;
   const want = sc.to - sc.from + 0.1;
   const rate = Math.min(Math.max(len / want, 1), MAX_SPEEDUP);
   const filters = [`setpts=PTS/${rate.toFixed(4)}`, `tpad=stop_mode=clone:stop_duration=${Math.max(0, want - len / rate + 0.2).toFixed(3)}`, "fps=30"];
-  execFileSync("ffmpeg", ["-loglevel", "error", "-y", "-i", src, "-vf", filters.join(","), "-t", want.toFixed(3), "-an",
+  execFileSync("ffmpeg", ["-loglevel", "error", "-y", "-ss", String(skip), "-i", src, "-vf", filters.join(","), "-t", want.toFixed(3), "-an",
     "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-pix_fmt", "yuv420p", "-movflags", "+faststart", join(out, "clips", `${sc.clip}.mp4`)]);
   sc.rate = rate;
 }
@@ -59,7 +64,7 @@ for (const sc of scenes) {
 const cardHtml = scenes
   .map((sc, i) => {
     const big = display(sc.big);
-    const size = i === 0 ? 76 : big.length <= 9 ? 132 : big.length <= 13 ? 108 : 88;
+    const size = i === 0 ? (script.hookSize ?? 76) : big.length <= 9 ? 132 : big.length <= 13 ? 108 : 88;
     return `      <div id="card-${i}" class="card clip" ${clip(sc.from, sc.to, 10)}>
         <div class="card-label">${esc(display(sc.label))}</div>
         <div class="card-big" style="font-size:${size}px">${esc(big)}</div>

@@ -20,7 +20,7 @@ scripts/render.sh campaign       # then any project below
 | `scripts/render.sh poverty` | India poverty data explainer (59 s, World Bank brief) | `hyperframes/explainer-india-poverty/script.json` | `hyperframes/explainer-india-poverty/renders/` |
 | `scripts/render.sh weights` | Weight-Space Programming explainer: 59 s version and full 2-minute version of all eight experiments | `hyperframes/explainer-weight-space/script.json`, `script-full.json` | `hyperframes/explainer-weight-space/renders/` |
 | `scripts/render.sh qwengpu` | qgpu explainer: a GPU compiled into Qwen's weights (84 s) | `hyperframes/explainer-weight-space/script-qwengpu.json` | `hyperframes/explainer-weight-space/renders/` |
-| `scripts/render.sh masala` | Masala Lab Atlas walkthrough (79 s): screen recordings of the site's tools, Indian English voice | `hyperframes/explainer-masala-lab/script.json`; re-record clips with `record.cjs` | `hyperframes/explainer-masala-lab/renders/` |
+| `scripts/render.sh masala` | Masala Lab Atlas walkthrough (79 s, Indian English voice) and 44 s teaser opening with Krish Ashok's book (US English voice): screen recordings of the site's tools | `hyperframes/explainer-masala-lab/script.json`, `script-glimpse.json`; re-record clips with `record.cjs` | `hyperframes/explainer-masala-lab/renders/` |
 | `scripts/render.sh papers` | "Papers, explained" Shorts, episodes 1–4 | `hyperframes/shorts-papers/script.json` | `hyperframes/shorts-papers/renders/` |
 | `scripts/render.sh papers --episode 2` | One episode | | |
 | `scripts/render.sh roots` | Roots of Capitalism Shorts, parts 1–6 | `hyperframes/shorts-roots-of-capitalism/script.json` | `hyperframes/shorts-roots-of-capitalism/renders/` |
