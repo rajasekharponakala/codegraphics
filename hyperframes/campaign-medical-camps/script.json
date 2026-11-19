@@ -1,0 +1,64 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.1,
+  "music": { "gainDb": -15 },
+  "slug": "swecha-medical-camps-donate",
+  "brand": "Swecha · Free Medical Camps",
+  "url": "ehrs.peoples-health.in/donate",
+  "hook": "Free medical care, every first Sunday",
+  "hookSay": "On the first Sunday of every month, hundreds of families in Hyderabad get free medical care. You can help keep it going.",
+  "hookPhotos": [["p05.jpg", "50%"]],
+  "beats": [
+    {
+      "label": "Since the first camp",
+      "big": "54 camps",
+      "sub": "39,549 consultations recorded",
+      "say": "Swecha's free multi-speciality camps have run {54|fifty-four} times, with more than {39,000|thirty-nine thousand} consultations.",
+      "photos": [["p01.jpg", "35%"], ["p02.jpg", "30%"]]
+    },
+    {
+      "label": "Who comes",
+      "big": "11,000+ patients",
+      "sub": "from 183 areas in Telangana, Andhra Pradesh and beyond",
+      "say": "Over {11,000|eleven thousand} patients have come, from {183|one hundred and eighty-three} areas across Telangana, Andhra Pradesh, and beyond.",
+      "photos": [["p18.jpg", "45%"]]
+    },
+    {
+      "label": "Who gives care",
+      "big": "60+ doctors",
+      "sub": "up to 12 specialities · 200+ volunteers at every camp",
+      "say": "A network of over {60|sixty} doctors covers up to {12|twelve} specialities, and more than {200|two hundred} volunteers run each camp.",
+      "photos": [["p17.jpg", "50%"], ["p07.jpg", "40%"], ["p06.jpg", "40%"]]
+    },
+    {
+      "label": "Beyond the consultation",
+      "big": "400+ free tests",
+      "sub": "per camp · and up to a month of medicines from 141 types",
+      "say": "Patients get free blood tests, thyroid tests and E C Gs, and up to a month of prescribed medicines.",
+      "photos": [["p08.jpg", "50%"], ["p19.jpg", "45%"]]
+    },
+    {
+      "label": "Eye care so far",
+      "big": "810 spectacles",
+      "sub": "2,700 eye check-ups · 34 cataract surgeries",
+      "say": "So far, {2,700|two thousand seven hundred} eye check-ups, {810|eight hundred and ten} free spectacles, and {34|thirty-four} cataract surgeries.",
+      "photos": [["p13.jpg", "50%"]]
+    },
+    {
+      "label": "What your gift does",
+      "big": "₹3.5 lakh",
+      "sub": "buys the medicines for one camp",
+      "say": "The medicines for one camp cost about {₹3.5 lakh|three and a half lakh rupees}. Your donation keeps the pharmacy stocked, month after month.",
+      "photos": [["p11.jpg", "40%"]]
+    }
+  ],
+  "outro": "Donate at the link on screen, and help keep care free, every first Sunday.",
+  "end": {
+    "kicker": "Donate now",
+    "title": "Keep the camps free",
+    "lines": ["700+ patients at every camp", "First Sunday of every month", "Swecha Office, Gachibowli, Hyderabad"],
+    "small": "Swecha Foundation · Figures from Swecha's 2026 programme proposal (through the 54th camp)",
+    "photos": ["p01.jpg", "p11.jpg", "p17.jpg", "p08.jpg"]
+  }
+}

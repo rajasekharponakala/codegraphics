@@ -17,3 +17,6 @@ hyperframes/explainer-weight-space/build/
 hyperframes/explainer-masala-lab/build/
 !hyperframes/explainer-masala-lab/assets/*.mp4
 hyperframes/explainer-ai-workbench/build/
+hyperframes/campaign-medical-camps/build/
+# Camp photos show patients: kept local, not published in this repo.
+hyperframes/campaign-medical-camps/assets/photos/
