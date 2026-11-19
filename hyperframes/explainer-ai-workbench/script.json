@@ -1,0 +1,73 @@
+{
+  "voice": "af_heart",
+  "speed": 1.05,
+  "music": { "gainDb": -15 },
+  "slug": "ai-workbench-workshop",
+  "kicker": "Hands-on workshop",
+  "hook": "Build your own AI workbench",
+  "hookSay": "What if your AI assistant was truly yours? Open, portable, and built by you.",
+  "beats": [
+    {
+      "label": "The shift",
+      "big": "AI agents",
+      "say": "Engineering is changing. {AI|A I} agents now read code, run tools, and draft documentation. But most of them live on closed platforms.",
+      "scene": { "type": "shift" }
+    },
+    {
+      "label": "The stack",
+      "big": "100% open source",
+      "say": "In this workshop, you build your own harness from free and open source parts: {OpenCode|Open Code}, its plugins, open models you can run locally, Git, and documentation.",
+      "scene": { "type": "stack" }
+    },
+    {
+      "label": "Language-agnostic",
+      "big": "Any language",
+      "say": "It is not tied to one language. Python, JavaScript, Java, {C++|C plus plus}, Go, or Rust: your workbench adapts to your project.",
+      "scene": { "type": "langs" }
+    },
+    {
+      "label": "Model Context Protocol",
+      "big": "MCP",
+      "say": "Connect it to files, databases, {APIs|A P Is}, and your own scripts through the Model Context Protocol, with only the access you approve.",
+      "scene": { "type": "mcp" }
+    },
+    {
+      "label": "Reusable skills",
+      "big": "Skills",
+      "say": "Write reusable skills for code generation, review, testing, documentation, and research.",
+      "scene": { "type": "skills" }
+    },
+    {
+      "label": "Graph engineering",
+      "big": "Code as a graph",
+      "say": "Use graph tools to map a codebase: its modules, dependencies, and how everything connects.",
+      "scene": { "type": "graph" }
+    },
+    {
+      "label": "Research in the AI era",
+      "big": "Papers, made easier",
+      "say": "Research is shifting too. Agents search the literature, summarise papers with citations, rerun experiments, and help draft in {LaTeX|lay-tek}. You still check every claim.",
+      "scene": { "type": "research" }
+    },
+    {
+      "label": "What you take home",
+      "big": "Yours to keep",
+      "say": "You leave with a portable, documented workbench, reusable skills, and at least one custom {MCP|M C P} or automation of your own.",
+      "scene": { "type": "outcomes" }
+    },
+    {
+      "label": "Who it's for",
+      "big": "Learn by building",
+      "say": "For undergraduates, engineers, and faculty. Use it for projects, hackathons, internships, research, and open source.",
+      "scene": { "type": "audience" }
+    }
+  ],
+  "outro": "The {AI|A I} Workbench Workshop. Build your own harness.",
+  "end": {
+    "kicker": "Join the workshop",
+    "title": "AI Workbench Workshop",
+    "subtitle": "Build Your Own Harness",
+    "lines": ["Hands-on labs: OpenCode, MCP, skills", "Any language · open, local models", "For students, engineers and faculty"],
+    "small": "100% free and open source stack · no proprietary platform needed"
+  }
+}

@@ -3,7 +3,7 @@
 # so renders never depend on a CDN.
 set -euo pipefail
 cd "$(dirname "$0")"
-for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab; do
+for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench; do
   mkdir -p "$project/vendor"
   cp node_modules/gsap/dist/gsap.min.js "$project/vendor/"
 done
@@ -15,8 +15,9 @@ done
 fonts=explainer-weight-space/vendor
 cp node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-{400,600,800}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-{400,700}-normal.woff2 "$fonts/"
-# The Masala Lab Atlas explainer uses the site's own fonts.
-fonts=explainer-masala-lab/vendor
+# The Masala Lab Atlas explainer (the site's own fonts) and the AI Workbench pitch.
+for fonts in explainer-masala-lab/vendor explainer-ai-workbench/vendor; do
 cp node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-{500,700}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/inter/files/inter-latin-{500,700}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-{400,700}-normal.woff2 "$fonts/"
+done

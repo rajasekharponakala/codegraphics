@@ -5,6 +5,7 @@
 #   scripts/render.sh poverty                   India poverty data explainer (World Bank brief)
 #   scripts/render.sh weights                   Weight-Space Programming explainer, 59 s and full 2 min
 #   scripts/render.sh qwengpu                   qgpu (a GPU compiled into Qwen's weights) explainer
+#   scripts/render.sh workbench                 AI Workbench Workshop pitch (88 s)
 #   scripts/render.sh masala                    Masala Lab Atlas walkthrough (79 s) and teaser (44 s)
 #   scripts/render.sh papers [--episode N]      "Papers, explained" Shorts (all, or one)
 #   scripts/render.sh roots [--part N] [--style glass|brutal]
@@ -53,6 +54,9 @@ case "$target" in
   qwengpu)
     rm -rf "$HF/explainer-weight-space/build"/weight-space-*/
     render_builds explainer-weight-space --script script-qwengpu.json
+    ;;
+  workbench)
+    render_builds explainer-ai-workbench "$@"
     ;;
   masala)
     (cd "$HF/explainer-masala-lab" && node build.mjs --script script-glimpse.json)
