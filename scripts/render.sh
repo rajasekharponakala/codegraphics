@@ -5,7 +5,7 @@
 #   scripts/render.sh poverty                   India poverty data explainer (World Bank brief)
 #   scripts/render.sh weights                   Weight-Space Programming explainer, 59 s and full 2 min
 #   scripts/render.sh qwengpu                   qgpu (a GPU compiled into Qwen's weights) explainer
-#   scripts/render.sh camps                     Swecha medical-camps donation campaign (63 s; photos kept local)
+#   scripts/render.sh camps                     Swecha medical-camps donation campaign (55 s; photos kept local)
 #   scripts/render.sh workbench                 AI Workbench Workshop pitch (88 s)
 #   scripts/render.sh masala                    Masala Lab Atlas walkthrough (79 s) and teaser (44 s)
 #   scripts/render.sh papers [--episode N]      "Papers, explained" Shorts (all, or one)
