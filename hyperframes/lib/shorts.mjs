@@ -185,10 +185,10 @@ export function mixNarration(segments, total, out) {
 // Lays the music bed (music.py) under the narration. A sidechain compressor keyed
 // on the voice ducks the music while the narrator speaks and lets it back up in
 // the gaps and over the end card.
-export function addMusic(narration, total, seed, out, gainDb = -12) {
+export function addMusic(narration, total, seed, out, gainDb = -12, style = "ambient") {
   const bed = join(dirname(out), "music.wav");
   const python = process.env.HYPERFRAMES_PYTHON || "python3";
-  execFileSync(python, ["-I", join(LIB, "music.py"), "--seconds", total.toFixed(3), "--seed", String(seed), "--out", bed]);
+  execFileSync(python, ["-I", join(LIB, "music.py"), "--seconds", total.toFixed(3), "--seed", String(seed), "--out", bed, "--style", style]);
   execFileSync("ffmpeg", [
     "-loglevel", "error", "-y", "-i", narration, "-i", bed,
     "-filter_complex",
@@ -235,7 +235,7 @@ export function writeSoundtrack(segments, total, outDir, { music, seed }) {
   mixNarration(segments, total, join(outDir, "narration.wav"));
   let mix = join(outDir, "narration.wav");
   if (music !== false) {
-    addMusic(mix, total, seed, join(outDir, "mix.wav"), music?.gainDb ?? -12);
+    addMusic(mix, total, seed, join(outDir, "mix.wav"), music?.gainDb ?? -12, music?.style ?? "ambient");
     mix = join(outDir, "mix.wav");
   }
   normalize(mix, join(outDir, "soundtrack.wav"));

@@ -24,4 +24,5 @@ done
 # The Swecha medical-camps campaign.
 fonts=campaign-medical-camps/vendor
 cp node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-{600,800}-normal.woff2 "$fonts/"
+cp node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/inter/files/inter-latin-{500,700}-normal.woff2 "$fonts/"

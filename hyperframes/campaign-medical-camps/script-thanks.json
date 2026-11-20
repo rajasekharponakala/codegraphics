@@ -1,0 +1,76 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.1,
+  "theme": "thanks",
+  "seed": 2611,
+  "music": { "style": "warm", "gainDb": -12 },
+  "slug": "swecha-medical-camps-thanksgiving",
+  "brand": "Swecha · Free Medical Camps",
+  "url": "ehrs.peoples-health.in/donate",
+  "hookLabel": "Swecha · Thanksgiving",
+  "hook": "This month, we give thanks",
+  "hookSay": "This Thanksgiving month, Swecha is saying thank you, to everyone who keeps our free medical camps going.",
+  "hookShots": [
+    { "style": "mosaic", "photos": ["p05.jpg", "p17.jpg", "p11.jpg", "p08.jpg", "p01.jpg", "p06.jpg"] }
+  ],
+  "beats": [
+    {
+      "label": "To our doctors",
+      "big": "Thank you!",
+      "sub": "60+ doctors · up to 12 specialities",
+      "say": "Thank you to the more than {60|sixty} doctors who care for our patients, across up to {12|twelve} specialities.",
+      "shots": [
+        { "style": "polaroids", "photos": [["p17.jpg", "General physician"], ["p07.jpg", "ENT"], ["p16.jpg", "Gynaecology"]] }
+      ]
+    },
+    {
+      "label": "To our volunteers",
+      "big": "200+ volunteers",
+      "sub": "registration · pharmacy · food and water, at every camp",
+      "say": "Thank you to the more than {200|two hundred} volunteers at every camp: at registration, in the pharmacy, and serving food and water.",
+      "shots": [
+        { "style": "split", "photos": [["p12.jpg", "50%"], ["p11.jpg", "40%"]] },
+        { "style": "panR", "photo": "p06.jpg", "x": "50%" }
+      ]
+    },
+    {
+      "label": "To our community",
+      "big": "11,000+ patients",
+      "sub": "from 183 areas, who trust us with their care",
+      "say": "And thank you to the more than {11,000|eleven thousand} patients, from {183|one hundred and eighty-three} areas, who trust us with their care.",
+      "shots": [
+        { "style": "panL", "photo": "p18.jpg", "x": "50%" },
+        { "style": "push", "photo": "p02.jpg", "x": "30%" }
+      ]
+    },
+    {
+      "label": "Together, so far",
+      "big": "54 camps",
+      "sub": "39,549 consultations · 810 free spectacles · 34 cataract surgeries",
+      "say": "Together, we have run {54|fifty-four} camps: more than {39,000|thirty-nine thousand} consultations, {810|eight hundred and ten} free spectacles, and {34|thirty-four} cataract surgeries.",
+      "shots": [
+        { "style": "wipe", "photo": "p01.jpg", "x": "35%" },
+        { "style": "pull", "photo": "p13.jpg", "x": "50%" }
+      ]
+    },
+    {
+      "label": "This season of giving",
+      "big": "Give the gift of care",
+      "sub": "Help keep the next camp free",
+      "say": "This season of giving, say thank you in the most caring way. Help keep the next camp free.",
+      "shots": [
+        { "style": "wipe", "photo": "p08.jpg", "x": "50%" },
+        { "style": "push", "photo": "p19.jpg", "x": "45%" }
+      ]
+    }
+  ],
+  "outro": "Donate at the link on screen. From all of us at Swecha, thank you.",
+  "end": {
+    "kicker": "Give thanks, give care",
+    "title": "Thank you!",
+    "lines": ["Free camps, first Sunday of every month", "700+ patients at every camp", "Swecha Office, Gachibowli, Hyderabad"],
+    "small": "Swecha Foundation · Figures from Swecha's 2026 programme proposal (through the 54th camp)",
+    "photos": ["p17.jpg", "p11.jpg", "p06.jpg", "p05.jpg"]
+  }
+}
