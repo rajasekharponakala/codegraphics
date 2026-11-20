@@ -110,5 +110,7 @@
       "p17.jpg",
       "p08.jpg"
     ]
-  }
+  },
+  "logo": "assets/brand/swecha-logo-dark.png",
+  "ctaBar": "Donate · ehrs.peoples-health.in/donate"
 }

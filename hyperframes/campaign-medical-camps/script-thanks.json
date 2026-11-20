@@ -171,5 +171,8 @@
       "p08.jpg",
       "p05.jpg"
     ]
-  }
+  },
+  "logo": "assets/brand/swecha-logo-dark.png",
+  "tag": "Thanksgiving Giving Drive",
+  "ctaBar": "Donate · ehrs.peoples-health.in/donate"
 }

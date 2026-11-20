@@ -64,7 +64,7 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   display: flex; flex-direction: column; justify-content: center; gap: 12px;
   background: #fff; border-left: 16px solid var(--amber); border-radius: 22px; box-shadow: 0 18px 50px rgba(15, 76, 92, 0.22);
 }
-.card-label { font: 700 30px/1.2 var(--sans); color: var(--amber); text-transform: uppercase; letter-spacing: 0.06em; }
+.card-label { font: 700 30px/1.2 var(--sans); color: #a8640f; text-transform: uppercase; letter-spacing: 0.06em; }
 .card-big { font-family: var(--display); font-weight: 800; line-height: 1; color: var(--teal); letter-spacing: -0.01em; }
 .card-sub { font: 600 38px/1.3 var(--display); color: var(--muted); }
 
@@ -78,19 +78,34 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 
 #end-card { inset: 0; background: var(--cream); }
 #end-grid { position: absolute; left: 60px; top: 70px; width: 960px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-#end-grid .eg img { display: block; width: 100%; height: 300px; object-fit: cover; border-radius: 18px; }
+#end-grid .eg img { display: block; width: 100%; height: 240px; object-fit: cover; border-radius: 18px; }
 html[data-theme="thanks"] #end-grid { gap: 26px; top: 90px; }
 html[data-theme="thanks"] #end-grid .eg { padding: 14px 14px 40px; background: #fff; box-shadow: 0 14px 30px rgba(43, 26, 18, 0.25); }
-html[data-theme="thanks"] #end-grid .eg img { height: 250px; border-radius: 2px; }
+html[data-theme="thanks"] #end-grid .eg img { height: 200px; border-radius: 2px; }
 html[data-theme="thanks"] .eg0 { transform: rotate(-4deg); }
 html[data-theme="thanks"] .eg1 { transform: rotate(3deg); }
 html[data-theme="thanks"] .eg2 { transform: rotate(2deg); }
 html[data-theme="thanks"] .eg3 { transform: rotate(-3deg); }
-#end-box { position: absolute; left: 60px; top: 720px; width: 960px; padding: 48px 52px; background: #fff; border-left: 16px solid var(--amber); border-radius: 22px; box-shadow: 0 18px 50px rgba(15, 76, 92, 0.18); }
-#end-kicker { display: inline-block; padding: 10px 24px; font: 700 32px/1.2 var(--sans); color: #fff; text-transform: uppercase; background: var(--amber); border-radius: 40px; }
+#end-box { position: absolute; left: 60px; top: 620px; width: 960px; padding: 48px 52px; background: #fff; border-left: 16px solid var(--amber); border-radius: 22px; box-shadow: 0 18px 50px rgba(15, 76, 92, 0.18); }
+#end-kicker { display: inline-block; padding: 10px 24px; font: 700 32px/1.2 var(--sans); color: #fff; text-transform: uppercase; background: #a8640f; border-radius: 40px; }
 #end-title { margin-top: 26px; font: 800 96px/1 var(--display); color: var(--teal); letter-spacing: -0.01em; }
 #end-url { display: inline-block; margin-top: 30px; padding: 16px 26px; font: 700 42px/1.2 var(--sans); color: #fff; background: var(--teal); border-radius: 14px; transform-origin: left center; }
 #end-lines { margin-top: 36px; list-style: none; }
 #end-lines li { position: relative; padding-left: 50px; margin-top: 14px; font: 600 40px/1.3 var(--display); }
 #end-lines li::before { content: ""; position: absolute; left: 6px; top: 16px; width: 22px; height: 22px; border-radius: 50%; background: var(--amber); }
 #end-small { margin-top: 34px; font: 500 28px/1.4 var(--sans); color: var(--muted); }
+
+/* ---------- campaign layout: logo badge, drive tag, persistent donate strip ---------- */
+#brand.logo-badge { padding: 14px 26px; background: #fff; border-radius: 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22); }
+#brand.logo-badge img { display: block; height: 66px; }
+#tag { right: 60px; top: 84px; padding: 12px 22px; font: 700 28px/1.2 var(--sans); color: var(--teal); background: var(--amber-soft); border: 3px solid var(--amber); border-radius: 40px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+html[data-cta] .card { top: 990px; }
+#cta {
+  left: 60px; top: 1452px; width: 960px; height: 100px; display: flex; align-items: center; justify-content: center; gap: 18px;
+  font: 700 40px/1 var(--sans); color: #fff; background: var(--teal); border-radius: 50px; box-shadow: 0 10px 28px rgba(43, 26, 18, 0.3);
+}
+#cta b { color: var(--amber); font-size: 44px; }
+.card-logo { position: absolute; right: 36px; top: 26px; height: 64px; }
+#end-logo { display: block; height: 96px; margin-bottom: 22px; }
+html[data-theme="thanks"] #end-box { top: 600px; padding-top: 40px; }
+#end-logo + #end-kicker { margin-top: 0; }

@@ -10,6 +10,10 @@ out of this repository (`assets/photos/` is gitignored); put them back as `p01.j
 rebuild. Before posting, confirm the camp's consent practice covers patients' faces in a public
 fundraising video; if not, swap the close patient shots (p08, p13, p19) for wide or volunteer shots.
 
+Branding: the Swecha logo (`assets/brand/`, made transparent from the supplied PNG) sits in a
+badge at the top left, on the first card and on the end card; a donate strip with the link stays
+on screen throughout. The Thanksgiving version adds a "Thanksgiving Giving Drive" tag.
+
 ## Every number in the video
 
 | On screen / spoken | Value | Where in the proposal |
