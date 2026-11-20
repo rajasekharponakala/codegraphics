@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Build Your Own Harness · First-Year Edition</title>
+<style>
+@font-face { font-family: "Space Grotesk"; font-weight: 500; src: url(fonts/space-grotesk-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 700; src: url(fonts/space-grotesk-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; src: url(fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url(fonts/jetbrains-mono-latin-700-normal.woff2) format("woff2"); }
+
+@page { size: A4; margin: 0; }
+:root {
+  --night: #0e1116; --panel: #161b22; --line: #d7dde5; --ink: #141a22; --muted: #566273;
+  --orange: #f97316; --orange-soft: #fff1e6; --cyan: #0891b2; --cyan-bright: #22d3ee; --cyan-soft: #e6f7fb; --green: #16a34a;
+  --display: "Space Grotesk", sans-serif; --sans: "Inter", sans-serif; --mono: "JetBrains Mono", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #e9ecef; }
+body { font-family: var(--sans); color: var(--ink); font-size: 10pt; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { position: relative; width: 210mm; height: 297mm; margin: 0 auto 8mm; background: #fff; overflow: hidden; page-break-after: always; }
+@media print { html, body { background: #fff; } .page { margin: 0; } }
+h2 { font: 700 15pt/1.15 var(--display); letter-spacing: -0.01em; margin-bottom: 3mm; }
+h2 small { display: block; font: 700 7.5pt/1.2 var(--mono); color: var(--cyan); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.2mm; }
+.mono { font-family: var(--mono); }
+
+/* ---------- page 1: hero ---------- */
+.hero { position: relative; height: 118mm; padding: 13mm 15mm 0; color: #e8edf3; background: var(--night);
+  background-image: linear-gradient(rgba(154,167,182,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(154,167,182,.09) 1px, transparent 1px); background-size: 6mm 6mm; }
+.hero .brand { display: flex; align-items: center; gap: 4mm; }
+.hero .brand img { height: 12mm; }
+.hero .brand span { font: 500 8pt/1.2 var(--mono); color: #9aa7b6; text-transform: uppercase; letter-spacing: 0.1em; border-left: 1px solid #3a4553; padding-left: 4mm; }
+.kicker { margin-top: 10mm; font: 700 9pt/1 var(--mono); color: var(--cyan-bright); text-transform: uppercase; letter-spacing: 0.12em; }
+.kicker::before { content: "// "; color: #6b7785; }
+.hero h1 { margin-top: 3mm; font: 700 40pt/0.98 var(--display); letter-spacing: -0.03em; color: #fff; }
+.hero .sub { margin-top: 3mm; font: 700 13pt/1.2 var(--mono); color: var(--orange); }
+.hero .tagline { margin-top: 5mm; width: 100mm; font-size: 11pt; line-height: 1.45; color: #c9d2dc; }
+.term { position: absolute; right: 15mm; bottom: 12mm; width: 78mm; background: #070a0e; border: 1px solid #2f3a48; border-radius: 3mm; overflow: hidden; font: 400 7.6pt/1.65 var(--mono); color: #9aa7b6; }
+.term .bar { display: flex; gap: 1.6mm; padding: 2mm 3mm; background: #1f2630; border-bottom: 1px solid #2f3a48; }
+.term .bar i { width: 2.2mm; height: 2.2mm; border-radius: 50%; background: #f87171; }
+.term .bar i:nth-child(2) { background: var(--orange); } .term .bar i:nth-child(3) { background: #4ade80; }
+.term pre { padding: 2.5mm 3.5mm 3mm; font: inherit; white-space: pre; }
+.term b { color: #fff; } .term em { font-style: normal; color: #4ade80; }
+.pills { position: absolute; left: 15mm; bottom: 12mm; display: flex; gap: 2.5mm; }
+.pills span { padding: 1.6mm 3.2mm; font: 700 7.5pt/1 var(--mono); border-radius: 10mm; border: 1px solid #3a4553; color: #e8edf3; }
+.pills span:first-child { background: var(--orange); border-color: var(--orange); color: #111; }
+
+.body { padding: 10mm 15mm 0; }
+.intro { display: grid; grid-template-columns: 1fr 1fr; gap: 9mm; }
+.intro p { color: #2b3542; }
+.intro .shift { padding: 4mm 5mm; border-radius: 3mm; background: var(--orange-soft); border-left: 1.4mm solid var(--orange); }
+.intro .shift b { display: block; font: 700 10.5pt/1.3 var(--display); margin-bottom: 1.5mm; }
+
+.cols { display: grid; grid-template-columns: 1.08fr 1fr; gap: 9mm; margin-top: 9mm; }
+.stack .layer { display: flex; justify-content: space-between; align-items: baseline; gap: 3mm; padding: 2.8mm 4mm; margin-bottom: 2mm; border: 1px solid var(--line); border-radius: 2.5mm; }
+.stack .layer b { font: 700 10pt/1.2 var(--display); }
+.stack .layer span { font-size: 8pt; color: var(--muted); text-align: right; }
+.stack .layer.h { background: var(--orange-soft); border-color: var(--orange); }
+.stack .layer.m { background: var(--cyan-soft); border-color: var(--cyan); }
+.stack .foss { margin-top: 2.5mm; font: 700 8pt/1 var(--mono); color: var(--green); }
+.langs { display: flex; flex-wrap: wrap; gap: 2mm; margin-bottom: 7mm; }
+.langs span { padding: 1.6mm 3mm; font: 700 8.5pt/1 var(--mono); border: 1px solid var(--cyan); border-radius: 1.8mm; color: #0e5466; background: #fff; }
+.langs span.any { border-style: dashed; border-color: var(--orange); color: #b4530a; }
+.who .p { display: flex; gap: 3.5mm; align-items: center; margin-bottom: 2.6mm; }
+.who .p i { flex: none; width: 11mm; height: 11mm; border-radius: 2.5mm; font: 700 8pt/11mm var(--mono); font-style: normal; text-align: center; background: var(--night); color: var(--orange); }
+.who .p b { display: block; font: 700 10pt/1.2 var(--display); }
+.who .p span { font-size: 8.5pt; color: var(--muted); }
+
+.foot1 { position: absolute; left: 15mm; right: 15mm; bottom: 10mm; display: flex; justify-content: space-between; align-items: center; padding-top: 4mm; border-top: 1px solid var(--line); font: 700 8pt/1 var(--mono); color: var(--muted); }
+.foot1 b { color: var(--orange); }
+
+/* ---------- page 2 ---------- */
+.top2 { display: flex; justify-content: space-between; align-items: center; padding: 9mm 15mm 4mm; border-bottom: 1px solid var(--line); }
+.top2 img { height: 10mm; }
+.top2 span { font: 700 8pt/1 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.labs { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+.lab { display: grid; grid-template-columns: 9mm 1fr; gap: 3mm; padding: 2.8mm 3.6mm; border: 1px solid var(--line); border-radius: 3mm; }
+.lab i { width: 9mm; height: 9mm; border-radius: 50%; font: 700 9pt/9mm var(--mono); font-style: normal; text-align: center; background: var(--cyan-soft); color: #0e5466; }
+.lab b { display: block; font: 700 10pt/1.25 var(--display); margin-bottom: 0.8mm; }
+.lab span { font-size: 8pt; line-height: 1.38; color: #3a4553; }
+.lab.own { background: var(--orange-soft); border-color: var(--orange); }
+.lab.own i { background: var(--orange); color: #111; }
+
+.research { margin-top: 6mm; padding: 5mm 6mm 5.5mm; border-radius: 3.5mm; background: var(--night); color: #e8edf3; }
+.research h2 { color: #fff; }
+.research h2 small { color: var(--cyan-bright); }
+.research p { color: #c9d2dc; font-size: 8.8pt; margin-bottom: 3.5mm; }
+.flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.5mm; }
+.flow div { position: relative; padding: 3mm 3mm 3.2mm; border-radius: 2.5mm; background: #1f2630; border: 1px solid #2f3a48; }
+.flow div:not(:last-child)::after { content: "›"; position: absolute; right: -2.6mm; top: 50%; transform: translateY(-55%); font: 700 12pt/1 var(--mono); color: var(--cyan-bright); }
+.flow b { display: block; font: 700 9.5pt/1.2 var(--display); color: #fff; margin-bottom: 1mm; }
+.flow span { font-size: 7.4pt; line-height: 1.32; color: #aab6c3; }
+.flow .human { background: rgba(249,115,22,.16); border-color: var(--orange); }
+.flow .human b { color: var(--orange); }
+
+.end { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin-top: 6mm; }
+.checks li { list-style: none; display: flex; gap: 3mm; align-items: flex-start; margin-bottom: 1.8mm; font-size: 9pt; line-height: 1.35; }
+.checks li::before { content: "✓"; flex: none; width: 5.5mm; height: 5.5mm; border-radius: 1.4mm; font: 700 8pt/5.5mm var(--sans); text-align: center; background: var(--green); color: #fff; }
+.join { padding: 4.5mm 5.5mm; border-radius: 3.5mm; border: 1.5px solid var(--ink); }
+.join .row { display: grid; grid-template-columns: 20mm 1fr; align-items: end; gap: 2mm; margin-top: 2.6mm; font: 700 8.5pt/1 var(--mono); color: var(--muted); text-transform: uppercase; }
+.join .row i { display: block; height: 5mm; border-bottom: 1px dashed #9aa7b6; }
+.join .org { display: flex; align-items: center; gap: 3mm; margin-top: 4mm; padding-top: 3mm; border-top: 1px solid var(--line); font-size: 8.5pt; color: var(--muted); }
+.join .org img { height: 8mm; }
+.foot2 { position: absolute; left: 15mm; right: 15mm; bottom: 6mm; font-size: 7.5pt; color: #8a95a3; }
+</style>
+</head>
+<body>
+
+<!-- ===================== PAGE 1 ===================== -->
+<section class="page">
+  <div class="hero">
+    <div class="brand"><img src="swecha-logo-white.png" alt="Swecha" /><span>presents</span></div>
+    <div class="kicker">First-year edition · No experience needed</div>
+    <h1>Build Your<br />Own Harness</h1>
+    <div class="sub">Your first AI coding workbench</div>
+    <p class="tagline">Learn to code with an AI assistant you set up yourself, from free and open source tools, on your own laptop. Start right, and keep it for all four years.</p>
+    <div class="pills"><span>Beginner friendly</span><span>100% FOSS</span><span>Hands-on</span></div>
+    <div class="term">
+      <div class="bar"><i></i><i></i><i></i></div>
+<pre><b>$ opencode</b>
+&gt; explain this loop to me, step by step
+skills   explain · test · notes
+mcp      files ✓  git ✓
+project  ~/first-year/lab-03
+<em>ready. what are we learning today?</em></pre>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="intro">
+      <div class="shift"><b>Engineering is changing.</b>AI tools now help write, explain and test code. The engineers who do well will be the ones who understand these tools, not just use them. Start in your first year, with tools you own and can see inside.</div>
+      <p>In this workshop you set up an AI assistant for your coursework and projects, step by step. It works with your own files, explains code in plain words, helps you test your programs and keeps your notes in order. You do not need any experience: if you have written a "Hello, world!", you are ready.</p>
+    </div>
+
+    <div class="cols">
+      <div class="stack">
+        <h2><small>The setup</small>What you will build</h2>
+        <div class="layer"><b>Projects on Git</b><span>save every version of your work</span></div>
+        <div class="layer"><b>Connections (MCP)</b><span>to your files, only with your OK</span></div>
+        <div class="layer"><b>Skills</b><span>explain, test, take notes</span></div>
+        <div class="layer h"><b>OpenCode</b><span>the AI assistant you configure</span></div>
+        <div class="layer m"><b>Open models</b><span>free models you can run</span></div>
+        <div class="foss">› Free and open source: no paid subscription</div>
+      </div>
+      <div>
+        <h2><small>Your first-year languages</small>Works with what you learn</h2>
+        <div class="langs"><span>C</span><span>Python</span><span>Java</span><span>C++</span><span>JavaScript</span><span class="any">+ any language later</span></div>
+        <div class="who">
+          <h2><small>Why start now</small>Built for first years</h2>
+          <div class="p"><i>01</i><div><b>Learn faster</b><span>ask "why?" about any line of code, any time</span></div></div>
+          <div class="p"><i>02</i><div><b>Good habits early</b><span>Git, tests and notes from your first lab</span></div></div>
+          <div class="p"><i>03</i><div><b>Ahead for later years</b><span>projects, hackathons, internships</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot1"><span><b>›</b> No experience needed · Bring your laptop</span><span>See overleaf: labs, study skills, outcomes</span></div>
+</section>
+
+<!-- ===================== PAGE 2 ===================== -->
+<section class="page">
+  <div class="top2"><img src="swecha-logo-dark.png" alt="Swecha" /><span>Build Your Own Harness · First-year edition</span></div>
+
+  <div class="body" style="padding-top: 6mm">
+    <h2><small>Step-by-step labs</small>From zero to your own AI workbench</h2>
+    <div class="labs">
+      <div class="lab"><i>1</i><div><b>Set up your laptop</b><span>Install OpenCode and Git, and create your first project folder for a lab assignment.</span></div></div>
+      <div class="lab"><i>2</i><div><b>Your first AI session</b><span>Ask the assistant to explain a program line by line, then change it and see what happens.</span></div></div>
+      <div class="lab"><i>3</i><div><b>Connect your files</b><span>Use MCP to let the assistant read your project folder, and decide exactly what it can access.</span></div></div>
+      <div class="lab"><i>4</i><div><b>Use ready-made skills</b><span>Skills that explain code, write simple tests for your programs and turn lab work into notes.</span></div></div>
+      <div class="lab"><i>5</i><div><b>See code as a map</b><span>Draw how the files and functions in a project connect, so a bigger program makes sense.</span></div></div>
+      <div class="lab own"><i>6</i><div><b>Make your own skill</b><span>Write one small skill or automation of your own, for example a checklist that reviews your lab code before you submit it.</span></div></div>
+    </div>
+
+    <div class="research">
+      <h2><small>Study smarter in the AI era</small>Use AI to learn, not to skip learning</h2>
+      <p>The same workbench helps you study: find good sources, understand them and write clearly. You stay the author, and you check what the AI tells you.</p>
+      <div class="flow">
+        <div><b>Find</b><span>good sources, such as textbooks and open papers on arXiv</span></div>
+        <div><b>Understand</b><span>ask for explanations and worked examples</span></div>
+        <div><b>Try it</b><span>run the code yourself and see the result</span></div>
+        <div><b>Write</b><span>notes and reports in your own words, with references</span></div>
+        <div class="human"><b>Check</b><span>verify every answer; follow your college's rules on AI use</span></div>
+      </div>
+    </div>
+
+    <div class="end">
+      <div>
+        <h2><small>Outcomes</small>You leave with</h2>
+        <ul class="checks">
+          <li>Your own AI coding workbench, set up on your laptop</li>
+          <li>Your first project on Git, with every change saved</li>
+          <li>Skills that explain code, test programs and take notes</li>
+          <li>One skill or automation you built yourself</li>
+          <li>Good habits for honest, effective use of AI in your studies</li>
+        </ul>
+      </div>
+      <div class="join">
+        <h2><small>Join the workshop</small>Reserve your seat</h2>
+        <div class="row">Date<i></i></div>
+        <div class="row">Venue<i></i></div>
+        <div class="row">Register<i></i></div>
+        <div class="row">Contact<i></i></div>
+        <div class="org"><img src="swecha-logo-dark.png" alt="Swecha" /><span>Organised by Swecha · swecha.org</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot2">The terminal session on the front is an illustration.</div>
+</section>
+
+</body>
+</html>
