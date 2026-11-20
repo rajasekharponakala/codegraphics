@@ -65,54 +65,59 @@ Donate: https://ehrs.peoples-health.in/donate
 
 ---
 
-# Thanksgiving version
+# Thanksgiving version (donation drive)
 
-Video: `renders/swecha-medical-camps-thanksgiving.mp4` (52 s, 1080×1920). Built from
-`script-thanks.json`: same proposal figures, retold as thanks to doctors, volunteers and
-patients, then the ask. Autumn rust-and-gold theme with handwritten headlines (Caveat, SIL OFL).
-Photo styles: mosaic, polaroids, split screen, pans, circle wipes, push and pull.
-Music: `lib/music.py --style warm` (original: G major I–V–vi–IV at 84 BPM, piano arpeggio, melody,
-soft bass, light shaker).
+Video: `renders/swecha-medical-camps-thanksgiving.mp4` (57 s, 1080×1920). Built from
+`script-thanks.json`: a Thanksgiving giving-season appeal to individuals and companies. Story:
+the need (free care every month) → proof (54 camps, 11,000+ patients) → what a donation provides
+(tests, medicines, eye care) → a CSR pitch to companies (sponsor one camp or partner for a year,
+as the proposal offers) → "Donate this Thanksgiving". No rupee amounts. Autumn rust-and-gold
+theme with handwritten headlines (Caveat, SIL OFL). Photo styles: mosaic, polaroids, split
+screen, pans, circle wipes, push and pull. Music: `lib/music.py --style warm` (original: G major
+I–V–vi–IV at 84 BPM, piano arpeggio, melody, soft bass, light shaker).
 
-Polaroid captions name specialities from the doctors' name plates (General physician, ENT,
-Gynaecology), not the doctors.
+The end card gives the CSR contact from the proposal's cover (manager@swecha.net); change it in
+`script-thanks.json` → `end.lines` if companies should write elsewhere.
 
 ## When to post
 
 - Thanksgiving Day is Thursday 26 November 2026; #GivingTuesday is Tuesday 1 December 2026.
-- The next camp is Sunday 6 December 2026 (first Sunday). Post by 24–26 November, pin it, and
-  share again on 1 December with "#GivingTuesday".
+- Post by 24 November and pin it; share again on 26 November and on 1 December (#GivingTuesday).
+- For companies, send the video with the CSR proposal PDF.
 
 ## Caption / title (under 100 characters)
 
 ```
-This Thanksgiving, thank you to everyone who keeps our medical camps free 🙏 #GivingTuesday
+This Thanksgiving, give the gift of free medical care 🙏 Donate to Swecha #GivingTuesday
 ```
 
 ## Description
 
 ```
-This Thanksgiving month, Swecha is saying thank you.
+This Thanksgiving, as people and companies choose where to give, choose free medical care for families who need it most.
 
-To the 60+ doctors who care for our patients across up to 12 specialities.
-To the 200+ volunteers at every camp: at registration, in the pharmacy, serving food and water.
-To the 11,000+ patients from 183 areas who trust us with their care.
+Every first Sunday, Swecha Foundation runs a free multi-speciality medical camp at the Swecha Office, Gachibowli, Hyderabad.
 
-Together, we have run 54 free medical camps: 39,549 consultations, 810 free spectacles and 34 cataract surgeries.
+It works: 54 camps so far, 39,549 consultations and 11,000+ patients from 183 areas.
 
-This season of giving, help keep the next camp free.
-Donate: https://ehrs.peoples-health.in/donate
+Your donation provides:
+• Free tests: 400+ in a camp, including blood tests, thyroid tests and ECGs
+• Up to a month of prescribed medicines for each patient
+• Eye care: 810 free spectacles and 34 cataract surgeries so far
 
-Free multi-speciality camps on the first Sunday of every month at the Swecha Office, Gachibowli, Hyderabad.
+Individuals: donate today → https://ehrs.peoples-health.in/donate
+Companies: sponsor a camp or partner with us for the year (CSR) → manager@swecha.net
+
 Figures from Swecha Foundation's 2026 programme proposal (through the 54th camp). Photos from Swecha's camps.
 Voice: AI text-to-speech (Indian English). Music: original.
 
-#Thanksgiving #GivingTuesday #Swecha #MedicalCamp #Hyderabad
+#Thanksgiving #GivingTuesday #Swecha #MedicalCamp #Hyderabad #CSR
 ```
 
 ## Pinned comment
 
 ```
-Who would you like to thank this year? Tag a doctor or volunteer who made a difference 🙏
-Help keep the next camp free: https://ehrs.peoples-health.in/donate
+This Thanksgiving, one share can bring a donor 🙏 Please donate or pass it on:
+https://ehrs.peoples-health.in/donate
+Companies: sponsor a camp → manager@swecha.net
 ```
