@@ -3,7 +3,7 @@
 # so renders never depend on a CDN.
 set -euo pipefail
 cd "$(dirname "$0")"
-for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps; do
+for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps explainer-volunteer-compute; do
   mkdir -p "$project/vendor"
   cp node_modules/gsap/dist/gsap.min.js "$project/vendor/"
 done
@@ -26,3 +26,8 @@ fonts=campaign-medical-camps/vendor
 cp node_modules/@fontsource/source-sans-3/files/source-sans-3-latin-{600,800}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/inter/files/inter-latin-{500,700}-normal.woff2 "$fonts/"
+# The volunteer-compute explainer uses the project page's fonts.
+fonts=explainer-volunteer-compute/vendor
+cp node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-{normal,italic}.woff2 "$fonts/"
+cp node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-{500,700}-normal.woff2 "$fonts/"
+cp node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-{400,700}-normal.woff2 "$fonts/"

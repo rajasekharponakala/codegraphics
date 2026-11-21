@@ -1,0 +1,93 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.1,
+  "music": { "gainDb": -15 },
+  "slug": "volunteer-compute-explainer",
+  "source": "code.swecha.org/corpus/volunteer-compute",
+  "hook": {
+    "label": "Swecha · Corpus Volunteer Compute",
+    "big": "The cluster is already _in the room._",
+    "sub": "Idle laptops, one shared AI computer for Telugu",
+    "say": "What if the computers that build A I for Telugu were already on our desks? Swecha's Corpus Volunteer Compute turns idle laptops into one shared A I computer.",
+    "scene": { "type": "fleet" }
+  },
+  "beats": [
+    {
+      "label": "01 · Pilot",
+      "big": "50,000 hours. _80,000 pages._",
+      "sub": "Telugu audio transcribed · book pages OCR'd",
+      "say": "In the pilot, volunteers' laptops transcribed {50,000|fifty thousand} hours of Telugu audio, and read {80,000|eighty thousand} book pages with O C R.",
+      "scene": { "type": "pilot" }
+    },
+    {
+      "label": "02 · Green",
+      "big": "Zero _new servers._",
+      "sub": "The greenest compute is already switched on",
+      "say": "It needed no new servers, no new cooling, and no new always-on power demand.",
+      "scene": { "type": "ledger" }
+    },
+    {
+      "label": "03 · Access",
+      "big": "Compute is the _scarce part._",
+      "sub": "81 million first-language Telugu speakers (2011 Census)",
+      "say": "Telugu has {81|eighty-one} million first-language speakers, but G P Us are rationed and rented. Inference does not need a G P U. It runs on the C P Us and N P Us people already own.",
+      "scene": { "type": "access" }
+    },
+    {
+      "label": "04 · Protocol",
+      "big": "One queue. _Every device._",
+      "sub": "Lease a record · compute locally · return only text",
+      "say": "One server holds the queue. A device claims a record, runs the model locally, and sends back only the text. Devices never talk to each other.",
+      "scene": { "type": "grid" }
+    },
+    {
+      "label": "05 · Session",
+      "big": "One record, _end to end._",
+      "sub": "The audio never stays on the volunteer's machine",
+      "say": "The audio is deleted as soon as the text is safe. If a laptop leaves, its claim expires, and the next volunteer picks the record up.",
+      "scene": { "type": "session" }
+    },
+    {
+      "label": "06 · Guard",
+      "big": "It gives the laptop _back._",
+      "sub": "Battery, heat and memory, re-checked every 30 seconds",
+      "say": "A guard checks battery, heat and memory every {30|thirty} seconds, and throttles, so the volunteer's machine stays usable.",
+      "scene": { "type": "guard" }
+    },
+    {
+      "label": "07 · Models",
+      "big": "Two roads into _one corpus._",
+      "sub": "Gonthuka ASR · Telugu BPE · Nanochat 560M",
+      "say": "Audio and its transcripts train Gonthuka, a Telugu speech model. The O C R text trains a Telugu tokenizer, and Nanochat, a {560|five hundred and sixty} million parameter language model.",
+      "scene": { "type": "flow" }
+    },
+    {
+      "label": "08 · Scale-up",
+      "big": "Next: _1M hours, 11M pages._",
+      "sub": "20× the audio · 137× the pages · same volunteer fabric",
+      "say": "Next: one million hours of audio, and eleven million pages, on the same volunteer fabric.",
+      "scene": { "type": "scale" }
+    },
+    {
+      "label": "09 · Public infrastructure",
+      "big": "Made by the people. _Held in common._",
+      "sub": "Corpus, client and models under AGPL-3.0",
+      "say": "The corpus, the client and the models are all released under the A G P L licence: public infrastructure, held in common.",
+      "scene": { "type": "commons" }
+    },
+    {
+      "label": "10 · Join",
+      "big": "Lend your _idle laptop._",
+      "sub": "Install the client, log in, start volunteering",
+      "say": "To join, install the corpus client, log in, and start volunteer compute.",
+      "scene": { "type": "join" }
+    }
+  ],
+  "outro": "Corpus Volunteer Compute, by Swecha. The cluster is already in the room.",
+  "end": {
+    "title": "Corpus Volunteer Compute",
+    "lines": ["code.swecha.org/corpus/volunteer-compute", "corpus.swecha.org"],
+    "small": "Figures from the project README and pages (pilot phase). Diagrams redrawn for this video; the fleet, session and guard chart are illustrations."
+  }
+}
