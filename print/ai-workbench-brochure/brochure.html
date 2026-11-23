@@ -97,7 +97,9 @@ h2 small { display: block; font: 700 7.5pt/1.2 var(--mono); color: var(--cyan); 
 .flow .human { background: rgba(249,115,22,.16); border-color: var(--orange); }
 .flow .human b { color: var(--orange); }
 
-.end { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin-top: 6mm; }
+.end { margin-top: 6mm; }
+.end .checks { columns: 2; column-gap: 9mm; }
+.end .checks li { break-inside: avoid; }
 .checks li { list-style: none; display: flex; gap: 3mm; align-items: flex-start; margin-bottom: 1.8mm; font-size: 9pt; line-height: 1.35; }
 .checks li::before { content: "✓"; flex: none; width: 5.5mm; height: 5.5mm; border-radius: 1.4mm; font: 700 8pt/5.5mm var(--sans); text-align: center; background: var(--green); color: #fff; }
 .join { padding: 4.5mm 5.5mm; border-radius: 3.5mm; border: 1.5px solid var(--ink); }
@@ -199,14 +201,6 @@ project  ~/projects/capstone
           <li>At least one custom MCP or automation workflow of your own</li>
           <li>A setup ready for academic projects, hackathons, internships and open-source contributions</li>
         </ul>
-      </div>
-      <div class="join">
-        <h2><small>Join the workshop</small>Reserve your seat</h2>
-        <div class="row">Date<i></i></div>
-        <div class="row">Venue<i></i></div>
-        <div class="row">Register<i></i></div>
-        <div class="row">Contact<i></i></div>
-        <div class="org"><img src="swecha-logo-dark.png" alt="Swecha" /><span>Organised by Swecha · swecha.org</span></div>
       </div>
     </div>
   </div>
