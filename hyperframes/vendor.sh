@@ -3,7 +3,7 @@
 # so renders never depend on a CDN.
 set -euo pipefail
 cd "$(dirname "$0")"
-for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps explainer-volunteer-compute; do
+for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps explainer-volunteer-compute explainer-early-indians; do
   mkdir -p "$project/vendor"
   cp node_modules/gsap/dist/gsap.min.js "$project/vendor/"
 done
@@ -31,3 +31,7 @@ fonts=explainer-volunteer-compute/vendor
 cp node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-{normal,italic}.woff2 "$fonts/"
 cp node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-{500,700}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-{400,700}-normal.woff2 "$fonts/"
+# The Early Indians atlas Short uses the site's fonts.
+fonts=explainer-early-indians/vendor
+cp node_modules/@fontsource/fraunces/files/fraunces-latin-{600,700}-normal.woff2 "$fonts/"
+cp node_modules/@fontsource/inter/files/inter-latin-{500,700}-normal.woff2 "$fonts/"

@@ -6,6 +6,7 @@
 #   scripts/render.sh weights                   Weight-Space Programming explainer, 59 s and full 2 min
 #   scripts/render.sh qwengpu                   qgpu (a GPU compiled into Qwen's weights) explainer
 #   scripts/render.sh camps                     Swecha medical-camps campaign: 55 s and Thanksgiving appeal 57 s (photos kept local)
+#   scripts/render.sh earlyindians              Early Indians atlas walkthrough (screen recordings)
 #   scripts/render.sh volunteer                 Corpus Volunteer Compute explainer (landscape, for the README)
 #   scripts/render.sh workbench                 AI Workbench Workshop pitch (88 s)
 #   scripts/render.sh masala                    Masala Lab Atlas walkthrough (79 s) and teaser (44 s)
@@ -60,6 +61,9 @@ case "$target" in
   camps)
     (cd "$HF/campaign-medical-camps" && node build.mjs --script script-thanks.json)
     render_builds campaign-medical-camps "$@"
+    ;;
+  earlyindians)
+    render_builds explainer-early-indians "$@"
     ;;
   volunteer)
     render_builds explainer-volunteer-compute "$@"

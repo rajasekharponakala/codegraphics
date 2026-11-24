@@ -1,0 +1,56 @@
+{
+  "voice": "bm_george",
+  "speed": 1.05,
+  "music": { "gainDb": -15 },
+  "slug": "early-indians-atlas",
+  "url": "rajasekharponakala.github.io/history",
+  "hookLabel": "Tony Joseph · Early Indians",
+  "hook": "Who are Indians, and where did we come from?",
+  "hookSize": 66,
+  "hookSay": "Tony Joseph's book, Early Indians, tells the story of our ancestors using ancient {DNA|D N A}. Now you can explore it on a map.",
+  "hookClip": "home",
+  "beats": [
+    {
+      "clip": "journey",
+      "label": "1 · The First Indians",
+      "big": "65,000 years ago",
+      "say": "Modern humans left Africa and reached India about {65,000|sixty-five thousand} years ago. Their descendants still make up {50|fifty} to {65|sixty-five} percent of our ancestry."
+    },
+    {
+      "clip": "atlas",
+      "label": "2 · Farmers and cities",
+      "big": "Zagros → Harappa",
+      "say": "After {7000|seven thousand} {BCE|B C E}, farmers from Iran's Zagros hills moved east, mixed with the First Indians, and helped build the Harappan civilization."
+    },
+    {
+      "clip": "harappa",
+      "label": "3 · The Harappans",
+      "big": "700 years",
+      "say": "For {700|seven hundred} years, from {2600|twenty-six hundred} to {1900|nineteen hundred} {BCE|B C E}, its cities show no sign of being attacked or burnt."
+    },
+    {
+      "clip": "steppe",
+      "label": "4 · The last migrants",
+      "big": "After 2000 BCE",
+      "say": "After {2000|two thousand} {BCE|B C E}, herders from the Eurasian Steppe arrived, bringing Indo-European languages."
+    },
+    {
+      "clip": "pizza",
+      "label": "5 · The Indian pizza",
+      "big": "Layers, not borders",
+      "say": "The book calls us a pizza: a First Indian base, a sauce of Zagros farmers, a sprinkle of Steppe cheese, and toppings from east Asia."
+    },
+    {
+      "clip": "timeline",
+      "label": "Explore",
+      "big": "38 events · 45 places",
+      "say": "Scrub one long timeline, take a guided map tour, and browse every picture in the book."
+    }
+  ],
+  "outro": "No group is pure. We are all migrants. Explore Early Indians, the interactive atlas, at the link below.",
+  "end": {
+    "title": "Early Indians · Atlas",
+    "lines": ["12 guided map stops · 45 places", "38-event timeline · 29 charts", "6 quizzes · free, works offline"],
+    "small": "Unofficial interactive companion to Early Indians by Tony Joseph (Juggernaut, 2018). Not affiliated with the author or publisher. Read the book."
+  }
+}

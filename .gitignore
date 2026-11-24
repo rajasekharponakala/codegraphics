@@ -23,3 +23,5 @@ hyperframes/campaign-medical-camps/assets/photos/
 print/*/page-*.png
 print/*/*-page-*.png
 hyperframes/explainer-volunteer-compute/build/
+hyperframes/explainer-early-indians/build/
+!hyperframes/explainer-early-indians/assets/*.mp4
