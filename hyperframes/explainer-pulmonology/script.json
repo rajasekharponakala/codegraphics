@@ -1,0 +1,71 @@
+{
+  "voice": "bm_george",
+  "speed": 1.0,
+  "music": { "gainDb": -18 },
+  "slug": "pulmonology-vqd",
+  "course": "Pulmonology · Core respiratory physiology",
+  "hook": {
+    "label": "Respiratory medicine",
+    "big": "Pulmonology",
+    "sub": "Airways, lungs, pleura and respiratory muscles",
+    "say": "Pulmonology, or respiratory medicine, covers the anatomy, physiology, diagnosis and treatment of diseases of the airways, the lungs, the pleura, and the respiratory muscles.",
+    "scene": { "type": "anatomy" }
+  },
+  "beats": [
+    {
+      "label": "1 · Core physiology",
+      "big": "Three processes",
+      "sub": "Ventilation · Perfusion · Diffusion",
+      "say": "Gas exchange depends on three processes. Ventilation brings air to the alveoli. Perfusion brings blood to the pulmonary capillaries. And diffusion moves oxygen and carbon dioxide across the membrane between them.",
+      "scene": { "type": "alveolus" }
+    },
+    {
+      "label": "Ventilation · V̇",
+      "big": "Not all air reaches the alveoli",
+      "sub": "Alveolar ventilation = (tidal volume − dead space) × rate",
+      "say": "Ventilation is air reaching the alveoli. Of a typical {500|five hundred} millilitre breath, about {150|one hundred and fifty} fills the conducting airways, the anatomical dead space. Only about {350|three hundred and fifty} takes part in gas exchange.",
+      "scene": { "type": "breath", "vt": 500, "vd": 150, "rate": 12 }
+    },
+    {
+      "label": "Perfusion · Q̇",
+      "big": "The whole cardiac output",
+      "sub": "A high-flow, low-pressure circuit",
+      "say": "Perfusion is blood flow through the pulmonary capillaries. The lungs receive the whole output of the right ventricle, about five litres a minute, at a mean pressure of roughly {15|fifteen} millimetres of mercury, far lower than the systemic circulation.",
+      "scene": { "type": "circuit" }
+    },
+    {
+      "label": "Diffusion",
+      "big": "A thin, vast membrane",
+      "sub": "Fick's law: flow ∝ area × gradient ÷ thickness",
+      "say": "Diffusion follows Fick's law. Gas transfer rises with membrane area and the partial pressure gradient, and falls with membrane thickness. The lung offers roughly fifty to a hundred square metres, less than half a micrometre thick.",
+      "scene": { "type": "fick" }
+    },
+    {
+      "label": "Diffusion · timing",
+      "big": "Done in a third of the time",
+      "sub": "Capillary PO₂ equilibrates in about 0.25 s of a 0.75 s transit",
+      "say": "At rest, a red cell spends about {0.75|nought point seven five} seconds in the capillary. Its oxygen pressure rises from about {40|forty} to {100|one hundred} millimetres of mercury within the first third. That reserve is lost when the membrane thickens, or when transit time shortens on exercise.",
+      "scene": { "type": "curve" }
+    },
+    {
+      "label": "Matching · V̇/Q̇",
+      "big": "Ventilation must meet perfusion",
+      "sub": "Overall V̇/Q̇ ≈ 4 L/min ÷ 5 L/min ≈ 0.8",
+      "say": "The three must match. Overall, about four litres of alveolar ventilation meet five litres of blood each minute, a ratio near {0.8|nought point eight}. At one extreme, perfused but unventilated alveoli form a shunt. At the other, ventilated but unperfused alveoli are dead space.",
+      "scene": { "type": "vq" }
+    },
+    {
+      "label": "Clinical link",
+      "big": "Where disease strikes",
+      "sub": "Each process fails in recognisable ways",
+      "say": "Each process has its own failures. Airway obstruction and weak respiratory muscles impair ventilation. Pulmonary embolism impairs perfusion. Fibrosis thickens the membrane, and emphysema destroys its area, impairing diffusion.",
+      "scene": { "type": "clinic" }
+    }
+  ],
+  "outro": "Ventilation, perfusion and diffusion: three processes that must work, and match, for every breath.",
+  "end": {
+    "title": "Ventilation · Perfusion · Diffusion",
+    "lines": ["V̇A = (VT − VD) × f", "V̇/Q̇ ≈ 0.8 overall", "Fick: V̇gas ∝ A × ΔP ÷ T"],
+    "small": "Values are typical resting adult figures from standard respiratory physiology texts, for teaching; diagrams are schematic. Verify against your course text."
+  }
+}
