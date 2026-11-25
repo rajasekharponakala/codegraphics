@@ -25,3 +25,5 @@ print/*/*-page-*.png
 hyperframes/explainer-volunteer-compute/build/
 hyperframes/explainer-early-indians/build/
 !hyperframes/explainer-early-indians/assets/*.mp4
+hyperframes/explainer-telugudanam/build/
+!hyperframes/explainer-telugudanam/assets/*.mp4

@@ -1,0 +1,58 @@
+/* Telugudanam Short: the site's own look (warm parchment, Playfair Display,
+   Noto Sans Telugu, terracotta and the five hall colours) around screen recordings. */
+@font-face { font-family: "Playfair Display"; font-weight: 700; src: url(vendor/playfair-display-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-weight: 800; src: url(vendor/playfair-display-latin-800-normal.woff2) format("woff2"); }
+@font-face { font-family: "Noto Sans Telugu"; font-weight: 600; src: url(vendor/noto-sans-telugu-telugu-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Noto Sans Telugu"; font-weight: 800; src: url(vendor/noto-sans-telugu-telugu-800-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url(vendor/inter-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url(vendor/inter-latin-700-normal.woff2) format("woff2"); }
+
+:root {
+  --parchment: #f4ead6; --surface: #fffaf0; --ink: #1c1410; --muted: #5d4b3f; --line: rgba(124, 45, 18, 0.18);
+  --terracotta: #7c2d12; --amber: #c2410c; --script: #9a3412; --language: #4338ca; --literature: #be123c; --diaspora: #0f766e; --digital: #7c3aed;
+  --serif: "Playfair Display", Georgia, serif; --te: "Noto Sans Telugu", sans-serif; --sans: "Inter", sans-serif;
+  --halls: linear-gradient(90deg, var(--script), var(--language), var(--literature), var(--diaspora), var(--digital));
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--parchment); color: var(--ink); font-family: var(--sans); }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.clip { position: absolute; }
+#bg { inset: 0; background: radial-gradient(900px 700px at 100% 0%, rgba(194, 65, 12, 0.14), transparent 60%), radial-gradient(900px 700px at 0% 100%, rgba(67, 56, 202, 0.1), transparent 60%), var(--parchment); }
+
+#progress-track, #progress { left: 60px; top: 38px; width: 960px; height: 10px; border-radius: 5px; }
+#progress-track { background: rgba(124, 45, 18, 0.12); }
+#progress { background: var(--halls); transform-origin: left center; }
+
+.card {
+  left: 60px; top: 78px; width: 960px; height: 268px;
+  display: flex; flex-direction: column; justify-content: center; gap: 12px;
+  padding: 26px 44px; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 18px 50px rgba(124, 45, 18, 0.14);
+}
+.card::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 8px; border-radius: 28px 28px 0 0; background: var(--halls); }
+.card-label { font: 600 34px/1.25 var(--te), var(--sans); color: var(--amber); letter-spacing: 0.02em; }
+.card-big { font-family: var(--serif); font-weight: 800; line-height: 1.04; letter-spacing: -0.01em; color: var(--ink); }
+
+#window { left: 115px; top: 376px; width: 850px; height: 1160px; background: var(--surface); border: 1px solid var(--line); border-radius: 26px; overflow: hidden; box-shadow: 0 30px 80px rgba(124, 45, 18, 0.22); }
+#bar { height: 61px; display: flex; align-items: center; gap: 12px; padding: 0 22px; background: var(--parchment); border-bottom: 1px solid var(--line); }
+#bar i { width: 18px; height: 18px; border-radius: 50%; background: #d9cbb3; }
+#bar i:first-child { background: var(--amber); } #bar i:nth-child(2) { background: #d97706; } #bar i:nth-child(3) { background: var(--diaspora); }
+#bar span { margin-left: 14px; padding: 6px 18px; font: 500 28px/1.3 var(--sans); color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
+.rec { left: 116px; top: 438px; width: 848px; height: 1097px; object-fit: cover; border-radius: 0 0 25px 25px; }
+
+.caption {
+  top: 1590px; left: 50%; transform: translateX(-50%); max-width: 900px; white-space: nowrap;
+  padding: 12px 24px; font: 700 56px/1.15 var(--serif); text-align: center; color: var(--surface); background: var(--terracotta); border-radius: 18px;
+}
+.caption .w { display: inline-block; padding: 0 8px; border-radius: 10px; }
+.caption .w[data-on="1"] { background: #f59e0b; color: var(--ink); }
+
+#end-card { left: 60px; top: 280px; width: 960px; padding: 56px 56px 60px; background: var(--surface); border: 1px solid var(--line); border-radius: 32px; box-shadow: 0 30px 80px rgba(124, 45, 18, 0.18); }
+#end-card::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 10px; border-radius: 32px 32px 0 0; background: var(--halls); }
+#end-kicker { display: inline-block; padding: 10px 24px; font: 700 32px/1.2 var(--sans); text-transform: uppercase; color: #fff; background: var(--terracotta); border-radius: 40px; }
+#end-te { margin-top: 30px; font: 800 110px/1.25 var(--te); color: var(--amber); }
+#end-title { margin-top: 6px; font: 800 84px/1 var(--serif); letter-spacing: -0.01em; }
+#end-url { display: inline-block; margin-top: 30px; padding: 12px 24px; font: 700 34px/1.3 var(--sans); color: #fff; background: var(--language); border-radius: 14px; }
+#end-lines { margin-top: 36px; list-style: none; }
+#end-lines li { position: relative; padding-left: 52px; margin-top: 14px; font: 500 36px/1.3 var(--sans); }
+#end-lines li::before { content: ""; position: absolute; left: 6px; top: 14px; width: 24px; height: 24px; border-radius: 50%; background: var(--halls); }
+#end-small { margin-top: 40px; font: 500 28px/1.4 var(--sans); color: var(--muted); }

@@ -1,0 +1,64 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.08,
+  "music": {
+    "gainDb": -15
+  },
+  "slug": "telugudanam-museum",
+  "url": "ranjithraj.gitlab.io/telugudanam",
+  "hookLabel": "తెలుగుదనం · Telugudanam",
+  "hook": "A museum of the Telugu language",
+  "hookSize": 76,
+  "hookSay": "Telugudanam means the essence of being Telugu. This free online museum tells the story of the language in five halls.",
+  "hookClip": "home",
+  "beats": [
+    {
+      "clip": "script",
+      "label": "Hall 1 · Script",
+      "big": "Every letter, one grid",
+      "say": "In the Script hall, every Telugu letter sits on one grid. Tap a filter to see which sounds are native, and which were borrowed from Sanskrit, Persian and English."
+    },
+    {
+      "clip": "language",
+      "label": "Hall 2 · Language",
+      "big": "Dravidian roots",
+      "say": "The Language hall shows that Telugu is not a daughter of Sanskrit. It is a Dravidian language, and its closest relative is Tulu."
+    },
+    {
+      "clip": "literature",
+      "label": "Hall 3 · Literature",
+      "big": "Story before script",
+      "say": "Literature begins in the street: Burra Katha troupes, Oggu Katha singers, and Vemana's four-line verses against caste and greed."
+    },
+    {
+      "clip": "diaspora",
+      "label": "Hall 4 · Diaspora",
+      "big": "1,500 → 1.2 million",
+      "say": "The Diaspora hall follows Telugus from old sea trade to the Gulf and America, where they grew from about {1,500|fifteen hundred} in {1970|nineteen seventy} to over {1.2 million|one point two million} by {2024|twenty twenty-four}.",
+      "clipStart": 2.6
+    },
+    {
+      "clip": "digital",
+      "label": "Hall 5 · Digital Telugu",
+      "big": "From fonts to Unicode",
+      "say": "And Digital Telugu traces the move from broken fonts to the Telugu Wikipedia in {2003|two thousand three}, and Unicode in {2004|two thousand four}."
+    },
+    {
+      "clip": "toggle",
+      "label": "Read, then explore",
+      "big": "Try every exhibit",
+      "say": "Every room has a page to read and an exhibit to explore. This video only shows a glimpse. Visit the site, and try the interactive exhibits yourself."
+    }
+  ],
+  "outro": "Telugudanam: the essence of being Telugu. The link is on screen.",
+  "end": {
+    "title": "Telugudanam",
+    "lines": [
+      "5 halls: script, language, literature, diaspora, digital",
+      "Interactive exhibits in every room",
+      "Read in English or Telugu"
+    ],
+    "small": "Footage: screen recordings of the site. Figures as stated on the site, with its cited sources."
+  }
+}
