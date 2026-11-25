@@ -1,0 +1,97 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.12,
+  "music": { "gainDb": -15 },
+  "slug": "telugudanam-findings",
+  "url": "ranjithraj.gitlab.io/telugudanam",
+  "hook": {
+    "label": "తెలుగుదనం · Telugudanam",
+    "big": "What makes Telugu, Telugu?",
+    "say": "What makes Telugu, Telugu? The online museum Telugudanam answers in five modules. Here is what each one finds.",
+    "scene": { "type": "halls" }
+  },
+  "beats": [
+    {
+      "module": "script", "label": "Script · 1", "big": "Born of Brahmi",
+      "say": "The script came from Ashoka's Brahmi. In the south it loosened and looped, at Bhattiprolu, then in a shared Telugu and Kannada script, until Telugu had its own by the eleventh century.",
+      "scene": { "type": "timeline", "steps": [["3rd c. BCE", "Ashokan Brahmi", "spare, angular"], ["Bhattiprolu", "letters bend south", "early Telugu words"], ["Deccan", "Telugu–Kannada script", "shared by two sisters"], ["11th c.", "Telugu", "a voice of its own"]] }
+    },
+    {
+      "module": "script", "label": "Script · 2", "big": "Why the letters are round",
+      "say": "Why is Telugu so round? It was written on palm leaves with an iron stylus. A straight line across the leaf's veins would split it, so every stroke learned to curve.",
+      "scene": { "type": "leaf" }
+    },
+    {
+      "module": "script", "label": "Script · 3", "big": "A script that crossed the sea",
+      "say": "Its ancestor, the Pallava script, sailed to Southeast Asia. Old Khmer, Javanese, Thai and Lao all descend from that same southern hand.",
+      "scene": { "type": "timeline", "steps": [["4th c.", "Pallava script", "sets sail from south India"], ["611 CE", "Old Khmer", "oldest Khmer inscription"], ["760 CE", "Kawi, Java", "earliest Javanese writing"], ["Today", "Thai · Lao · Balinese", "one family of scripts"]] }
+    },
+    {
+      "module": "language", "label": "Language · 1", "big": "Not a daughter of Sanskrit",
+      "say": "Telugu is not a daughter of Sanskrit. It is Dravidian, from a family spoken before {3000|three thousand} {BCE|B C E}, and its closest relative is Tulu.",
+      "scene": { "type": "tree" }
+    },
+    {
+      "module": "language", "label": "Language · 2", "big": "One word, a whole sentence",
+      "say": "Telugu stacks suffixes on an unchanging root. Chey, inch, ledu: one word that means, did not cause to do.",
+      "scene": { "type": "build", "parts": [["చేయ్", "do"], ["ఇంచ్", "cause to"], ["లేదు", "did not"]], "word": "చేయించలేదు", "gloss": "“did not cause to do”" }
+    },
+    {
+      "module": "language", "label": "Language · 3", "big": "Words the world borrowed",
+      "say": "And the world borrowed Telugu. Catamaran comes from kattumaram, and bandicoot from pandikokku.",
+      "scene": { "type": "pairs", "rows": [["కట్టుమరం", "kaṭṭumaram", "catamaran"], ["పందికొక్కు", "pandikokku", "bandicoot"]] }
+    },
+    {
+      "module": "literature", "label": "Literature · 1", "big": "Story before script",
+      "say": "Telugu literature began in the mouth: Burra Katha troupes, Oggu Katha singers, and Vemana's four-line verses against caste and greed.",
+      "scene": { "type": "chips", "items": [["Burra Katha", "two narrators, a drummer, a commentator"], ["Oggu Katha", "drum-driven epics"], ["Harikatha", "temple storytelling"], ["Vemana, 14th c.", "four-line verses against caste and greed"]] }
+    },
+    {
+      "module": "literature", "label": "Literature · 2", "big": "Three poets, one epic",
+      "say": "Written literature began as translation, in {1022|ten twenty-two}. Three poets across three centuries, Nannayya, Tikkana and Errapragada, wrote one Telugu Mahabharata.",
+      "scene": { "type": "timeline", "steps": [["1022 CE", "Nannayya", "begins the Mahābhārata"], ["13th c.", "Tikkana", "the middle books"], ["14th c.", "Errapragada", "completes the epic"]] }
+    },
+    {
+      "module": "literature", "label": "Literature · 3", "big": "Prose finds its voice",
+      "say": "Then came spoken-language prose. Gurajada's Kanyasulkam in {1892|eighteen ninety-two}, and Sri Sri's free verse in {1950|nineteen fifty}, brought the street into literature.",
+      "scene": { "type": "quote", "te": "దేశమంటే మట్టి కాదోయ్, దేశమంటే మనుషులోయ్", "en": "A country is not its soil, but its people.", "who": "Gurajada Apparao" }
+    },
+    {
+      "module": "diaspora", "label": "Diaspora · 1", "big": "A thousand years of leaving",
+      "say": "Telugus have been leaving for a thousand years: merchants to Southeast Asia, indentured labourers to four continents, then the Gulf oil boom and the American I T wave.",
+      "scene": { "type": "timeline", "steps": [["700–1200 CE", "Southeast Asia", "inscriptions in Sumatra, Java"], ["1830–1920", "Indenture", "Fiji, Mauritius, South Africa, Caribbean"], ["1970s–90s", "The Gulf", "oil-boom workforce"], ["1990s–now", "America", "the IT wave"]] }
+    },
+    {
+      "module": "diaspora", "label": "Diaspora · 2", "big": "From 1,500 to 1.2 million",
+      "say": "In {1970|nineteen seventy} there were about {1,500|fifteen hundred} Telugus in America. By {2024|twenty twenty-four}, over {1.2 million|one point two million}.",
+      "scene": { "type": "bars", "unit": "Telugu speakers, as stated on the site", "rows": [["Bangalore", 3000000, "3M+"], ["North America", 1300000, "1.3M+"], ["The Gulf", 1200000, "1.2M+"], ["United Kingdom", 150000, "150,000+"], ["Fiji", 100000, "100,000+"]] }
+    },
+    {
+      "module": "diaspora", "label": "Diaspora · 3", "big": "Will the children keep it?",
+      "say": "The test is the second generation. In one national survey, only {16|sixteen} percent of immigrant youth spoke their parents' language fluently.",
+      "scene": { "type": "stat", "value": 16, "suffix": "%", "text": "of second-generation immigrant youth spoke their parents' language fluently, in one national survey", "foot": "ManaBadi weekend schools: 100,000+ students in 15 countries since 2007" }
+    },
+    {
+      "module": "digital", "label": "Digital · 1", "big": "From broken fonts to Unicode",
+      "say": "Online, Telugu began as broken fonts. Then came eenadu dot net in {1998|nineteen ninety-eight}, the Telugu Wikipedia in {2003|two thousand three}, and Unicode in {2004|two thousand four}.",
+      "scene": { "type": "timeline", "steps": [["1988", "ISCII", "fonts that broke between machines"], ["1998", "eenadu.net", "Telugu news online"], ["2003", "Telugu Wikipedia", "100,000+ articles today"], ["2004", "Unicode", "128 code points, readable anywhere"]] }
+    },
+    {
+      "module": "digital", "label": "Digital · 2", "big": "Tenglish",
+      "say": "Today Telugu is often typed in the Latin alphabet, mixed with English. Chala bagundi. That is Tenglish, a living new register.",
+      "scene": { "type": "pairs", "rows": [["చాలా బాగుంది", "chala bagundi", "very nice"], ["50M+", "Gboard", "Telugu users"]] }
+    },
+    {
+      "module": "digital", "label": "Digital · 3", "big": "Built in the open",
+      "say": "And open source keeps Telugu tools in the community's hands: free fonts, open models, and Swecha's Gonthuka speech model.",
+      "scene": { "type": "chips", "items": [["Open fonts", "Potti Sreeramulu, NTR, Ramabhadra, Mallanna"], ["Gonthuka", "Swecha's open speech-recognition model"], ["Open models", "AI4Bharat"], ["Telugu Wikipedia", "written by volunteers"]] }
+    }
+  ],
+  "outro": "That is only a glimpse. Visit Telugudanam, and try every exhibit yourself.",
+  "end": {
+    "title": "Telugudanam",
+    "lines": ["Script · Language · Literature", "Diaspora · Digital Telugu", "Interactive exhibits in English and Telugu"],
+    "small": "Findings as stated on the site, which cites its sources in every room. Diagrams redrawn for this video."
+  }
+}

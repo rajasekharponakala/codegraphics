@@ -3,7 +3,7 @@
 # so renders never depend on a CDN.
 set -euo pipefail
 cd "$(dirname "$0")"
-for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps explainer-volunteer-compute explainer-early-indians explainer-telugudanam; do
+for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps explainer-volunteer-compute explainer-early-indians explainer-telugudanam explainer-telugu-findings; do
   mkdir -p "$project/vendor"
   cp node_modules/gsap/dist/gsap.min.js "$project/vendor/"
 done
@@ -36,7 +36,8 @@ fonts=explainer-early-indians/vendor
 cp node_modules/@fontsource/fraunces/files/fraunces-latin-{600,700}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/inter/files/inter-latin-{500,700}-normal.woff2 "$fonts/"
 # The Telugudanam Short uses the site's fonts, including Noto Sans Telugu.
-fonts=explainer-telugudanam/vendor
+for fonts in explainer-telugudanam/vendor explainer-telugu-findings/vendor; do
 cp node_modules/@fontsource/noto-sans-telugu/files/noto-sans-telugu-telugu-{600,800}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/playfair-display/files/playfair-display-latin-{700,800}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/inter/files/inter-latin-{500,700}-normal.woff2 "$fonts/"
+done
