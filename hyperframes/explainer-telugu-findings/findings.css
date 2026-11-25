@@ -120,7 +120,7 @@ circle.on { fill: var(--accent); }
 circle.off { fill: rgba(124, 45, 18, 0.12); }
 
 /* captions */
-.caption { top: 1596px; left: 50%; transform: translateX(-50%); max-width: 900px; white-space: nowrap; padding: 12px 24px; font: 700 54px/1.15 var(--serif); text-align: center; color: var(--surface); background: var(--terracotta); border-radius: 18px; }
+.caption { top: 1596px; left: 50%; transform: translateX(-50%); max-width: 900px; white-space: nowrap; padding: 12px 24px; font: 700 54px/1.3 var(--serif), var(--te); text-align: center; color: var(--surface); background: var(--terracotta); border-radius: 18px; }
 .caption .w { display: inline-block; padding: 0 8px; border-radius: 10px; }
 .caption .w[data-on="1"] { background: #f59e0b; color: var(--ink); }
 

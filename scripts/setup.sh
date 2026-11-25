@@ -25,7 +25,7 @@ echo "==> npm packages (remotion/)"
 
 echo "==> Python venv for the voiceover (.venv)"
 [ -x "$ROOT/.venv/bin/python" ] || python3 -m venv "$ROOT/.venv"
-"$ROOT/.venv/bin/pip" install -q kokoro-onnx soundfile
+"$ROOT/.venv/bin/pip" install -q kokoro-onnx soundfile piper-tts  # piper-tts: Telugu voices (lib/telugu_tts.py)
 
 export HYPERFRAMES_PYTHON="$ROOT/.venv/bin/python"
 

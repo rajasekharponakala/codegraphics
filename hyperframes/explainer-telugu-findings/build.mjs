@@ -13,7 +13,9 @@ const W = 1080;
 const H = 1920;
 const TOP = 470; // first pixel of the scene area, below the card
 
-const script = JSON.parse(readFileSync(join(HERE, "script.json"), "utf8"));
+// node build.mjs [--script script-bilingual.json]
+const scriptArg = process.argv.indexOf("--script");
+const script = JSON.parse(readFileSync(join(HERE, scriptArg === -1 ? "script.json" : process.argv[scriptArg + 1]), "utf8"));
 const f = (x) => Number(x.toFixed(3));
 const clip = (start, end, track) => `data-start="${f(start)}" data-duration="${f(end - start)}" data-track-index="${track}"`;
 const svg = (body) => `<svg class="overlay" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">${body}</svg>`;
@@ -207,7 +209,7 @@ const segments = [
   ...script.beats.map((b) => ({ kind: "beat", text: b.say, ...b })),
   { kind: "outro", text: script.outro },
 ];
-const { endStart, total } = narrate(segments, { voice: script.voice, speed: script.speed, accent: script.accent, cacheDir: join(BUILD, ".tts") });
+const { endStart, total } = narrate(segments, { voice: script.voice, speed: script.speed, accent: script.accent, teVoice: script.teVoice, cacheDir: join(BUILD, ".tts") });
 writeSoundtrack(segments, total, out, { music: script.music, seed: 2611 });
 
 const scenes = segments.slice(0, -1).map((seg, i) => ({

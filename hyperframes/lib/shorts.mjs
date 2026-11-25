@@ -24,7 +24,16 @@ export const spoken = (text) => text.replace(MARKUP, "$2");
 export const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+// Telugu: one syllable per akshara — every independent vowel, plus every
+// consonant not silenced by the pollu (virama, U+0C4D) that joins it to the next.
+const TELUGU = /[\u0C00-\u0C7F]/;
+function aksharas(word) {
+  const letters = word.match(/[\u0C05-\u0C14\u0C60\u0C61]|[\u0C15-\u0C39\u0C58-\u0C5A]\u0C4D?/g) ?? [];
+  return Math.max(1, letters.filter((l) => !l.endsWith("\u0C4D")).length);
+}
+
 function syllables(word) {
+  if (TELUGU.test(word)) return aksharas(word);
   const w = word.toLowerCase().replace(/[^a-zà-ÿ0-9]/g, "");
   if (/^\d/.test(w)) return 2 * w.length; // digits left unspelled: 450 is "four hundred and fifty"
   const groups = w.match(/[aeiouyà-ÿ]+/g)?.length ?? 1;
@@ -133,15 +142,25 @@ function ensureKokoroFiles(dir) {
 // prefix, e.g. an Indian voice (hf_/hm_) reading English text with "en-gb".
 // accent "indian" speaks through indian_tts.py, which rewrites the phonemes with
 // Indian English features; it needs the Kokoro files that `hyperframes tts` downloads.
-function tts(text, voice, speed, cacheDir, lang, accent) {
+function tts(text, voice, speed, cacheDir, lang, accent, teVoice = "padmavathi") {
   const dir = cacheDir;
   mkdirSync(dir, { recursive: true });
+  // Text in Telugu script is spoken by a Piper (VITS) Telugu voice; English by Kokoro.
+  if (TELUGU.test(text)) {
+    voice = teVoice;
+    accent = "piper-te";
+  }
   const tag = accent ? `accent:${accent}` : lang;
   const id = tag ? `${voice}|${speed}|${tag}|${text}` : `${voice}|${speed}|${text}`;
   const key = createHash("sha256").update(id).digest("hex").slice(0, 16);
   const out = join(dir, `${key}.wav`);
   if (!existsSync(out)) {
-    if (accent === "indian") {
+    if (accent === "piper-te") {
+      const python = process.env.HYPERFRAMES_PYTHON || "python3";
+      execFileSync(python, ["-I", join(LIB, "telugu_tts.py"), "--text", text, "--voice", voice, "--speed", String(speed), "--out", out], {
+        stdio: ["ignore", "ignore", "inherit"],
+      });
+    } else if (accent === "indian") {
       ensureKokoroFiles(dir);
       const python = process.env.HYPERFRAMES_PYTHON || "python3";
       execFileSync(python, ["-I", join(LIB, "indian_tts.py"), "--text", text, "--voice", voice, "--speed", String(speed), "--out", out], {
@@ -216,10 +235,10 @@ export function normalize(input, out) {
 
 // Speaks each segment ({ text }) and lays them end to end. Adds audio, start and
 // end to each segment; returns when the end card starts and the total length.
-export function narrate(segments, { voice, speed, cacheDir, lang, accent }) {
+export function narrate(segments, { voice, speed, cacheDir, lang, accent, teVoice }) {
   let t = LEAD;
   for (const seg of segments) {
-    seg.audio = tts(spoken(seg.text), voice, speed, cacheDir, lang, accent);
+    seg.audio = tts(spoken(seg.text), voice, speed, cacheDir, lang, accent, teVoice);
     seg.start = t;
     seg.end = t + seg.audio.duration;
     t = seg.end + GAP;

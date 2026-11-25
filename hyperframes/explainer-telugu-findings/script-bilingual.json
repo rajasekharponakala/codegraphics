@@ -1,0 +1,86 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.12,
+  "music": {
+    "gainDb": -15
+  },
+  "slug": "telugudanam-bilingual-test",
+  "url": "ranjithraj.gitlab.io/telugudanam",
+  "hook": {
+    "label": "తెలుగుదనం · Telugudanam",
+    "big": "What makes Telugu, Telugu?",
+    "say": "What makes Telugu, Telugu? Three findings from Telugudanam, told in Telugu, with an English voice from Kokoro and a Telugu voice from Piper.",
+    "scene": {
+      "type": "halls"
+    }
+  },
+  "beats": [
+    {
+      "module": "script",
+      "label": "Script · 2",
+      "big": "Why the letters are round",
+      "say": "తెలుగు అక్షరాలు గుండ్రంగా ఎందుకు ఉంటాయి? తాటాకు మీద ఇనుప గంటంతో రాసేవారు. సరళ రేఖ ఆకును చీల్చేస్తుంది, అందుకే ప్రతి గీత వంపు తిరిగింది.",
+      "scene": {
+        "type": "leaf"
+      }
+    },
+    {
+      "module": "language",
+      "label": "Language · 1",
+      "big": "Not a daughter of Sanskrit",
+      "say": "తెలుగు సంస్కృతానికి కూతురు కాదు. ఇది ద్రావిడ భాష. దీనికి అత్యంత దగ్గరి బంధువు తుళు.",
+      "scene": {
+        "type": "tree"
+      }
+    },
+    {
+      "module": "diaspora",
+      "label": "Diaspora · 2",
+      "big": "From 1,500 to 1.2 million",
+      "say": "{1970|పంతొమ్మిది వందల డెబ్బై}లో అమెరికాలో సుమారు {1,500|పదిహేను వందల} మంది తెలుగువారు ఉండేవారు. {2024|రెండు వేల ఇరవై నాలుగు} నాటికి, {12|పన్నెండు} లక్షలకు పైగా.",
+      "scene": {
+        "type": "bars",
+        "unit": "Telugu speakers, as stated on the site",
+        "rows": [
+          [
+            "Bangalore",
+            3000000,
+            "3M+"
+          ],
+          [
+            "North America",
+            1300000,
+            "1.3M+"
+          ],
+          [
+            "The Gulf",
+            1200000,
+            "1.2M+"
+          ],
+          [
+            "United Kingdom",
+            150000,
+            "150,000+"
+          ],
+          [
+            "Fiji",
+            100000,
+            "100,000+"
+          ]
+        ]
+      }
+    }
+  ],
+  "outro": "Explore all five modules at Telugudanam.",
+  "end": {
+    "title": "Telugudanam",
+    "lines": [
+      "Script · Language · Literature",
+      "Diaspora · Digital Telugu",
+      "Interactive exhibits in English and Telugu"
+    ],
+    "small": "Findings as stated on the site, which cites its sources in every room. Diagrams redrawn for this video."
+  },
+  "teVoice": "padmavathi"
+}
