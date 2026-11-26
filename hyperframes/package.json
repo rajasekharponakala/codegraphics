@@ -11,8 +11,11 @@
     "shorts:build": "cd shorts-roots-of-capitalism && node build.mjs"
   },
   "devDependencies": {
+    "@fontsource/bricolage-grotesque": "^5.3.0",
     "@fontsource/caveat": "^5.3.0",
+    "@fontsource/dm-sans": "^5.3.0",
     "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/instrument-serif": "^5.3.0",
     "@fontsource/inter": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",

@@ -6,6 +6,7 @@
 #   scripts/render.sh weights                   Weight-Space Programming explainer, 59 s and full 2 min
 #   scripts/render.sh qwengpu                   qgpu (a GPU compiled into Qwen's weights) explainer
 #   scripts/render.sh camps                     Swecha medical-camps campaign: 55 s and Thanksgiving appeal 57 s (photos kept local)
+#   scripts/render.sh foodpolitics              Plate & Power: content explainer of The Meat of the Matter
 #   scripts/render.sh pulmonology               Pulmonology lecture: ventilation, perfusion, diffusion (landscape)
 #   scripts/render.sh telugufindings            Telugudanam findings explainer (2:36, five modules)
 #   scripts/render.sh telugudanam               Telugudanam museum walkthrough (screen recordings)
@@ -64,6 +65,9 @@ case "$target" in
   camps)
     (cd "$HF/campaign-medical-camps" && node build.mjs --script script-thanks.json)
     render_builds campaign-medical-camps "$@"
+    ;;
+  foodpolitics)
+    render_builds explainer-food-politics "$@"
     ;;
   pulmonology)
     render_builds explainer-pulmonology "$@"

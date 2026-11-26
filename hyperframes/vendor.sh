@@ -3,7 +3,7 @@
 # so renders never depend on a CDN.
 set -euo pipefail
 cd "$(dirname "$0")"
-for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps explainer-volunteer-compute explainer-early-indians explainer-telugudanam explainer-telugu-findings explainer-pulmonology; do
+for project in release-card shorts-roots-of-capitalism shorts-papers campaign-gsr864e explainer-india-poverty explainer-weight-space explainer-masala-lab explainer-ai-workbench campaign-medical-camps explainer-volunteer-compute explainer-early-indians explainer-telugudanam explainer-telugu-findings explainer-pulmonology explainer-food-politics; do
   mkdir -p "$project/vendor"
   cp node_modules/gsap/dist/gsap.min.js "$project/vendor/"
 done
@@ -46,3 +46,8 @@ fonts=explainer-pulmonology/vendor
 cp node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-{500,700}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/inter/files/inter-latin-{500,700}-normal.woff2 "$fonts/"
 cp node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-{400,700}-normal.woff2 "$fonts/"
+# The Plate & Power explainer uses the companion site's fonts.
+fonts=explainer-food-politics/vendor
+cp node_modules/@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-{700,800}-normal.woff2 "$fonts/"
+cp node_modules/@fontsource/dm-sans/files/dm-sans-latin-{500,700}-normal.woff2 "$fonts/"
+cp node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-{500,600}-normal.woff2 "$fonts/"

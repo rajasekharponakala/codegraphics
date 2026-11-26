@@ -1,0 +1,72 @@
+{
+  "voice": "hf_alpha",
+  "accent": "indian",
+  "speed": 1.1,
+  "music": { "gainDb": -16 },
+  "slug": "plate-and-power",
+  "url": "rajasekharponakala.github.io/foodpolitcs",
+  "hook": {
+    "label": "The Meat of the Matter · Dr Sylvia Karpagam",
+    "big": "The plate is never just a plate",
+    "say": "Food is personal. But nourishment is political. Dr Sylvia Karpagam's book, The Meat of the Matter, traces how nutrients, identity, markets and policy shape what reaches our plates.",
+    "scene": { "type": "signals", "tiles": [["67%", "children aged 6–59 months with some anaemia", "NFHS-5"], ["36%", "children under six measured were stunted", "Parliament, Dec 2023"], ["53%", "infants 6–8 months fed solids on time", "NFHS-5"], ["48% vs 19%", "underweight: poorest vs richest", "CNNS"]] }
+  },
+  "beats": [
+    {
+      "label": "1 · Access", "big": "Hunger is not only an empty plate",
+      "say": "Hunger is not only an empty plate. Between food and a nourished body sit five barriers: can it be bought, is it in the market, is it permitted, is it actually eaten, and what does the body receive?",
+      "scene": { "type": "chain", "steps": [["01", "Affordability", "Can it be bought?"], ["02", "Availability", "Is it in the market?"], ["03", "Acceptance", "Is it permitted?"], ["04", "The plate", "What is actually eaten?"], ["05", "Health", "What does the body receive?"]] }
+    },
+    {
+      "label": "Access · wealth", "big": "Same country, different starting line",
+      "say": "Wealth draws the starting line. Among children under five, {48|forty-eight} percent in the poorest households were underweight, against {19|nineteen} percent in the richest.",
+      "scene": { "type": "bars", "unit": "Underweight, children under five · CNNS 2016–18 (survey)", "max": 60, "rows": [["Poorest fifth", 48, "48%"], ["Richest fifth", 19, "19%"]], "note": "2.5× the prevalence. Income is one part of a wider system." }
+    },
+    {
+      "label": "Access · acceptance", "big": "Who is allowed which food?",
+      "say": "And food is also permitted, or forbidden. In NFHS five, {29|twenty-nine} percent of women and {17|seventeen} percent of men said they never ate fish, meat or eggs. Caste, religion, gender and school rules decide what is acceptable, for whom.",
+      "scene": { "type": "bars", "unit": "Never consume fish, meat or eggs · NFHS-5 (self-report)", "max": 40, "rows": [["Women", 29, "29%"], ["Men", 17, "17%"]], "note": "Identity and intake are different measures." }
+    },
+    {
+      "label": "2 · Nutrients", "big": "Not all protein is used the same way",
+      "say": "Nutrients are a system, not a score. In one study of Indian children, the body could use {87|eighty-seven} percent of the protein in egg, but about {65|sixty-five} percent in mung bean.",
+      "scene": { "type": "bars", "unit": "Protein digestibility in Indian children · Shivakumar et al., 2019 (study)", "max": 100, "rows": [["Chicken egg", 87.4, "87.4%"], ["Rice", 78.5, "78.5%"], ["Finger millet", 68.4, "68.4%"], ["Mung bean", 65.2, "65.2%"]], "note": "Tested foods and methods only. Not a ranking of whole diets." }
+    },
+    {
+      "label": "Nutrients · iron and B12", "big": "Content is not absorption",
+      "say": "Iron in food is not iron absorbed: the meal around it and how it is cooked matter. And vitamin B12 needs a reliable source, from animal foods or fortified foods.",
+      "scene": { "type": "cards", "items": [["Haem iron", "meat, poultry, fish: more readily absorbed"], ["Vitamin C", "helps iron from grains, beans and greens"], ["Preparation", "soaking, sprouting and fermenting help"], ["Vitamin B12", "animal or fortified foods; planned vegan diets need a reliable source"]] }
+    },
+    {
+      "label": "3 · Myths", "big": "Pause the claim",
+      "say": "The book tests familiar food myths. India is essentially vegetarian? Survey data show most people eat fish, meat or eggs at least sometimes. Anaemia is just iron deficiency? It has many causes.",
+      "scene": { "type": "myths", "items": [["“India is essentially a vegetarian country.”", "Most women and men in NFHS-5 ate fish, meat or eggs at least occasionally."], ["“Anaemia is always iron deficiency.”", "Anaemia has many causes; diagnosis matters."], ["“Millets or soya replace every animal food.”", "Valuable, but digestibility and the rest of the diet decide."]] }
+    },
+    {
+      "label": "Myths · beef", "big": "Restrictions have a nutrition cost",
+      "say": "The book argues that food restrictions are not nutrition-neutral. A {2023|twenty twenty-three} study estimated lower haemoglobin in specific beef-eating communities after beef bans.",
+      "scene": { "type": "quote", "text": "Restrictions on beef are nutrition-neutral.", "verdict": "Not according to one quasi-experimental study, in specific communities.", "who": "Dasgupta, Majid & Orman, 2023 · context matters" }
+    },
+    {
+      "label": "4 · School meals", "big": "A meal is made long before lunch",
+      "say": "A school meal is a legal entitlement. But it is made long before lunch: budget, supplier, menu, what is served, what is eaten, and what changes. The book asks: was the meal eaten and enjoyed, or only counted?",
+      "scene": { "type": "pipeline", "steps": ["Budget", "Supplier", "Menu", "Served", "Eaten", "Outcome"] }
+    },
+    {
+      "label": "5 · Trade-offs", "big": "One plate, four obligations",
+      "say": "Good food policy must weigh four things together: nutrition, climate, livelihoods, and rights and dignity. The book refuses to collapse them into one score.",
+      "scene": { "type": "quad", "items": [["Nutrition", "diverse, affordable, absorbed"], ["Climate", "system-specific effects"], ["Livelihood", "who earns, who loses"], ["Rights", "food without coercion"]] }
+    },
+    {
+      "label": "6 · Way forward", "big": "From the plate to the table",
+      "say": "The way forward: independent data, transparent funding, and real seats for students, parents, cooks and communities in deciding what is on the plate.",
+      "scene": { "type": "cards", "items": [["Students", "trace one nutrition claim to its original study"], ["Parents", "ask for the menu, standard and grievance contact"], ["Institutions", "audit what is served, eaten and wasted"], ["Policymakers", "budget for whole diets; review food restrictions"]] }
+    }
+  ],
+  "outro": "Read the book, and explore the evidence in the companion site, Plate and Power.",
+  "end": {
+    "title": "Plate & Power",
+    "lines": ["Based on The Meat of the Matter", "Dr Sylvia Karpagam · HarperCollins India, 2026", "Every figure linked to its source"],
+    "small": "Figures as cited in the book and companion site; surveys, studies, laws and the author's arguments are labelled separately. Not medical advice."
+  }
+}
